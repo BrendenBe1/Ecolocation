@@ -7,19 +7,19 @@ package ecolocation.ecolocation;
 
 public class Animal {
     private String name;    //common name if applicable
-    private String picPath; //this is the path name of the pic
+    private Drawable picture;
     private String description;
     //TODO: consider making diet an enumeration
     private String diet;    //herbivore, omnivore, carnivore
     //TODO: consider making endangeredLevel an enumeration
     private String endangeredLevel;
     private float mass; //in kilograms
-    private float population;   //population density
+    private int population;   //population density
 
     //--------- Constructors
     public Animal(){
         name = "Elephant";
-//        picPath = ;
+    //    picture =
         description = "Description";
         diet = "Herbivore";
         endangeredLevel = "Vulnerable";
@@ -27,10 +27,10 @@ public class Animal {
         population = 415000;
     }
 
-    public Animal(String name, String picPath, String description,
-                  String diet, String endangeredLevel, float mass, float population){
+    public Animal(String name, Drawable picture, String description,
+                  String diet, String endangeredLevel, float mass, int population){
         this.name = name;
-        this.picPath = picPath;
+        this.picture = picture;
         this.description = description;
         this.diet = diet;
         this.endangeredLevel = endangeredLevel;
@@ -40,7 +40,7 @@ public class Animal {
 
 
     //------ Getters
-    public void setPopulation(float population) {
+    public void setPopulation(int population) {
         this.population = population;
     }
 
@@ -50,8 +50,8 @@ public class Animal {
         return name;
     }
 
-    public String getPicPath() {
-        return picPath;
+    public Drawable getpicture() {
+        return picture;
     }
 
     public String getDescription() {
@@ -70,7 +70,7 @@ public class Animal {
         return mass;
     }
 
-    public float getPopulation() {
+    public int getPopulation() {
         return population;
     }
 }
