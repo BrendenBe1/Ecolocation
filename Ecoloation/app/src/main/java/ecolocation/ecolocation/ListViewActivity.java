@@ -1,10 +1,13 @@
 package ecolocation.ecolocation;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
     //widgets
@@ -23,7 +26,7 @@ public class ListViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
 
         //TODO: initialize animalList with database/google drive stuff;
-        animalList = new ArrayList<Animal>();
+        animalList = fillList();
 
 
         //-------- Implementing Widgets
@@ -66,10 +69,9 @@ public class ListViewActivity extends AppCompatActivity {
         });
     }
 
-     name,  picture,  description, diet,  endangeredLevel,  mass,  population
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){
-        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher);
+        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
                         "vulnerable", 187.5, 20000);
@@ -85,5 +87,14 @@ public class ListViewActivity extends AppCompatActivity {
 
         Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
                         "near threatened", 250, 150000);
+
+        ArrayList<Animal> list = new ArrayList<Animal>();
+        list.add(lion);
+        list.add(elephant);
+        list.add(giraffe);
+        list.add(cheetah);
+        list.add(zebra);
+
+        return list;
     }
 }

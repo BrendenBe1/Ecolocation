@@ -1,10 +1,21 @@
 package ecolocation.ecolocation;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.SeekBar;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+
 /**
  * Created by Chandler on 11/28/2017.
  */
 
-public class AnimalAdapter extends ArrayAdapter<Animal>{
+public class AnimalAdapter extends ArrayAdapter<Animal> {
     private final Context context;
     private final ArrayList<Animal> animalList;
 
@@ -32,16 +43,18 @@ public class AnimalAdapter extends ArrayAdapter<Animal>{
 
         //get the rowView from the inflater
         //The rowView allows acccess to the widgets on the layout
-        View rowView = inflater.inflate(R.layout.list_item, parent, false)
+        View rowView = inflater.inflate(R.layout.list_item, parent, false);
 
         //------------- Initializing Widgets from list_item
         ImageView animalPic = (ImageView) rowView.findViewById(R.id.pic_animal);
-        TextView nameText = (TextView) rowView.findViewById(R.id.pic_animal);
+        TextView nameText = (TextView) rowView.findViewById(R.id.txt_animal_name);
         SeekBar seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
 
         //----------- Setting Up Values of Widgets
-        animalPic.setImageDrawable(currAnimal.getpicture);
-        nameText.setText(currAnimal.getName);
-        seekBar.setProgress(currAnimal.getPopulation);
+        animalPic.setImageDrawable(currAnimal.getpicture());
+        nameText.setText(currAnimal.getName());
+        seekBar.setProgress(currAnimal.getPopulation());
+
+        return rowView;
     }
 }

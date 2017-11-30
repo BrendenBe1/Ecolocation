@@ -34,4 +34,24 @@
         android:layout_marginTop="15dp"
         android:text="@string/bttn_custom_loc" />
 
+    <Button
+        android:id="@+id/bttn_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="false"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="30dp"
+        android:text="Google Demo" />
+
+    <Button
+        android:id="@+id/bttn_database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="30dp"
+        android:text="Database Demo" />
+
 </RelativeLayout>

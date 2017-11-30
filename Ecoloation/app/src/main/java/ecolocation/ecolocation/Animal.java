@@ -1,5 +1,7 @@
 package ecolocation.ecolocation;
 
+import android.graphics.drawable.Drawable;
+
 /**
  * Created by Chandler on 11/28/2017.
  * This interface is
@@ -13,7 +15,7 @@ public class Animal {
     private String diet;    //herbivore, omnivore, carnivore
     //TODO: consider making endangeredLevel an enumeration
     private String endangeredLevel;
-    private float mass; //in kilograms
+    private double mass; //in kilograms
     private int population;   //population density
 
     //--------- Constructors
@@ -28,7 +30,7 @@ public class Animal {
     }
 
     public Animal(String name, Drawable picture, String description,
-                  String diet, String endangeredLevel, float mass, int population){
+                  String diet, String endangeredLevel, double mass, int population){
         this.name = name;
         this.picture = picture;
         this.description = description;
@@ -66,7 +68,7 @@ public class Animal {
         return endangeredLevel;
     }
 
-    public float getMass() {
+    public double getMass() {
         return mass;
     }
 
