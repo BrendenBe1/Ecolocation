@@ -12,7 +12,7 @@
     <string name="bttn_custom_loc">Custom Location</string>
 
     <!--Graph Results Strings-->
-    <string name="bttn_run">Run</string>
+    <string name="bttn_run">View Animals</string>
 
     <!--About Screen Strings-->
     <string name="about_str">This screen will describe stuff like where the data is from and the

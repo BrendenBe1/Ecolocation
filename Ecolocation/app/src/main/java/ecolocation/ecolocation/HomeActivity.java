@@ -29,7 +29,6 @@ public class HomeActivity extends AppCompatActivity {
                 //This tells it what activity to go to & what activity we're on
                 Intent intent = new Intent(HomeActivity.this, LocationActivity.class);
 
-                //go to Location Activity
                 startActivity(intent);
             }
         });

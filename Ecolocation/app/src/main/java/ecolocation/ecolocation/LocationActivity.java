@@ -11,8 +11,7 @@ public class LocationActivity extends AppCompatActivity {
     Button currentLocBttn;
     Button customLocBttn;
     //TODO: delete these buttons after tech demo
-    Button googleButton; //this is just to go to the google drive demo screen
-    Button dbButton;    //this is just to go to the database demo screen
+    Button graphsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,22 +38,12 @@ public class LocationActivity extends AppCompatActivity {
         });
 
         //TODO: delete below after tech demo
-        googleButton = (Button) findViewById(R.id.bttn_google);
-        googleButton.setOnClickListener(new View.OnClickListener() {
+        graphsButton = (Button) findViewById(R.id.bttn_graphs);
+        graphsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LocationActivity.this,
-                        GoogleDriveDemoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        dbButton = (Button) findViewById(R.id.bttn_database);
-        dbButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LocationActivity.this,
-                        DatabaseDemoActivity.class);
+                        GraphResultsActivity.class);
                 startActivity(intent);
             }
         });

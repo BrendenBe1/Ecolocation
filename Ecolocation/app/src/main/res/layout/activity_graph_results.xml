@@ -13,5 +13,29 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="15dp"
         android:text="@string/bttn_run" />
+
+    <Button
+        android:id="@+id/bttn_google"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="false"
+        android:layout_centerHorizontal="false"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="30dp"
+        android:layout_toRightOf="@+id/bttn_database"
+        android:text="Google Demo"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/bttn_database"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="10dp"
+        android:text="Database Demo"
+        android:textSize="12sp" />
 </RelativeLayout>

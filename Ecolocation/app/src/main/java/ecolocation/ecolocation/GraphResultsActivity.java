@@ -9,6 +9,9 @@ import android.widget.Button;
 public class GraphResultsActivity extends AppCompatActivity {
     //widgets
     Button listViewButton;
+    //TODO: delete these buttons after tech demo
+    Button googleButton;
+    Button dbButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,27 @@ public class GraphResultsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //go to next activity: ListViewActivity
                 Intent intent = new Intent(GraphResultsActivity.this, ListViewActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //TODO: delete after tech demo
+        googleButton = (Button) findViewById(R.id.bttn_google);
+        googleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GraphResultsActivity.this,
+                        GoogleDriveDemoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dbButton = (Button) findViewById(R.id.bttn_database);
+        dbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(GraphResultsActivity.this,
+                        DatabaseDemoActivity.class);
                 startActivity(intent);
             }
         });
