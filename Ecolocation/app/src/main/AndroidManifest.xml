@@ -16,12 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".LocationActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".GraphResultsActivity" />
         <activity android:name=".ListViewActivity" />
-        <!-- <activity android:name="."></activity> -->
+
+        <!--Remove after Demo-->
         <activity android:name=".GoogleDriveDemoActivity" />
         <activity android:name=".DatabaseDemoActivity"></activity>
     </application>
