@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //This tells it what activity to go to & what activity we're on
-                Intent intent = new Intent(HomeActivity.this, LocationActivity.class);
+                Intent intent = new Intent(HomeActivity.this, MapActivity.class);
 
                 startActivity(intent);
             }
