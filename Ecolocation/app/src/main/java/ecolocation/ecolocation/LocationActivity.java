@@ -6,7 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class LocationActivity extends AppCompatActivity {
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback{
     //widgets
     Button currentLocBttn;
     Button customLocBttn;
@@ -22,11 +26,24 @@ public class LocationActivity extends AppCompatActivity {
         currentLocBttn = (Button) findViewById(R.id.bttn_curr_location);
         customLocBttn = (Button) findViewById(R.id.bttn_custom_location);
 
+
+
+
+
         //-------- Setting Up Event Listeners
         currentLocBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: select the users current location
+                /*
+        * Setting up the google maps view w/ a fragment
+        * Retreived from https://developers.google.com/maps/documentation/android-api/map-with-marker
+        *
+        * Getting the SupportMapFragment & request notification when map is ready to use
+        */
+                SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
+                        .findFragmentById(R.id.map);
+                mapFrag.getMapAsync(LocationActivity.this);
             }
         });
 
@@ -47,5 +64,19 @@ public class LocationActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-    }
+
+
+
+        }
+
+  @Override
+  public void onMapReady(GoogleMap googleMap){
+//      //add a marker in Sydney, Australia
+//      LatLng sydney = new LatLng(-33.852, 151.211);
+//      googleMap.addMarker(new MarkerOptions().position(sydney))
+//              .setTitle("Marker in Sydney");
+//      //move map's camera to the marker
+//      googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+  }
+
 }
