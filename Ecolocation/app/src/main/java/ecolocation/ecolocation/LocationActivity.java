@@ -10,8 +10,6 @@ public class LocationActivity extends AppCompatActivity {
     //widgets
     Button currentLocBttn;
     Button customLocBttn;
-    //TODO: delete these buttons after tech demo
-    Button graphsButton;
 
     //constants
     private static final String LOCATION = "LOCATION";
@@ -48,19 +46,8 @@ public class LocationActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //TODO: let the user pick a location from Google Maps
 
-                Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+                Intent intent = new Intent(LocationActivity.this, MapActivity2.class);
                 intent.putExtra(LOCATION, CUSTOM);
-                startActivity(intent);
-            }
-        });
-
-        //TODO: delete below after tech demo
-        graphsButton = (Button) findViewById(R.id.bttn_graphs);
-        graphsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LocationActivity.this,
-                        GraphResultsActivity.class);
                 startActivity(intent);
             }
         });

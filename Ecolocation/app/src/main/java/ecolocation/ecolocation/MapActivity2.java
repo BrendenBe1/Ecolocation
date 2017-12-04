@@ -1,6 +1,5 @@
 package ecolocation.ecolocation;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,9 +8,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -30,12 +26,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
-    //widgets
-    Button nextButton;
-    EditText latTxt;
-    EditText longTxt;
-
+public class MapActivity2 extends AppCompatActivity implements OnMapReadyCallback {
     private static final String TAG = MapActivity.class.getSimpleName();
     private GoogleMap map;
     private Marker marker;
@@ -53,7 +44,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
+    private final LatLng defaultLocation = new LatLng(35.198284, -111.651299);
     private boolean locationPermissionGranted;
 
     //----- CONSTANTS
@@ -67,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_map2);
 
         // Retrieve location and camera position from saved instance state.
         if (savedInstanceState != null) {
@@ -85,20 +76,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
-        //initialize widgets & set up event listeners
-        latTxt = (EditText) findViewById(R.id.txt_lat);
-        longTxt = (EditText) findViewById(R.id.txt_long);
-        nextButton = (Button) findViewById(R.id.bttn_next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: store location chosen to go to next activity
-
-                Intent intent = new Intent(MapActivity.this,
-                        GraphResultsActivity.class);
-                startActivity(intent);
-            }
-        });
+//
     }
 
     /*
@@ -157,7 +135,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //permission is not already granted, need to ask for it
         else{
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission
-                .ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+                    .ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
         }
     }
 
@@ -168,8 +146,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
-
-        //TODO: do other activities, will be implemented later
 
         //TODO: delete?
         getLocationPermission();
@@ -265,7 +241,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 String currLong = String.valueOf(currLocation.longitude);
                 String locStr = "Lat: " + currLat + ", Long: " + currLong;
 
-                Toast.makeText(MapActivity.this, locStr, Toast.LENGTH_LONG).show();
+                Toast.makeText(MapActivity2.this, locStr, Toast.LENGTH_LONG).show();
             }
         });
     }
