@@ -6,16 +6,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback{
+public class LocationActivity extends AppCompatActivity {
     //widgets
     Button currentLocBttn;
     Button customLocBttn;
     //TODO: delete these buttons after tech demo
     Button graphsButton;
+
+    //constants
+    private static final String LOCATION = "LOCATION";
+    private static final String CURRENT = "CURRENT";
+    private static final String CUSTOM = "CUSTOM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,15 +36,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 //TODO: select the users current location
-                /*
-        * Setting up the google maps view w/ a fragment
-        * Retreived from https://developers.google.com/maps/documentation/android-api/map-with-marker
-        *
-        * Getting the SupportMapFragment & request notification when map is ready to use
-        */
-                SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
-                        .findFragmentById(R.id.map);
-                mapFrag.getMapAsync(LocationActivity.this);
+
+                Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+                intent.putExtra(LOCATION, CURRENT);
+                startActivity(intent);
             }
         });
 
@@ -51,6 +47,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View view) {
                 //TODO: let the user pick a location from Google Maps
+
+                Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+                intent.putExtra(LOCATION, CUSTOM);
+                startActivity(intent);
             }
         });
 
@@ -65,18 +65,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-
-
         }
-
-  @Override
-  public void onMapReady(GoogleMap googleMap){
-//      //add a marker in Sydney, Australia
-//      LatLng sydney = new LatLng(-33.852, 151.211);
-//      googleMap.addMarker(new MarkerOptions().position(sydney))
-//              .setTitle("Marker in Sydney");
-//      //move map's camera to the marker
-//      googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-  }
 
 }
