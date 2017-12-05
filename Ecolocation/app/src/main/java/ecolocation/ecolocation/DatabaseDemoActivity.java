@@ -3,10 +3,16 @@ package ecolocation.ecolocation;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class DatabaseDemoActivity extends AppCompatActivity {
@@ -19,6 +25,11 @@ public class DatabaseDemoActivity extends AppCompatActivity {
     //variables for creating the list
     private ArrayList<Animal> animalList;
     private AnimalAdapter adapter;
+
+    static final String DB_URL = "jdbc:mysql://ecolocationdata.c8qsf4w8dkdu.us-east-2.rds.amazonaws.com:3306/animal_data";
+    static final String DB_DRV = "com.mysql.jdbc.Driver";
+    static final String DB_USER = "team_ecolocation";
+    static final String DB_PASSWD = "Ecolocation";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +77,45 @@ public class DatabaseDemoActivity extends AppCompatActivity {
                 //TODO: show different ways of sorting
             }
         });
+
+        connectDB();
     }
 
+    public void connectDB(){
+        String type = "select";
+        BackgroundWork backgroundwork = new BackgroundWork(this);
+        backgroundwork.execute(type, DB_USER, DB_PASSWD);
+
+
+
+        /*Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Connection con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);
+            // System.out.println("Database connection success");
+
+            String result = "Database connection success\n";
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select * from iucn");
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            while(rs.next()) {
+                result += rsmd.getColumnName(1) + ": " + rs.getInt(1) + "\n";
+                result += rsmd.getColumnName(2) + ": " + rs.getString(2) + "\n";
+                result += rsmd.getColumnName(3) + ": " + rs.getString(3) + "\n";
+            }
+            Log.e("db", result);
+
+        }
+        catch(Exception e) {
+            e.printStackTrace();
+
+        }*/
+
+    }
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
