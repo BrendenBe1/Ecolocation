@@ -10,8 +10,11 @@ public class LocationActivity extends AppCompatActivity {
     //widgets
     Button currentLocBttn;
     Button customLocBttn;
-    //TODO: delete these buttons after tech demo
-    Button graphsButton;
+
+    //constants
+    private static final String LOCATION = "LOCATION";
+    private static final String CURRENT = "CURRENT";
+    private static final String CUSTOM = "CUSTOM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +25,19 @@ public class LocationActivity extends AppCompatActivity {
         currentLocBttn = (Button) findViewById(R.id.bttn_curr_location);
         customLocBttn = (Button) findViewById(R.id.bttn_custom_location);
 
+
+
+
+
         //-------- Setting Up Event Listeners
         currentLocBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //TODO: select the users current location
+
+                Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+                intent.putExtra(LOCATION, CURRENT);
+                startActivity(intent);
             }
         });
 
@@ -34,18 +45,13 @@ public class LocationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: let the user pick a location from Google Maps
-            }
-        });
 
-        //TODO: delete below after tech demo
-        graphsButton = (Button) findViewById(R.id.bttn_graphs);
-        graphsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LocationActivity.this,
-                        GraphResultsActivity.class);
+                Intent intent = new Intent(LocationActivity.this, MapActivity2.class);
+                intent.putExtra(LOCATION, CUSTOM);
                 startActivity(intent);
             }
         });
-    }
+
+        }
+
 }

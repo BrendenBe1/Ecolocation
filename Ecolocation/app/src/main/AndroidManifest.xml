@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ecolocation.ecolocation">
 
+    <!-- Permission for Location Services -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,9 +24,21 @@
         <activity android:name=".InfoActivity" />
         <activity android:name=".GraphResultsActivity" />
         <activity android:name=".ListViewActivity" />
-        <!-- <activity android:name="."></activity> -->
+
+        <!-- Remove after Demo -->
         <activity android:name=".GoogleDriveDemoActivity" />
-        <activity android:name=".DatabaseDemoActivity"></activity>
+        <activity android:name=".DatabaseDemoActivity" />
+        <activity android:name=".MapActivity" />
+
+        <!-- The API key for Google Maps-based APIs. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_api_key" />
+
+        <activity android:name=".MapActivity2"></activity>
     </application>
 
 </manifest>
