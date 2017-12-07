@@ -15,10 +15,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -69,16 +67,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        // Retrieve location and camera position from saved instance state.
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-        }
+//        // Retrieve location and camera position from saved instance state.
+//        if (savedInstanceState != null) {
+//            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
+//            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
+//        }
 
-        //The first two are primary entry points to the Google Places API & Location Services
-        geoDataClient = Places.getGeoDataClient(this, null);
-        placeDetectionClient = Places.getPlaceDetectionClient(this, null);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//        //The first two are primary entry points to the Google Places API & Location Services
+//        geoDataClient = Places.getGeoDataClient(this, null);
+//        placeDetectionClient = Places.getPlaceDetectionClient(this, null);
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         //get a handle to the map fragment
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()

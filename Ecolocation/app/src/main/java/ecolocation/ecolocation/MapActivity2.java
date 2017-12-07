@@ -1,40 +1,41 @@
 package ecolocation.ecolocation;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.PlaceDetectionClient;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
-public class MapActivity2 extends AppCompatActivity implements OnMapReadyCallback {
+import java.util.List;
+
+public class MapActivity2 extends AppCompatActivity {
     private static final String TAG = MapActivity.class.getSimpleName();
     private GoogleMap map;
     private Marker marker;
-    private CameraPosition cameraPosition;
-
-    // The entry points to the Places API.
-    private GeoDataClient geoDataClient;
-    private PlaceDetectionClient placeDetectionClient;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -55,70 +56,47 @@ public class MapActivity2 extends AppCompatActivity implements OnMapReadyCallbac
     private static final String KEY_CAMERA_POSITION = "camera_position";
     private static final String KEY_LOCATION = "location";
 
+    //turning on location services variables
+    private GoogleApiClient googleApiClient;
+    final static int REQUEST_LOCATION = 199;
+
+    //widgets
+    TextView latTxt;
+    TextView longTxt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
 
-        // Retrieve location and camera position from saved instance state.
-        if (savedInstanceState != null) {
-            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-        }
+        //initialize widgets
+        latTxt = findViewById(R.id.txt_lat);
+        longTxt = findViewById(R.id.txt_long);
 
-        //The first two are primary entry points to the Google Places API & Location Services
-        geoDataClient = Places.getGeoDataClient(this, null);
-        placeDetectionClient = Places.getPlaceDetectionClient(this, null);
+        //get permission for location & enable location services if not already enabled
+        getLocationPermission();
+        checkLocationServices();
+
+        //used to get the last known location of the device
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-
-        //get a handle to the map fragment
-        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFrag.getMapAsync(this);
-
-//
     }
 
-    /*
-    * Use the fuseLocationProvider to get the device's last-known location & use that to position
-    *   the map.
-    */
-    public void getDeviceLocation(){
-        //get the best & most recent location of the device
-        try{
-            if(locationPermissionGranted){
-                Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
-                locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Location> task) {
-                        if(task.isSuccessful())
-                        {
-                            //set the map's camera position to current location
-                            lastKnownLocation = task.getResult();
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                                    lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
-                            ), DEFAULT_ZOOM));
-                        }
-                        else{
-                            //log messages
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-
-                            //move camera & get UI settings
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
-                                    DEFAULT_ZOOM));
-                            map.getUiSettings().setMyLocationButtonEnabled(false);
-                        }
-
-                        //places marker on current location
-                        setMarker();
-                    }
-
-                });
-            }
-        }
-        catch(SecurityException e){
-            Log.e("Exception: %s", e.getMessage());
+    @Override
+    public void onRequestPermissionsResult(int requestcode, String[] permissions, int[] grantResults){
+        switch (requestcode){
+            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION:
+                if(grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    locationPermissionGranted = true;
+                    Toast.makeText(this, "Permission granted", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    locationPermissionGranted = false;
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_LONG).show();
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                }
+                break;
         }
     }
 
@@ -127,122 +105,102 @@ public class MapActivity2 extends AppCompatActivity implements OnMapReadyCallbac
     * already granted, if not then it asks.
     */
     private void getLocationPermission(){
-        //checks to see if permission is already granted
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        //request permission to use location services
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+        else{
             locationPermissionGranted = true;
         }
-        //permission is not already granted, need to ask for it
+
+    }
+
+    //-------------- This is for turning on the location if it is not already enabled --------------
+    //starts the process of checking if the location is enabled
+    private void checkLocationServices(){
+        // check if location is on
+        final LocationManager manager = (LocationManager) MapActivity2.this.getSystemService(Context.LOCATION_SERVICE);
+        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) && hasGPSDevice(MapActivity2.this)) {
+            Toast.makeText(MapActivity2.this,"Gps already enabled",Toast.LENGTH_SHORT).show();
+        }
         else{
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission
-                    .ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+            Toast.makeText(MapActivity2.this,"Gps not enabled",Toast.LENGTH_SHORT).show();
+            enableLoc();
+        }
+
+        //see if the device is has GPS support
+        if(!hasGPSDevice(MapActivity2.this)){
+            Toast.makeText(MapActivity2.this,"Gps not Supported",Toast.LENGTH_SHORT).show();
         }
     }
 
-    /**
-     * Manipulates the map when it's available.
-     * This callback is triggered when the map is ready to be used.
-     */
-    @Override
-    public void onMapReady(GoogleMap map) {
-        this.map = map;
+    //checks if the device has GPS support
+    private boolean hasGPSDevice(Context context) {
+        final LocationManager mgr = (LocationManager) context
+                .getSystemService(Context.LOCATION_SERVICE);
+        if (mgr == null) {return false;}
 
-        //TODO: delete?
-        getLocationPermission();
+        final List<String> providers = mgr.getAllProviders();
+        if (providers == null){return false;}
 
-        //turn on My Location Layer & related control on the map
-        updateLocationUI();
-
-        //Get the current location of the device & set the position of the map
-        getDeviceLocation();
+        return providers.contains(LocationManager.GPS_PROVIDER);
     }
 
-    /*
-    * Handling the result of the permission request
-    */
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults){
-        locationPermissionGranted = false;
-        switch (requestCode){
-            //if request is cancelled, the result arrays are empty
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                //if permission is granted, set locationPermissionGranted to true
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
+    //enable location service
+    private void enableLoc() {
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient.Builder(MapActivity2.this)
+                    .addApi(LocationServices.API)
+                    .addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+                        @Override
+                        public void onConnected(Bundle bundle) {}
+
+                        @Override
+                        public void onConnectionSuspended(int i) {
+                            googleApiClient.connect();
+                        }
+                    })
+                    .addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+                        @Override
+                        public void onConnectionFailed(ConnectionResult connectionResult) {
+                            Log.d("Location error","Location error " + connectionResult.getErrorCode());
+                        }
+                    }).build();
+            googleApiClient.connect();
+
+            //setting parameters needed when enabling location services
+            LocationRequest locationRequest = LocationRequest.create();
+            locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+            locationRequest.setInterval(30 * 1000);
+            locationRequest.setFastestInterval(5 * 1000);
+            LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                    .addLocationRequest(locationRequest);
+
+            builder.setAlwaysShow(true);
+
+            PendingResult<LocationSettingsResult> result =
+                    LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build());
+            result.setResultCallback(new ResultCallback<LocationSettingsResult>() {
+                @Override
+                public void onResult(LocationSettingsResult result) {
+                    final Status status = result.getStatus();
+                    switch (status.getStatusCode()) {
+                        case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                            try {
+                                // Show the dialog by calling startResolutionForResult(),
+                                // and check the result in onActivityResult().
+                                status.startResolutionForResult(MapActivity2.this, REQUEST_LOCATION);
+
+                                finish();
+                            } catch (IntentSender.SendIntentException e) {}
+                            break;
+                    }
                 }
-            }
+            });
         }
-        updateLocationUI();
-    }
-
-    /*
-    * Set the location controls on the map.
-    *
-    * If the user granted location permissions, then enable My Location Layer & related controls
-    *   on the map.
-    *  Otherwise, disable them & set current location to null;
-    */
-    private void updateLocationUI(){
-        if(map == null){
-            return;
-        }
-
-        try{
-            //see if location permission was granted
-            if(locationPermissionGranted){
-                map.setMyLocationEnabled(true);
-                map.getUiSettings().setMyLocationButtonEnabled(true);
-            }
-            //disable My Location layer & controls
-            else{
-                //disable layer & controls
-                map.setMyLocationEnabled(false);
-                map.getUiSettings().setMyLocationButtonEnabled(false);
-
-                //reset lastKnownLocation & ask for permission
-                lastKnownLocation = null;
-                getLocationPermission();
-            }
-        }
-        catch(SecurityException e){
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
-
-    //shows the draggable marker
-    private void setMarker(){
-        marker = map.addMarker(new MarkerOptions().position(new LatLng(defaultLocation.latitude,
-                defaultLocation.longitude)).title("Default Location").draggable(true));
-
-        //add marker to current location or default location (if location is denied)
-        if (lastKnownLocation != null){
-//            map.addMarker(new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(),
-//                    lastKnownLocation.getLongitude())).title("Current Location").draggable(true));
-
-            marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
-                    lastKnownLocation.getLongitude()));
-            marker.setTitle("Current Location");
-        }
-
-        //event listener for marker
-        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {}
-
-            @Override
-            public void onMarkerDrag(Marker marker) {}
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                LatLng currLocation = marker.getPosition();
-                String currLat = String.valueOf(currLocation.latitude);
-                String currLong = String.valueOf(currLocation.longitude);
-                String locStr = "Lat: " + currLat + ", Long: " + currLong;
-
-                Toast.makeText(MapActivity2.this, locStr, Toast.LENGTH_LONG).show();
-            }
-        });
     }
 }
+
+
