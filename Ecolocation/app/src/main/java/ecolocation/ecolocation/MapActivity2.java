@@ -79,6 +79,7 @@ public class MapActivity2 extends AppCompatActivity {
 
         //used to get the last known location of the device
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getLocationPermission();
     }
 
     @Override
