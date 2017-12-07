@@ -1,6 +1,5 @@
 package ecolocation.ecolocation;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -83,20 +81,20 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
-        //initialize widgets & set up event listeners
-        latTxt = (EditText) findViewById(R.id.txt_lat);
-        longTxt = (EditText) findViewById(R.id.txt_long);
-        nextButton = (Button) findViewById(R.id.bttn_next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: store location chosen to go to next activity
-
-                Intent intent = new Intent(MapActivity.this,
-                        GraphResultsActivity.class);
-                startActivity(intent);
-            }
-        });
+//        //initialize widgets & set up event listeners
+//        latTxt = (EditText) findViewById(R.id.txt_lat);
+//        longTxt = (EditText) findViewById(R.id.txt_long);
+//        nextButton = (Button) findViewById(R.id.bttn_next);
+//        nextButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //TODO: store location chosen to go to next activity
+//
+//                Intent intent = new Intent(MapActivity.this,
+//                        GraphResultsActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     /*
