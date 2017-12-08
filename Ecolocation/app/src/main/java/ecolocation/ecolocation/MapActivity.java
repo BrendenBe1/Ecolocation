@@ -10,16 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.places.GeoDataClient;
-import com.google.android.gms.location.places.PlaceDetectionClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -35,11 +32,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private static final String TAG = MapActivity.class.getSimpleName();
     private GoogleMap map;
     private Marker marker;
-    private CameraPosition cameraPosition;
-
-    // The entry points to the Places API.
-    private GeoDataClient geoDataClient;
-    private PlaceDetectionClient placeDetectionClient;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -53,75 +45,61 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private boolean locationPermissionGranted;
 
     //----- CONSTANTS
-    //for default location
     private static final int DEFAULT_ZOOM = 15;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
-    // Keys for storing activity state.
-    private static final String KEY_CAMERA_POSITION = "camera_position";
-    private static final String KEY_LOCATION = "location";
+    private static final String GPS_PERMISSION = "gps permission";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-//        // Retrieve location and camera position from saved instance state.
-//        if (savedInstanceState != null) {
-//            lastKnownLocation = savedInstanceState.getParcelable(KEY_LOCATION);
-//            cameraPosition = savedInstanceState.getParcelable(KEY_CAMERA_POSITION);
-//        }
 
-//        //The first two are primary entry points to the Google Places API & Location Services
-//        geoDataClient = Places.getGeoDataClient(this, null);
-//        placeDetectionClient = Places.getPlaceDetectionClient(this, null);
-//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //initialize widgets
+        latTxt = findViewById(R.id.txt_lat);
+        longTxt = findViewById(R.id.txt_long);
+
+        //see if permission to location was granted
+        Bundle extras = getIntent().getExtras();
+        locationPermissionGranted = extras.getBoolean(GPS_PERMISSION);
+
+        //used to get the last known location of the device
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        getDeviceLocation();
 
         //get a handle to the map fragment
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
-
-//        //initialize widgets & set up event listeners
-//        latTxt = (EditText) findViewById(R.id.txt_lat);
-//        longTxt = (EditText) findViewById(R.id.txt_long);
-//        nextButton = (Button) findViewById(R.id.bttn_next);
-//        nextButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //TODO: store location chosen to go to next activity
-//
-//                Intent intent = new Intent(MapActivity.this,
-//                        GraphResultsActivity.class);
-//                startActivity(intent);
-//            }
-//        });
     }
-
     /*
-    * Use the fuseLocationProvider to get the device's last-known location & use that to position
-    *   the map.
-    */
+   * Use the fuseLocationProvider to get the device's last-known location & use that to position
+   *   the map.
+   */
     public void getDeviceLocation(){
         //get the best & most recent location of the device
         try{
+
             if(locationPermissionGranted){
                 Task<Location> locationResult = fusedLocationProviderClient.getLastLocation();
                 locationResult.addOnCompleteListener(this, new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
-                        if(task.isSuccessful())
+                        if(task.isSuccessful() && task.getResult() != null)
                         {
                             //set the map's camera position to current location
                             lastKnownLocation = task.getResult();
+
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                                     lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
                             ), DEFAULT_ZOOM));
+
+                            latTxt.setText(String.valueOf(lastKnownLocation.getLatitude()));
+                            longTxt.setText(String.valueOf(lastKnownLocation.getLongitude()));
+
                         }
                         else{
-                            //log messages
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
-
                             //move camera & get UI settings
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
                                     DEFAULT_ZOOM));
@@ -145,16 +123,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     * already granted, if not then it asks.
     */
     private void getLocationPermission(){
-        //checks to see if permission is already granted
-        if(ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        //request permission to use location services
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+        }
+        else{
             locationPermissionGranted = true;
         }
-        //permission is not already granted, need to ask for it
-        else{
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission
-                .ACCESS_FINE_LOCATION}, PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
+
     }
 
     /**
@@ -165,45 +143,48 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap map) {
         this.map = map;
 
-        //TODO: do other activities, will be implemented later
-
-        //TODO: delete?
-        getLocationPermission();
-
         //turn on My Location Layer & related control on the map
         updateLocationUI();
-
-        //Get the current location of the device & set the position of the map
-        getDeviceLocation();
     }
 
-    /*
-    * Handling the result of the permission request
-    */
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String permissions[],
-                                           @NonNull int[] grantResults){
-        locationPermissionGranted = false;
-        switch (requestCode){
-            //if request is cancelled, the result arrays are empty
-            case PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
-                //if permission is granted, set locationPermissionGranted to true
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    locationPermissionGranted = true;
-                }
-            }
+    //    shows the draggable marker
+    private void setMarker(){
+        marker = map.addMarker(new MarkerOptions().position(new LatLng(defaultLocation.latitude,
+                defaultLocation.longitude)).title("Default Location").draggable(true));
+
+        //add marker to current location or default location (if location is denied)
+        if (lastKnownLocation != null){
+            marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
+                    lastKnownLocation.getLongitude()));
         }
-        updateLocationUI();
+
+        //event listener for marker
+        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {}
+
+            @Override
+            public void onMarkerDrag(Marker marker) {}
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                LatLng currLocation = marker.getPosition();
+                String currLat = String.valueOf(currLocation.latitude);
+                String currLong = String.valueOf(currLocation.longitude);
+
+                latTxt.setText("Lat: " + currLat + ", ");
+                longTxt.setText("Long: " + currLong);
+            }
+        });
     }
 
     /*
-    * Set the location controls on the map.
-    *
-    * If the user granted location permissions, then enable My Location Layer & related controls
-    *   on the map.
-    *  Otherwise, disable them & set current location to null;
-    */
+       * Set the location controls on the map.
+       *
+       * If the user granted location permissions, then enable My Location Layer & related controls
+       *   on the map.
+       *  Otherwise, disable them & set current location to null;
+       */
     private void updateLocationUI(){
         if(map == null){
             return;
@@ -226,43 +207,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 getLocationPermission();
             }
         }
-        catch(SecurityException e){
-            Log.e("Exception: %s", e.getMessage());
-        }
-    }
-
-    //shows the draggable marker
-    private void setMarker(){
-        marker = map.addMarker(new MarkerOptions().position(new LatLng(defaultLocation.latitude,
-                defaultLocation.longitude)).title("Default Location").draggable(true));
-
-        //add marker to current location or default location (if location is denied)
-        if (lastKnownLocation != null){
-//            map.addMarker(new MarkerOptions().position(new LatLng(lastKnownLocation.getLatitude(),
-//                    lastKnownLocation.getLongitude())).title("Current Location").draggable(true));
-
-            marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
-                    lastKnownLocation.getLongitude()));
-            marker.setTitle("Current Location");
-        }
-
-        //event listener for marker
-        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
-            @Override
-            public void onMarkerDragStart(Marker marker) {}
-
-            @Override
-            public void onMarkerDrag(Marker marker) {}
-
-            @Override
-            public void onMarkerDragEnd(Marker marker) {
-                LatLng currLocation = marker.getPosition();
-                String currLat = String.valueOf(currLocation.latitude);
-                String currLong = String.valueOf(currLocation.longitude);
-                String locStr = "Lat: " + currLat + ", Long: " + currLong;
-
-                Toast.makeText(MapActivity.this, locStr, Toast.LENGTH_LONG).show();
-            }
-        });
+        catch(SecurityException e){}
     }
 }
