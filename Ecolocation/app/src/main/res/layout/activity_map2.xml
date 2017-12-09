@@ -2,18 +2,18 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="ecolocation.ecolocation.MapActivity"
+    tools:context="ecolocation.ecolocation.MapActivity2"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<fragment
-    android:id="@+id/map"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:name="com.google.android.gms.maps.SupportMapFragment">
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.google.android.gms.maps.SupportMapFragment">
 
-</fragment>
+    </fragment>
 
     <Button
         android:id="@+id/bttn_next"

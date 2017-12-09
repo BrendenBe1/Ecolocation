@@ -5,7 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -73,6 +76,12 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     private ArrayList<Animal> fillList(){
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        imageView.setVisibility(View.VISIBLE);
+        String url = "http://cefns.nau.edu/~mh973/images/chimp.jpg";
+        loadImageFromURL(url, imageView);
+
+
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
                 "vulnerable", 187.5, 20000);
 
@@ -96,5 +105,16 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         list.add(zebra);
 
         return list;
+    }
+
+    // function to load an image into an image view
+    private void loadImageFromURL(String url, ImageView imageView )
+    {
+        Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
+            @Override
+            public void onSuccess(){}
+            @Override
+            public void onError(){}
+        });
     }
 }

@@ -1,48 +1,57 @@
 package ecolocation.ecolocation;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
+public class LocationActivity extends AppCompatActivity {
+    //widgets
+    Button currentLocBttn;
+    Button customLocBttn;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
-
-
-
+    //constants
+    private static final String LOCATION = "LOCATION";
+    private static final String CURRENT = "CURRENT";
+    private static final String CUSTOM = "CUSTOM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        //get a handle to the map fragment
-        SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFrag.getMapAsync(this);
+        //-------- Initializing Widgets
+        currentLocBttn = (Button) findViewById(R.id.bttn_curr_location);
+        customLocBttn = (Button) findViewById(R.id.bttn_custom_location);
 
-    }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap){
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
 
-            if (!success) {
+
+
+        //-------- Setting Up Event Listeners
+        currentLocBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: select the users current location
+
+                Intent intent = new Intent(LocationActivity.this, MapActivity.class);
+                intent.putExtra(LOCATION, CURRENT);
+                startActivity(intent);
             }
-        } catch (Resources.NotFoundException e) {
+        });
+
+        customLocBttn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: let the user pick a location from Google Maps
+
+                Intent intent = new Intent(LocationActivity.this, MapActivity2.class);
+                intent.putExtra(LOCATION, CUSTOM);
+                startActivity(intent);
+            }
+        });
+
         }
-        // Position the map's camera near Sydney, Australia.
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(-34, 151)));
-    }
 
 }

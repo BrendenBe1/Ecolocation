@@ -30,4 +30,8 @@ dependencies {
     compile 'com.google.android.gms:play-services-location:11.6.2'
     compile 'com.google.android.gms:play-services-places:11.6.2'
     compile 'com.google.android.gms:play-services:11.6.2'
+
+    // compile dependency for picasso library
+    // allows for access to images from url
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
