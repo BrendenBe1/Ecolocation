@@ -10,6 +10,7 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -58,17 +59,17 @@ public class GraphResultsActivity extends AppCompatActivity {
 
         barChart.animateY(4000, Easing.EasingOption.EaseInQuart);
 
-
         ArrayList<BarEntry> barEntries = new ArrayList<>();
 
-       // barEntries.add(new BarEntry(1, 0f, "Curent"));
-        barEntries.add(new BarEntry(1, 10f, "Curent"));
-        barEntries.add(new BarEntry(2, 7f, "Present"));
-        barEntries.add(new BarEntry(3, 3f, "Change"));
-        //barEntries.add(new BarEntry(5, 0f, "Curent"));
+        barEntries.add(new BarEntry(1f, 10f));
+        barEntries.add(new BarEntry(2f, 7f));
+        barEntries.add(new BarEntry(3f, 0f));
 
-        BarDataSet dataSet = new BarDataSet(barEntries, "Date set1");
+        BarDataSet dataSet = new BarDataSet(barEntries, "");
 
+        String[] labels = new String[] {"" ,"Historic", "Current", "Change"};
+
+        barChart.getXAxis().setValueFormatter(new MyXAxisValueFormatter(labels));
 
         dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
@@ -77,10 +78,23 @@ public class GraphResultsActivity extends AppCompatActivity {
 
         barChart.setData(data);
 
+        barChart.getAxisRight().setDrawLabels(false);
+
         XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
         xAxis.setGranularity(1f);
+
+        YAxis yLAxis = barChart.getAxisLeft();
+        yLAxis.setAxisMinValue(0f);
+        yLAxis.setLabelCount(6);
+        yLAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+
+        YAxis yRAxis = barChart.getAxisRight();
+        yRAxis.setAxisMinValue(0f);
+
+
+
 
 
 
@@ -105,6 +119,26 @@ public class GraphResultsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+    }
+    public class MyXAxisValueFormatter implements AxisValueFormatter {
+
+        private String[] mValues;
+
+        public MyXAxisValueFormatter(String[] values) {
+            this.mValues = values;
+        }
+
+        @Override
+        public String getFormattedValue(float value, AxisBase axis) {
+
+            return mValues[(int) value];
+        }
+
+
+        public int getDecimalDigits() { return 0; }
     }
 
+
 }
+
