@@ -45,6 +45,7 @@ public class Animal {
     public void setPopulation(int population) {
         this.population = population;
     }
+    public void setImage( Drawable image ) { this.picture = image; }
 
 
     //------ Setters

@@ -18,6 +18,8 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     Button resetButton;
     Button recalcButton;
     Button sortButton;
+    Drawable[] d;
+
 
     //variables for creating the list
     private ArrayList<Animal> animalList;
@@ -76,10 +78,20 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     private ArrayList<Animal> fillList(){
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
+
         ImageView imageView = (ImageView)findViewById(R.id.imageView);
-        imageView.setVisibility(View.VISIBLE);
-        String url = "http://cefns.nau.edu/~mh973/images/chimp.jpg";
-        loadImageFromURL(url, imageView);
+        ImageView imageView1 = (ImageView)findViewById(R.id.imageView1);
+        ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
+        ImageView imageView3 = (ImageView)findViewById(R.id.imageView3);
+        ImageView imageView4 = (ImageView)findViewById(R.id.imageView4);
+
+
+        String url = "http://cefns.nau.edu/~mh973/images/lion.jpg";
+        String url1 = "http://cefns.nau.edu/~mh973/images/elephant.jpg";
+        String url2 = "http://cefns.nau.edu/~mh973/images/giraffe.jpg";
+        String url3 = "http://cefns.nau.edu/~mh973/images/cheetah.jpg";
+        String url4 = "http://cefns.nau.edu/~mh973/images/zebra.jpg";
+
 
 
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
@@ -97,6 +109,12 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
                 "near threatened", 250, 150000);
 
+        loadImageFromURL(url, imageView, lion);
+        loadImageFromURL(url1, imageView1, elephant);
+        loadImageFromURL(url2, imageView2, giraffe);
+        loadImageFromURL(url3, imageView3, cheetah);
+        loadImageFromURL(url4, imageView4, zebra);
+
         ArrayList<Animal> list = new ArrayList<Animal>();
         list.add(lion);
         list.add(elephant);
@@ -104,15 +122,22 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         list.add(cheetah);
         list.add(zebra);
 
+
+
         return list;
     }
 
     // function to load an image into an image view
-    private void loadImageFromURL(String url, ImageView imageView )
+    private void loadImageFromURL(String url, final ImageView imageView, final Animal animal)
     {
         Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
             @Override
-            public void onSuccess(){}
+            public void onSuccess()
+            {
+                Drawable d = imageView.getDrawable();
+                animal.setImage(d);
+
+            }
             @Override
             public void onError(){}
         });
