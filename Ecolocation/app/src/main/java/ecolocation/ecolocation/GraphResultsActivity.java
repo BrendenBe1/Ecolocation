@@ -10,7 +10,7 @@ public class GraphResultsActivity extends AppCompatActivity {
     //widgets
     Button listViewButton;
     //TODO: delete these buttons after tech demo
-    Button googleButton;
+    Button spatialButton;
     Button dbButton;
 
     @Override
@@ -32,12 +32,12 @@ public class GraphResultsActivity extends AppCompatActivity {
         });
 
         //TODO: delete after tech demo
-        googleButton = (Button) findViewById(R.id.bttn_google);
-        googleButton.setOnClickListener(new View.OnClickListener() {
+        spatialButton = (Button) findViewById(R.id.bttn_spatial);
+        spatialButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GraphResultsActivity.this,
-                        GoogleDriveDemoActivity.class);
+                        SpatialMapActivity.class);
                 startActivity(intent);
             }
         });

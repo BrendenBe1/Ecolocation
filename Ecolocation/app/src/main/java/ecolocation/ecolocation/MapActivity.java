@@ -1,5 +1,6 @@
 package ecolocation.ecolocation;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -59,6 +61,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         //initialize widgets
         latTxt = findViewById(R.id.txt_lat);
         longTxt = findViewById(R.id.txt_long);
+        nextButton = findViewById(R.id.bttn_next);
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MapActivity.this, GraphResultsActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //see if permission to location was granted
         Bundle extras = getIntent().getExtras();
