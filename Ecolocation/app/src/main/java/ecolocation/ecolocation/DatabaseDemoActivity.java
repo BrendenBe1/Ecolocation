@@ -37,7 +37,7 @@ public class DatabaseDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_google_drive);
 
         //TODO: initialize animalList with database/google drive stuff;
-        animalList = select_animals(0);
+        animalList = select_animals();
 
         //-------- Implementing Widgets
         listView = (ListView) findViewById(R.id.layout_list);
@@ -80,12 +80,12 @@ public class DatabaseDemoActivity extends AppCompatActivity {
 
     }
 
-    private ArrayList<New_Animal> select_animals(int id) {
-        final ArrayList<New_Animal> list = new ArrayList<New_Animal>();
+    private ArrayList<New_Animal> select_animals() {
+        final ArrayList<New_Animal> list = new ArrayList<>();
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
             @Override
-            protected Void doInBackground(Integer... animalNums) {
+            protected Void doInBackground(Integer... Void) {
 
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
@@ -103,8 +103,8 @@ public class DatabaseDemoActivity extends AppCompatActivity {
                         New_Animal animal = new New_Animal(object.getString("binomial"));
 
                         DatabaseDemoActivity.this.animalList.add(animal);
-                        list.add(animal);
-                        Log.d("return", String.valueOf(animalList.get(i)));
+                        //list.add(animal);
+                        //Log.d("return", String.valueOf(animalList.get(i)));
                     }
 
 
@@ -123,9 +123,8 @@ public class DatabaseDemoActivity extends AppCompatActivity {
             }
         };
 
-        asyncTask.execute(id);
+        asyncTask.execute();
 
-        //Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
         return list;
     }
 
