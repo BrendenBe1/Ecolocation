@@ -5,15 +5,12 @@ package ecolocation.ecolocation;
  */
 
 public class New_Animal {
-    private String genus;
-    private String species;
+    private String binomial;
 
-    public New_Animal(String genus, String species){
-        this.genus = genus;
-        this.species = species;
+    public New_Animal(String binomial){
+        this.binomial = binomial;
     }
-    public String getGenus(){return genus;}
-    public String getSpecies(){return species;}
+    public String getBinomial(){return binomial;}
 }
 
 

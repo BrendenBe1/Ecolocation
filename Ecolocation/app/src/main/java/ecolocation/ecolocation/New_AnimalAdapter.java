@@ -48,7 +48,7 @@ public class New_AnimalAdapter extends ArrayAdapter<New_Animal> {
         TextView nameText = (TextView) rowView.findViewById(R.id.txt_animal_name);
 
         //----------- Setting Up Values of Widgets
-        nameText.setText(currAnimal.getGenus() + " " + currAnimal.getSpecies());
+        nameText.setText(currAnimal.getBinomial());
         Log.d("text NUM", "hhh");
 
         return rowView;

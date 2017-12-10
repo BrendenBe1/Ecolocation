@@ -89,7 +89,7 @@ public class DatabaseDemoActivity extends AppCompatActivity {
 
                 OkHttpClient client = new OkHttpClient();
                 Request request = new Request.Builder()
-                        .url("http://192.168.0.106/animals.php?")
+                        .url("http://18.220.129.239/animals.php?")
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
@@ -100,7 +100,7 @@ public class DatabaseDemoActivity extends AppCompatActivity {
 
                         JSONObject object = array.getJSONObject(i);
 
-                        New_Animal animal = new New_Animal(object.getString("genus"), object.getString("species"));
+                        New_Animal animal = new New_Animal(object.getString("binomial"));
 
                         DatabaseDemoActivity.this.animalList.add(animal);
                         list.add(animal);
