@@ -18,7 +18,6 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     Button resetButton;
     Button recalcButton;
     Button sortButton;
-    Drawable[] d;
 
 
     //variables for creating the list
@@ -76,24 +75,14 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
 
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){
+
+        // default image to display in case something happens
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
 
-        ImageView imageView = (ImageView)findViewById(R.id.imageView);
-        ImageView imageView1 = (ImageView)findViewById(R.id.imageView1);
-        ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
-        ImageView imageView3 = (ImageView)findViewById(R.id.imageView3);
-        ImageView imageView4 = (ImageView)findViewById(R.id.imageView4);
 
 
-        String url = "http://cefns.nau.edu/~mh973/images/lion.jpg";
-        String url1 = "http://cefns.nau.edu/~mh973/images/elephant.jpg";
-        String url2 = "http://cefns.nau.edu/~mh973/images/giraffe.jpg";
-        String url3 = "http://cefns.nau.edu/~mh973/images/cheetah.jpg";
-        String url4 = "http://cefns.nau.edu/~mh973/images/zebra.jpg";
-
-
-
+        // create animal objects with pic initialized as default
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
                 "vulnerable", 187.5, 20000);
 
@@ -109,12 +98,23 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
                 "near threatened", 250, 150000);
 
-        loadImageFromURL(url, imageView, lion);
-        loadImageFromURL(url1, imageView1, elephant);
-        loadImageFromURL(url2, imageView2, giraffe);
-        loadImageFromURL(url3, imageView3, cheetah);
-        loadImageFromURL(url4, imageView4, zebra);
+        // the urls for the images
+        String url = "http://cefns.nau.edu/~mh973/images/lion.jpg";
+        String url1 = "http://cefns.nau.edu/~mh973/images/elephant.jpg";
+        String url2 = "http://cefns.nau.edu/~mh973/images/giraffe.jpg";
+        String url3 = "http://cefns.nau.edu/~mh973/images/cheetah.jpg";
+        String url4 = "http://cefns.nau.edu/~mh973/images/zebra.jpg";
 
+
+        // get the images based on url and animal object
+        loadImageFromURL(url, lion);
+        loadImageFromURL(url1, elephant);
+        loadImageFromURL(url2, giraffe);
+        loadImageFromURL(url3, cheetah);
+        loadImageFromURL(url4, zebra);
+
+
+        // add stuff to list
         ArrayList<Animal> list = new ArrayList<Animal>();
         list.add(lion);
         list.add(elephant);
@@ -127,10 +127,18 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         return list;
     }
 
+
+
     // function to load an image into an image view
-    private void loadImageFromURL(String url, final ImageView imageView, final Animal animal)
+    private void loadImageFromURL(String url, final Animal animal)
     {
+        // create an imageView to hold the picture
+        final ImageView imageView = new ImageView(this);
+
+        // call to get picture
         Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
+
+            // because the image doesn't load all at once you have to set the image for the animal when it is successful
             @Override
             public void onSuccess()
             {
