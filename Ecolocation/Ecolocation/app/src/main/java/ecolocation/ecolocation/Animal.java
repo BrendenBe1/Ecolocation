@@ -1,6 +1,8 @@
 package ecolocation.ecolocation;
 
 import android.graphics.drawable.Drawable;
+import android.widget.ImageView;
+import android.widget.ListView;
 
 /**
  * Created by Chandler on 11/28/2017.
@@ -32,12 +34,13 @@ public class Animal {
     public Animal(String name, Drawable picture, String description,
                   String diet, String endangeredLevel, double mass, int population){
         this.name = name;
-        this.picture = picture;
+     //   this.picture = picture;
         this.description = description;
         this.diet = diet;
         this.endangeredLevel = endangeredLevel;
         this.mass = mass;
         this.population = population;
+
     }
 
 
@@ -45,7 +48,7 @@ public class Animal {
     public void setPopulation(int population) {
         this.population = population;
     }
-    public void setImage( Drawable image ) { this.picture = image; }
+
 
 
     //------ Setters

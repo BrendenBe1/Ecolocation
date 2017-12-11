@@ -8,6 +8,13 @@
     android:orientation="vertical"
     tools:context="ecolocation.ecolocation.ListViewActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="invisible"
+        />
 
     <TextView
         android:id="@+id/txt_list_title"

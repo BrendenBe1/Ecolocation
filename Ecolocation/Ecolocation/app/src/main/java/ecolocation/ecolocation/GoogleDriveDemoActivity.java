@@ -71,23 +71,22 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
                 //TODO: show different ways of sorting
             }
         });
-
     }
 
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){
-
-        // default image to display in case something happens
+        String url = "http://cefns.nau.edu/~mh973/images/chimp.jpg";
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
+        ImageView imageView = (ImageView)findViewById(R.id.imageView);
+        imageView.setVisibility(View.VISIBLE);
+        loadImageFromURL(url, imageView);
 
-
-
-        // create animal objects with pic initialized as default
+        pic = (Drawable) imageView.getDrawable();
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
                 "vulnerable", 187.5, 20000);
 
-        Animal elephant = new Animal("elephant", pic, "The largest land mammal",
+        Animal elephant = new Animal("african elephant", pic, "The largest land mammal",
                 "herbivore", "vulnerable", 3500, 415000);
 
         Animal giraffe = new Animal("giraffe", pic, "An animal with a long neck",
@@ -99,18 +98,6 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
                 "near threatened", 250, 150000);
 
-
-
-
-        // get the images based on url and animal object
-        loadImageFromURL(lion);
-        loadImageFromURL(elephant);
-        loadImageFromURL(giraffe);
-        loadImageFromURL(cheetah);
-        loadImageFromURL(zebra);
-
-
-        // add stuff to list
         ArrayList<Animal> list = new ArrayList<Animal>();
         list.add(lion);
         list.add(elephant);
@@ -118,31 +105,20 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         list.add(cheetah);
         list.add(zebra);
 
-
-
         return list;
     }
 
 
-
     // function to load an image into an image view
-    private void loadImageFromURL(final Animal animal)
+    private void loadImageFromURL(String url, ImageView imageView)
     {
-        // create an imageView to hold the picture
-        final ImageView imageView = new ImageView(this);
-        String url = "http://cefns.nau.edu/~mh973/images/" + animal.getName() + ".jpg";
-        // call to get picture
         Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
-
-            // because the image doesn't load all at once you have to set the image for the animal when it is successful
             @Override
-            public void onSuccess()
-            {
-                Drawable d = imageView.getDrawable();
-                animal.setImage(d);
-            }
+            public void onSuccess(){}
             @Override
             public void onError(){}
         });
     }
+
+
 }

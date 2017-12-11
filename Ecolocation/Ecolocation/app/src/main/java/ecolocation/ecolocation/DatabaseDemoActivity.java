@@ -5,20 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class GoogleDriveDemoActivity extends AppCompatActivity {
+public class DatabaseDemoActivity extends AppCompatActivity {
     //Widgets
     ListView listView;
     Button resetButton;
     Button recalcButton;
     Button sortButton;
-
 
     //variables for creating the list
     private ArrayList<Animal> animalList;
@@ -27,17 +23,17 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_view);
+        setContentView(R.layout.activity_google_drive);
 
         //TODO: initialize animalList with database/google drive stuff;
         animalList = fillList();
-
 
         //-------- Implementing Widgets
         listView = (ListView) findViewById(R.id.layout_list);
         resetButton = (Button) findViewById(R.id.bttn_reset);
         recalcButton = (Button) findViewById(R.id.bttn_recalc);
         sortButton = (Button) findViewById(R.id.bttn_sort);
+
 
         //setting up the individual list items with the adapter
         adapter = new AnimalAdapter(this, animalList);
@@ -48,7 +44,6 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         * own class).
         */
         listView.setAdapter(adapter);
-
 
         //-------- Setting Up Event Listeners
         resetButton.setOnClickListener(new View.OnClickListener() {
@@ -71,23 +66,16 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
                 //TODO: show different ways of sorting
             }
         });
-
     }
 
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){
-
-        // default image to display in case something happens
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
-
-
-
-        // create animal objects with pic initialized as default
         Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
                 "vulnerable", 187.5, 20000);
 
-        Animal elephant = new Animal("elephant", pic, "The largest land mammal",
+        Animal elephant = new Animal("african elephant", pic, "The largest land mammal",
                 "herbivore", "vulnerable", 3500, 415000);
 
         Animal giraffe = new Animal("giraffe", pic, "An animal with a long neck",
@@ -99,18 +87,6 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
                 "near threatened", 250, 150000);
 
-
-
-
-        // get the images based on url and animal object
-        loadImageFromURL(lion);
-        loadImageFromURL(elephant);
-        loadImageFromURL(giraffe);
-        loadImageFromURL(cheetah);
-        loadImageFromURL(zebra);
-
-
-        // add stuff to list
         ArrayList<Animal> list = new ArrayList<Animal>();
         list.add(lion);
         list.add(elephant);
@@ -118,31 +94,6 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
         list.add(cheetah);
         list.add(zebra);
 
-
-
         return list;
-    }
-
-
-
-    // function to load an image into an image view
-    private void loadImageFromURL(final Animal animal)
-    {
-        // create an imageView to hold the picture
-        final ImageView imageView = new ImageView(this);
-        String url = "http://cefns.nau.edu/~mh973/images/" + animal.getName() + ".jpg";
-        // call to get picture
-        Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
-
-            // because the image doesn't load all at once you have to set the image for the animal when it is successful
-            @Override
-            public void onSuccess()
-            {
-                Drawable d = imageView.getDrawable();
-                animal.setImage(d);
-            }
-            @Override
-            public void onError(){}
-        });
     }
 }
