@@ -52,7 +52,7 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
 
         //----------- Setting Up Values of Widgets
         animalPic.setImageDrawable(currAnimal.getpicture());
-        nameText.setText(currAnimal.getName());
+        nameText.setText(currAnimal.getBinomial());
         seekBar.setProgress(currAnimal.getPopulation());
 
         return rowView;

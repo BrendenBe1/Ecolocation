@@ -15,6 +15,7 @@
         android:layout_centerVertical="false"
         android:layout_marginTop="50dp"
         android:text="Welcome to Ecolocation"
+        android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <LinearLayout

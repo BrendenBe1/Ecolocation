@@ -61,7 +61,7 @@ public class HomeActivity extends AppCompatActivity {
 
         getLocationPermission();
         checkLocationServices();
-        
+
 
         //-----------Implementing Event Listeners for When the Buttons Are Clicked
         runButton.setOnClickListener(new View.OnClickListener() {

@@ -73,20 +73,20 @@ public class ListViewActivity extends AppCompatActivity {
     private ArrayList<Animal> fillList(){
         Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
 
-        Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
-                        "vulnerable", 187.5, 20000);
+        Animal lion = new Animal("Panthera Leo","lion", pic,"A big cat in Africa", "carnivore",
+                "vulnerable", 187.5, 20000);
 
-        Animal elephant = new Animal("african elephant", pic, "The largest land mammal",
-                        "herbivore", "vulnerable", 3500, 415000);
+        Animal elephant = new Animal("Loxodonta africana","african elephant", pic, "The largest land mammal",
+                "herbivore", "vulnerable", 3500, 415000);
 
-        Animal giraffe = new Animal("giraffe", pic, "An animal with a long neck",
-                        "herbivore", "vulnerable", 1192, 97500);
+        Animal giraffe = new Animal("Giraffa camelopardalis","giraffe", pic, "An animal with a long neck",
+                "herbivore", "vulnerable", 1192, 97500);
 
-        Animal cheetah = new Animal("cheetah", pic, "A very fast animal",
-                        "carnivore", "vulnerable", 50, 7100);
+        Animal cheetah = new Animal("Acinonyx jubatus", "cheetah", pic, "A very fast animal",
+                "carnivore", "vulnerable", 50, 7100);
 
-        Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
-                        "near threatened", 250, 150000);
+        Animal zebra = new Animal("Equus zebra","zebra", pic, "A striped horse.", "herbivore",
+                "near threatened", 250, 150000);
 
         ArrayList<Animal> list = new ArrayList<Animal>();
         list.add(lion);

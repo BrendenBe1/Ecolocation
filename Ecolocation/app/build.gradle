@@ -6,6 +6,7 @@ android {
         applicationId "ecolocation.ecolocation"
         minSdkVersion 16
         targetSdkVersion 26
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,17 +18,27 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '26.0.1'
+}
+repositories {
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile 'com.google.android.gms:play-services-maps:11.6.2'
-    compile 'com.google.android.gms:play-services-location:11.6.2'
-    compile 'com.google.android.gms:play-services-places:11.6.2'
-    compile 'com.google.android.gms:play-services:11.6.2'
+    implementation 'com.google.android.gms:play-services-maps:11.6.2'
+    implementation 'com.google.android.gms:play-services-location:11.6.2'
+    implementation 'com.google.android.gms:play-services-places:11.6.2'
+    implementation 'com.google.android.gms:play-services:11.6.2'
+    implementation 'com.squareup.okhttp3:okhttp:3.2.0'
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+
+    // compile dependency for picasso library
+    // allows for access to images from url
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

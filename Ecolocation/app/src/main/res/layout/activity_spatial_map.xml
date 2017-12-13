@@ -5,5 +5,5 @@
     android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ecolocation.ecolocation.SpatialMapActivity"
+    tools:context="ecolocation.ecolocation.InfoActivity"
     map:cameraZoom="10" />
