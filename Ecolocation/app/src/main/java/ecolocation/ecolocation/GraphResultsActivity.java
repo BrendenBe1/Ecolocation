@@ -32,7 +32,7 @@ public class GraphResultsActivity extends AppCompatActivity {
         });
 
         //TODO: delete after tech demo
-        googleButton = (Button) findViewById(R.id.bttn_google);
+        googleButton = (Button) findViewById(R.id.bttn_graph);
         googleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
