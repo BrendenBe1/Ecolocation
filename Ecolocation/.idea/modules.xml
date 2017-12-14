@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Ecolocation.iml" filepath="$PROJECT_DIR$/Ecolocation.iml" />
+      <module fileurl="file://C:\Users\Michael\Documents\Capstone\Ecolocation-master\Ecolocation\Ecolocation.iml" filepath="C:\Users\Michael\Documents\Capstone\Ecolocation-master\Ecolocation\Ecolocation.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\Michael\Documents\Capstone\Ecolocation-master\Ecolocation\app\app.iml" filepath="C:\Users\Michael\Documents\Capstone\Ecolocation-master\Ecolocation\app\app.iml" />
     </modules>
   </component>
 </project>

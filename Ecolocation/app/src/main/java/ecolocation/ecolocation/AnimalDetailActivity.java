@@ -8,6 +8,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
 import java.util.ArrayList;
 
 public class AnimalDetailActivity extends AppCompatActivity {
@@ -49,5 +53,10 @@ public class AnimalDetailActivity extends AppCompatActivity {
         populationText = (TextView) findViewById(R.id.txt_population);
         dietText = (TextView) findViewById(R.id.txt_diet);
         endangeredLevel = (TextView) findViewById(R.id.txt_endangered_level);
+
+        String url = "http://cefns.nau.edu/~mh973/images/elephant.jpg";
+
+
+        Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(animalPic);
     }
 }
