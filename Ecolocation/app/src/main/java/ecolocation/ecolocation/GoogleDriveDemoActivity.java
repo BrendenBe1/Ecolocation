@@ -75,10 +75,14 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
             }
         });
 
+        // go to detailed page
         recalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: calculate new nutrient dispersal
+                Intent intent = new Intent( GoogleDriveDemoActivity.this, AnimalDetailActivity.class );
+                //intent.putExtra("animal_list", animalList);
+                startActivity( intent );
+                finish();
             }
         });
 

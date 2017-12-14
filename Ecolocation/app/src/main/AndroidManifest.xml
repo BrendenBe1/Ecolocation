@@ -23,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LocationActivity" />
+        <activity android:name=".SpatialMapActivity" />
         <activity android:name=".AboutActivity" />
         <activity android:name=".InfoActivity" />
         <activity android:name=".GraphResultsActivity" />
         <activity android:name=".ListViewActivity" />
+        <activity android:name=".AnimalDetailActivity" />
 
         <!-- Remove after Demo -->
         <activity android:name=".GoogleDriveDemoActivity" />
-        <activity android:name=".DatabaseDemoActivity" />
         <activity android:name=".MapActivity" />
 
         <!-- The API key for Google Maps-based APIs. -->
@@ -42,7 +42,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".MapActivity2"></activity>
     </application>
 
 </manifest>
