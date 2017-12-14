@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
  */
 
 public class Animal {
+    private String binomial;
     private String name;    //common name if applicable
     private Drawable picture;
     private String description;
@@ -21,7 +22,7 @@ public class Animal {
     //--------- Constructors
     public Animal(){
         name = "Elephant";
-    //    picture =
+        //    picture =
         description = "Description";
         diet = "Herbivore";
         endangeredLevel = "Vulnerable";
@@ -29,8 +30,9 @@ public class Animal {
         population = 415000;
     }
 
-    public Animal(String name, Drawable picture, String description,
+    public Animal(String binomial, String name, Drawable picture, String description,
                   String diet, String endangeredLevel, double mass, int population){
+        this.binomial = binomial;
         this.name = name;
         this.picture = picture;
         this.description = description;
@@ -49,6 +51,9 @@ public class Animal {
 
 
     //------ Setters
+    public String getBinomial() {
+        return binomial;
+    }
     public String getName() {
         return name;
     }

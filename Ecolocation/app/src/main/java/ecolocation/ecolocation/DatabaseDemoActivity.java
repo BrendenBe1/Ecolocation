@@ -1,13 +1,24 @@
 package ecolocation.ecolocation;
 
-import android.graphics.drawable.Drawable;
+import android.annotation.SuppressLint;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class DatabaseDemoActivity extends AppCompatActivity {
     //Widgets
@@ -17,8 +28,8 @@ public class DatabaseDemoActivity extends AppCompatActivity {
     Button sortButton;
 
     //variables for creating the list
-    private ArrayList<Animal> animalList;
-    private AnimalAdapter adapter;
+    private ArrayList<New_Animal> animalList;
+    private New_AnimalAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +37,7 @@ public class DatabaseDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_google_drive);
 
         //TODO: initialize animalList with database/google drive stuff;
-        animalList = fillList();
+        animalList = select_animals();
 
         //-------- Implementing Widgets
         listView = (ListView) findViewById(R.id.layout_list);
@@ -36,7 +47,7 @@ public class DatabaseDemoActivity extends AppCompatActivity {
 
 
         //setting up the individual list items with the adapter
-        adapter = new AnimalAdapter(this, animalList);
+        adapter = new New_AnimalAdapter(this, animalList);
         /*
         * This line is doing a lot, the listView will take in individual
         * list_item layouts from the adapter. The adapter is filling in those
@@ -66,34 +77,55 @@ public class DatabaseDemoActivity extends AppCompatActivity {
                 //TODO: show different ways of sorting
             }
         });
+
     }
 
-    //this is just filling it in with dummy data
-    private ArrayList<Animal> fillList(){
-        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
+    private ArrayList<New_Animal> select_animals() {
+        final ArrayList<New_Animal> list = new ArrayList<>();
 
-        Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
-                "vulnerable", 187.5, 20000);
+        @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
+            @Override
+            protected Void doInBackground(Integer... Void) {
 
-        Animal elephant = new Animal("african elephant", pic, "The largest land mammal",
-                "herbivore", "vulnerable", 3500, 415000);
+                OkHttpClient client = new OkHttpClient();
+                Request request = new Request.Builder()
+                        .url("http://18.220.129.239/animals.php?")
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
 
-        Animal giraffe = new Animal("giraffe", pic, "An animal with a long neck",
-                "herbivore", "vulnerable", 1192, 97500);
+                    JSONArray array = new JSONArray(response.body().string());
 
-        Animal cheetah = new Animal("cheetah", pic, "A very fast animal",
-                "carnivore", "vulnerable", 50, 7100);
+                    for (int i = 0; i < array.length(); i++) {
 
-        Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
-                "near threatened", 250, 150000);
+                        JSONObject object = array.getJSONObject(i);
 
-        ArrayList<Animal> list = new ArrayList<Animal>();
-        list.add(lion);
-        list.add(elephant);
-        list.add(giraffe);
-        list.add(cheetah);
-        list.add(zebra);
+                        New_Animal animal = new New_Animal(object.getString("binomial"));
+
+                        DatabaseDemoActivity.this.animalList.add(animal);
+                        //list.add(animal);
+                        //Log.d("return", String.valueOf(animalList.get(i)));
+                    }
+
+
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                adapter.notifyDataSetChanged();
+            }
+        };
+
+        asyncTask.execute();
 
         return list;
     }
+
 }

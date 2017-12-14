@@ -1,8 +1,12 @@
 package ecolocation.ecolocation;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -10,7 +14,16 @@ import android.widget.ListView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class GoogleDriveDemoActivity extends AppCompatActivity {
     //Widgets
@@ -18,6 +31,7 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     Button resetButton;
     Button recalcButton;
     Button sortButton;
+    static int flag = 0;
 
 
     //variables for creating the list
@@ -55,6 +69,9 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: reset to original values
+                Intent intent = new Intent( GoogleDriveDemoActivity.this, GoogleDriveDemoActivity.class );
+                startActivity( intent );
+                finish();
             }
         });
 
@@ -78,47 +95,63 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     private ArrayList<Animal> fillList(){
 
         // default image to display in case something happens
-        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
+        final Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
+        final ArrayList<Animal> list = new ArrayList<>();
+
+        @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
+            @Override
+            protected Void doInBackground(Integer... Void) {
+
+                OkHttpClient client = new OkHttpClient();
+                // animals.php is old db call for just getting binomial
+                /*Request request = new Request.Builder()
+                        .url("http://18.220.129.239/animals.php?")
+                        .build();*/
+                Request request = new Request.Builder()
+                        .url("http://18.220.129.239/mammals.php?")
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+
+                    JSONArray array = new JSONArray(response.body().string());
+
+                    for (int i = 0; i < array.length(); i++) {
+
+                        JSONObject object = array.getJSONObject(i);
+
+                        Animal animal = new Animal(object.getString("binomial"), object.getString("common_name"), pic,
+                                "A big cat in Africa", "Carnivore", object.getString("endangered_level"),
+                                object.getInt("mass"), object.getInt("population"));
+
+
+                        //GoogleDriveDemoActivity.this.animalList.add(animal);
+                        list.add(animal);
+                        Log.d("return", animal.getBinomial());
+                    }
 
 
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
 
-        // create animal objects with pic initialized as default
-        Animal lion = new Animal("lion", pic,"A big cat in Africa", "carnivore",
-                "vulnerable", 187.5, 20000);
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                adapter.notifyDataSetChanged();
+                for(int i=0; i<animalList.size(); i++) {
+                    Animal currAnimal = animalList.get(i);
+                    loadImageFromURL(currAnimal);
+                    Log.d("currAnimal", currAnimal.getBinomial());
+                    // Do something with the value
+                }
+            }
+        };
 
-        Animal elephant = new Animal("elephant", pic, "The largest land mammal",
-                "herbivore", "vulnerable", 3500, 415000);
-
-        Animal giraffe = new Animal("giraffe", pic, "An animal with a long neck",
-                "herbivore", "vulnerable", 1192, 97500);
-
-        Animal cheetah = new Animal("cheetah", pic, "A very fast animal",
-                "carnivore", "vulnerable", 50, 7100);
-
-        Animal zebra = new Animal("zebra", pic, "A striped horse.", "herbivore",
-                "near threatened", 250, 150000);
-
-
-
-
-        // get the images based on url and animal object
-        loadImageFromURL(lion);
-        loadImageFromURL(elephant);
-        loadImageFromURL(giraffe);
-        loadImageFromURL(cheetah);
-        loadImageFromURL(zebra);
-
-
-        // add stuff to list
-        ArrayList<Animal> list = new ArrayList<Animal>();
-        list.add(lion);
-        list.add(elephant);
-        list.add(giraffe);
-        list.add(cheetah);
-        list.add(zebra);
-
-
+        asyncTask.execute();
 
         return list;
     }
@@ -140,6 +173,13 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
             {
                 Drawable d = imageView.getDrawable();
                 animal.setImage(d);
+                if( flag == 0 )
+                {
+                    Intent intent = new Intent( GoogleDriveDemoActivity.this, GoogleDriveDemoActivity.class );
+                    startActivity( intent );
+                    finish();
+                    flag = 1;
+                }
             }
             @Override
             public void onError(){}
