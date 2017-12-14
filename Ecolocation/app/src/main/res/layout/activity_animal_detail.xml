@@ -98,4 +98,16 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/back_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/main_linear_layout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/main_linear_layout"
+        android:layout_marginBottom="19dp"
+        android:layout_marginLeft="68dp"
+        android:layout_marginStart="68dp"
+        android:text="Back" />
+
 </RelativeLayout>

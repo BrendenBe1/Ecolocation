@@ -1,9 +1,14 @@
 package ecolocation.ecolocation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class AnimalDetailActivity extends AppCompatActivity {
     //widgets
@@ -15,11 +20,25 @@ public class AnimalDetailActivity extends AppCompatActivity {
     TextView populationText;
     TextView dietText;
     TextView endangeredLevel;
+    Button back_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_animal_detail);
+
+        //ArrayList<Animal> animalList = (ArrayList<Animal>) getIntent().getSerializableExtra("animal_list");
+        back_button = (Button) findViewById(R.id.back_button);
+
+        back_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO: reset to original values
+                Intent intent = new Intent( AnimalDetailActivity.this, GoogleDriveDemoActivity.class );
+                startActivity( intent );
+                finish();
+            }
+        });
 
         //implementing widgets
         animalPic = (ImageView) findViewById(R.id.pic_animal);

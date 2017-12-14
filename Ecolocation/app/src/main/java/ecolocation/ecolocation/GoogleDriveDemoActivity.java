@@ -1,6 +1,7 @@
 package ecolocation.ecolocation;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
     Button resetButton;
     Button recalcButton;
     Button sortButton;
+    static int flag = 0;
 
 
     //variables for creating the list
@@ -67,13 +69,20 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: reset to original values
+                Intent intent = new Intent( GoogleDriveDemoActivity.this, GoogleDriveDemoActivity.class );
+                startActivity( intent );
+                finish();
             }
         });
 
+        // go to detailed page
         recalcButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: calculate new nutrient dispersal
+                Intent intent = new Intent( GoogleDriveDemoActivity.this, AnimalDetailActivity.class );
+                //intent.putExtra("animal_list", animalList);
+                startActivity( intent );
+                finish();
             }
         });
 
@@ -168,6 +177,13 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
             {
                 Drawable d = imageView.getDrawable();
                 animal.setImage(d);
+                if( flag == 0 )
+                {
+                    Intent intent = new Intent( GoogleDriveDemoActivity.this, GoogleDriveDemoActivity.class );
+                    startActivity( intent );
+                    finish();
+                    flag = 1;
+                }
             }
             @Override
             public void onError(){}
