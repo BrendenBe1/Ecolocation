@@ -16,6 +16,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--Home Activity-->
         <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,16 +25,52 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SpatialMapActivity" />
-        <activity android:name=".AboutActivity" />
-        <activity android:name=".InfoActivity" />
-        <activity android:name=".GraphResultsActivity" />
-        <activity android:name=".ListViewActivity" />
-        <activity android:name=".AnimalDetailActivity" />
 
-        <!-- Remove after Demo -->
-        <activity android:name=".GoogleDriveDemoActivity" />
-        <activity android:name=".MapActivity" />
+        <!--Spatial Map Activity-->
+        <activity android:name=".SpatialMapActivity" />
+
+        <!--About Activity-->
+        <activity android:name=".AboutActivity"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity"/>
+        </activity>
+
+        <!--Info Activity-->
+        <activity android:name=".InfoActivity"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".AboutActivity"/>
+        </activity>
+
+        <!--Graph Results Activity-->
+        <activity android:name=".GraphResultsActivity"
+            android:parentActivityName=".GraphResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GraphResultsActivity"/>
+        </activity>
+
+        <!--Animal Detail Activity-->
+        <activity android:name=".AnimalDetailActivity"/>
+
+        <!--Map Activity-->
+        <activity android:name=".MapActivity"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity"/>
+        </activity>
+
+        <!--List View Activity-->
+        <activity android:name=".ListViewActivity"
+            android:parentActivityName=".GraphResultsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".GraphResultsActivity"/>
+        </activity>
 
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data

@@ -7,11 +7,18 @@
     android:layout_height="match_parent"
     tools:context="ecolocation.ecolocation.AnimalDetailActivity">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <!--TODO: add appropriate value of image -->
     <ImageView
         android:id="@+id/pic_animal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:layout_margin="10dp"
         android:src="@mipmap/ic_launcher" />
 
@@ -19,6 +26,7 @@
         android:id="@+id/main_linear_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:layout_toRightOf="@+id/pic_animal"
         android:orientation="vertical">
 
@@ -29,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="Elephant"
+            android:text="Species' Name"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
 
         <!--TODO: add appropriate value of text  -->
@@ -39,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:padding="0dp"
-            android:text="Elephants are currently the largest land mammals on Earth"
+            android:text="Species Description"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <!--TODO: figure out how to insert a link  -->
@@ -66,7 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Mass: 6,350 kg"
+            android:text="Species Mass"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <!--TODO: add appropriate value for text  -->
@@ -75,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Population: 700,000"
+            android:text="Species Population"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         <!--TODO: add appropriate value for text  -->
@@ -93,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="Endangered Level: Vulnerable"
+            android:text="Species Endangered Level"
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     </LinearLayout>

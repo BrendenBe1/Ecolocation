@@ -1,8 +1,9 @@
 package ecolocation.ecolocation;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
@@ -15,7 +16,6 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.AxisValueFormatter;
-import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -32,6 +32,12 @@ public class GraphResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_results);
+
+        //----------- toolbar setup
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //-------- BarChart
         barChart = (BarChart) findViewById(R.id.barChart);
@@ -102,7 +108,7 @@ public class GraphResultsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GraphResultsActivity.this,
-                        GoogleDriveDemoActivity.class);
+                        ListViewActivity.class);
                 startActivity(intent);
             }
         });
@@ -125,7 +131,6 @@ public class GraphResultsActivity extends AppCompatActivity {
 
         public int getDecimalDigits() { return 0; }
     }
-
 
 }
 
