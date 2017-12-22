@@ -5,11 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
 
 public class AnimalDetailActivity extends AppCompatActivity {
     //widgets
@@ -21,7 +18,9 @@ public class AnimalDetailActivity extends AppCompatActivity {
     TextView populationText;
     TextView dietText;
     TextView endangeredLevel;
-    Button back_button;
+
+    //constants
+    static final String SELECTED_ANIMAL = "selected animal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
-        //implementing widgets
+        //------------- implementing widgets
         animalPic = (ImageView) findViewById(R.id.pic_animal);
         nameText = (TextView) findViewById(R.id.txt_animal_name);
         descText = (TextView) findViewById(R.id.txt_desc);
@@ -44,10 +43,22 @@ public class AnimalDetailActivity extends AppCompatActivity {
         dietText = (TextView) findViewById(R.id.txt_diet);
         endangeredLevel = (TextView) findViewById(R.id.txt_endangered_level);
 
-        String url = "http://cefns.nau.edu/~mh973/images/elephant.jpg";
+        //------------ Getting current animal & setting contents of widgets
+        String animalName = getIntent().getExtras().getString(SELECTED_ANIMAL);
+        //get animal from the list
+        Ecosystem sEcosystem = Ecosystem.get(this);
+        Animal animal = sEcosystem.getAnimal(animalName);
 
-
-        Picasso.with(this).load(url).error(R.mipmap.ic_launcher).into(animalPic);
+        //set contents of widgets
+        //TODO: uncomment the below lines when the information is available
+        animalPic.setImageDrawable(animal.getpicture());
+        nameText.setText(animalName);
+        descText.setText(animal.getDescription());
+//        wikiLink.setText(animal.get);
+        massText.setText(String.valueOf(animal.getMass()));
+        populationText.setText(String.valueOf(animal.getPopulation()));
+//       dietText.setText(animal.get);
+        endangeredLevel.setText(animal.getEndangeredLevel());
     }
 
     //used to go back to the ListView Activity
