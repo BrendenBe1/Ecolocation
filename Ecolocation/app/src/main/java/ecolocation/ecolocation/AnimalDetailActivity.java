@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,18 +33,6 @@ public class AnimalDetailActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
-
-        back_button = (Button) findViewById(R.id.back_button);
-
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: reset to original values
-                Intent intent = new Intent( AnimalDetailActivity.this, ListViewActivity.class );
-                startActivity( intent );
-                finish();
-            }
-        });
 
         //implementing widgets
         animalPic = (ImageView) findViewById(R.id.pic_animal);

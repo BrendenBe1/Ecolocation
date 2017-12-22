@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -62,13 +63,17 @@ public class ListViewActivity extends AppCompatActivity {
 
         //setting up the individual list items with the adapter
         adapter = new AnimalAdapter(this, animalList);
-        /*
-        * This line is doing a lot, the listView will take in individual
-        * list_item layouts from the adapter. The adapter is filling in those
-        * list_item layouts with the data it gets (that work is done w/n it's
-        * own class).
-        */
+        //the adapater fills the list with the array list
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Animal currAnimal = animalList.get(position);
+
+                //make intent to put listed animal
+                
+            }
+        });
 
 
         //-------- Setting Up Event Listeners
