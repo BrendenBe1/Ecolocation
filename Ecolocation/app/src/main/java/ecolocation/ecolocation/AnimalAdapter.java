@@ -1,6 +1,7 @@
 package ecolocation.ecolocation;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +41,6 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
         Animal currAnimal = animalList.get(position);
 
 
-
         //get the rowView from the inflater
         //The rowView allows acccess to the widgets on the layout
         View rowView = inflater.inflate(R.layout.list_item, parent, false);
@@ -55,6 +55,77 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
         nameText.setText(currAnimal.getBinomial());
         seekBar.setProgress(currAnimal.getPopulation());
 
+        //------- Color-Code rows
+        Resources res = getContext().getResources();    //allows access to the color files
+        switch (currAnimal.getEndangeredLevel()){
+            case "Least Concern":
+                nameText.setTextColor(res.getColor(R.color.leastConcern));
+                break;
+            case "Near Threatened":
+                nameText.setTextColor(res.getColor(R.color.nearThreatened));
+                break;
+            case "Vulnerable":
+                nameText.setTextColor(res.getColor(R.color.vulnerable));
+                break;
+            case "Endangered":
+                nameText.setTextColor(res.getColor(R.color.endagered));
+                break;
+            case "Critically Endangered":
+                nameText.setTextColor(res.getColor(R.color.criticallyEndangered));
+                break;
+            case "Extinct in the Wild":
+                nameText.setTextColor(res.getColor(R.color.extinctInTheWild));
+                break;
+            case "Extinct":
+                nameText.setTextColor(res.getColor(R.color.extinct));
+                break;
+            case "Extant (resident)":
+                nameText.setTextColor(res.getColor(R.color.extantResident));
+                break;
+            case "Not Evaluated":
+                nameText.setTextColor(res.getColor(R.color.notEvaluated));
+                break;
+            case "Data Deficient":
+                nameText.setTextColor(res.getColor(R.color.dataDeficient));
+                break;
+            default:
+                nameText.setTextColor(res.getColor(R.color.notEvaluated));
+        }
+
+//        switch (currAnimal.getEndangeredLevel()){
+//            case "Least Concern":
+//                rowView.setBackgroundColor(res.getColor(R.color.leastConcern));
+//                break;
+//            case "Near Threatened":
+//                rowView.setBackgroundColor(res.getColor(R.color.nearThreatened));
+//                break;
+//            case "Vulnerable":
+//                rowView.setBackgroundColor(res.getColor(R.color.vulnerable));
+//                break;
+//            case "Endangered":
+//                rowView.setBackgroundColor(res.getColor(R.color.endagered));
+//                break;
+//            case "Critically Endangered":
+//                rowView.setBackgroundColor(res.getColor(R.color.criticallyEndangered));
+//                break;
+//            case "Extinct in the Wild":
+//                rowView.setBackgroundColor(res.getColor(R.color.extinctInTheWild));
+//                break;
+//            case "Extinct":
+//                rowView.setBackgroundColor(res.getColor(R.color.extinct));
+//                break;
+//            case "Extant (resident)":
+//                rowView.setBackgroundColor(res.getColor(R.color.extantResident));
+//                break;
+//            case "Not Evaluated":
+//                rowView.setBackgroundColor(res.getColor(R.color.notEvaluated));
+//                break;
+//            case "Data Deficient":
+//                rowView.setBackgroundColor(res.getColor(R.color.dataDeficient));
+//                break;
+//            default:
+//                rowView.setBackgroundColor(res.getColor(R.color.notEvaluated));
+//        }
         return rowView;
     }
 }
