@@ -8,6 +8,11 @@
     <string name="home_bttn_info">Info</string>
     <string name="home_bttn_about">About</string>
 
+    <!--Detail Animal Screen Strings-->
+    <string name="mass_title">Mass: </string>
+    <string name="pop_title">Population: </string>
+    <string name="end_lev_title">Endangered Level: </string>
+
     <!--Location Screen Strings-->
     <string name="select_location_prompt">Select a location you want to explore.</string>
     <string name="bttn_curr_loc">Current Location</string>

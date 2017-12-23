@@ -51,7 +51,7 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
         SeekBar seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
 
         //----------- Setting Up Values of Widgets
-        animalPic.setImageDrawable(currAnimal.getpicture());
+        animalPic.setImageDrawable(currAnimal.getPicture());
         nameText.setText(currAnimal.getBinomial());
         seekBar.setProgress(currAnimal.getPopulation());
 

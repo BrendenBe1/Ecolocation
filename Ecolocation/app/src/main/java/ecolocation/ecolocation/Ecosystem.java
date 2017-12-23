@@ -37,7 +37,7 @@ public class Ecosystem {
     //returns the wanted animal
     public Animal getAnimal(String scientificName){
         for(Animal animal : animalList){
-            if (animal.getName().equals(scientificName)){
+            if (animal.getBinomial().equals(scientificName)){
                 return animal;
             }
         }

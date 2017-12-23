@@ -61,30 +61,76 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/mass_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_linear_layout"
         android:layout_margin="5dp"
+        android:text="@string/mass_title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_mass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_linear_layout"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/mass_title"
+        android:text="Species Mass"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+    <TextView
+        android:id="@+id/population_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mass_title"
+        android:layout_margin="5dp"
+        android:text="@string/pop_title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_population"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_mass"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/population_title"
+        android:text="Species Population"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+    <TextView
+        android:id="@+id/endangered_level_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/population_title"
+        android:layout_margin="5dp"
+        android:text="@string/end_lev_title"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txt_endangered_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/population_title"
+        android:layout_margin="5dp"
+        android:layout_toRightOf="@+id/endangered_level_title"
+        android:text="Species Endangered Level"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:orientation="vertical">
 
         <!--TODO: add appropriate value for text  -->
-        <TextView
-            android:id="@+id/txt_mass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Species Mass"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <!--TODO: add appropriate value for text  -->
-        <TextView
-            android:id="@+id/txt_population"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Species Population"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         <!--TODO: add appropriate value for text  -->
         <TextView
@@ -96,13 +142,6 @@
             android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
         <!--TODO: add appropriate value for text  -->
-        <TextView
-            android:id="@+id/txt_endangered_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Species Endangered Level"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
     </LinearLayout>
 

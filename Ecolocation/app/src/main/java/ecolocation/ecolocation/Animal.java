@@ -58,7 +58,7 @@ public class Animal {
         return name;
     }
 
-    public Drawable getpicture() {
+    public Drawable getPicture() {
         return picture;
     }
 

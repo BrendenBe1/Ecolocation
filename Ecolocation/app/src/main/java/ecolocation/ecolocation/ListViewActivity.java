@@ -75,7 +75,7 @@ public class ListViewActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Animal currAnimal = animalList.get(position);
                 Intent intent = new Intent(ListViewActivity.this, AnimalDetailActivity.class);
-                intent.putExtra(SELECTED_ANIMAL, currAnimal.getName());
+                intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
                 startActivity(intent);
             }
         });

@@ -51,7 +51,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
 
         //set contents of widgets
         //TODO: uncomment the below lines when the information is available
-        animalPic.setImageDrawable(animal.getpicture());
+        animalPic.setImageDrawable(animal.getPicture());
         nameText.setText(animalName);
         descText.setText(animal.getDescription());
 //        wikiLink.setText(animal.get);
