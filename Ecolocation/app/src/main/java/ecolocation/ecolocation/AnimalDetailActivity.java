@@ -59,6 +59,7 @@ public class AnimalDetailActivity extends AppCompatActivity {
         populationText.setText(String.valueOf(animal.getPopulation()));
 //       dietText.setText(animal.get);
         endangeredLevel.setText(animal.getEndangeredLevel());
+
     }
 
     //used to go back to the ListView Activity

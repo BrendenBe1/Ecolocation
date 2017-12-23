@@ -12,6 +12,7 @@
     <string name="mass_title">Mass: </string>
     <string name="pop_title">Population: </string>
     <string name="end_lev_title">Endangered Level: </string>
+    <string name="diet_title">Diet: </string>
 
     <!--Location Screen Strings-->
     <string name="select_location_prompt">Select a location you want to explore.</string>
