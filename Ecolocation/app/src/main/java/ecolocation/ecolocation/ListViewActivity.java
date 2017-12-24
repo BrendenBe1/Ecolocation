@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -30,9 +31,6 @@ import okhttp3.Response;
 public class ListViewActivity extends AppCompatActivity {
     //Widgets
     ListView listView;
-    Button resetButton;
-    Button recalcButton;
-    Button sortButton;
 
     //variables for creating the list
     private ArrayList<Animal> animalList;
@@ -61,9 +59,6 @@ public class ListViewActivity extends AppCompatActivity {
 
         //-------- Implementing Widgets
         listView = (ListView) findViewById(R.id.layout_list);
-        resetButton = (Button) findViewById(R.id.bttn_reset);
-        recalcButton = (Button) findViewById(R.id.bttn_recalc);
-        sortButton = (Button) findViewById(R.id.bttn_sort);
 
         // ----------- Adapter Stuff
         // setting up the individual list items with the adapter
@@ -77,35 +72,6 @@ public class ListViewActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListViewActivity.this, AnimalDetailActivity.class);
                 intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
                 startActivity(intent);
-            }
-        });
-
-
-        //-------- Setting Up Event Listeners for Buttons
-        resetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: reset to original values
-                Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
-                startActivity( intent );
-                finish();
-            }
-        });
-
-        // go to detailed page
-        recalcButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent( ListViewActivity.this, AnimalDetailActivity.class );
-                startActivity( intent );
-                finish();
-            }
-        });
-
-        sortButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO: show different ways of sorting
             }
         });
 
@@ -205,5 +171,36 @@ public class ListViewActivity extends AppCompatActivity {
             @Override
             public void onError(){}
         });
+    }
+
+    //------------- Menu
+    // inflate menu custom icons
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_list_view, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.recalc:
+                return true;
+            case R.id.reset:
+                //TODO: replace this with restoring sliders to original values
+                Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
+                finish();
+                startActivity( intent );
+                return true;
+            case R.id.sort:
+                //TODO: sort by population (ascending & descending)
+                //TODO: sort alphabetical (ascending & descending)
+                //TODO: sort by mass (ascending & descending)
+                //TODO: endangered level (ascending & descending)
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

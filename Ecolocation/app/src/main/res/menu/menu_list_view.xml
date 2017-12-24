@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--https://guides.codepath.com/android/Defining-The-ActionBar#adding-action-items-->
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/sort"
+        android:icon="@drawable/ic_filter_list"
+        android:title="Sort"
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id = "@+id/alphabetical"
+                android:title = "Alphabetical">
+                <menu>
+                    <item
+                        android:id = "@+id/alph_ascending"
+                        android:title = "Ascending"/>
+                    <item
+                        android:id = "@+id/alph_descending"
+                        android:title="Descending"/>
+                </menu>
+            </item>
+            <item
+                android:id = "@+id/population"
+                android:title = "Population" >
+                <menu>
+                    <item
+                        android:id = "@+id/pop_ascending"
+                        android:title = "Ascending"/>
+                    <item
+                        android:id = "@+id/pop_descending"
+                        android:title="Descending"/>
+                </menu>
+            </item>
+            <item
+                android:id = "@+id/mass"
+                android:title = "Mass" >
+                <menu>
+                    <item
+                        android:id = "@+id/mass_ascending"
+                        android:title = "Ascending"/>
+                    <item
+                        android:id = "@+id/mass_descending"
+                        android:title="Descending"/>
+                </menu>
+            </item>
+            <item
+                android:id = "@+id/endangeredLevel"
+                android:title = "Endangered Level">
+                <menu>
+                    <item
+                        android:id = "@+id/endang_ascending"
+                        android:title = "Ascending"/>
+                    <item
+                        android:id = "@+id/endang_descending"
+                        android:title="Descending"/>
+                </menu>
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/submenu"
+        android:title="SubMenu"
+        android:icon="@drawable/ic_more_vert"
+        app:showAsAction="always">
+        <menu>
+        <item
+            android:id="@+id/recalc"
+            android:title="Re-Calculate"/>
+        <item
+            android:id="@+id/reset"
+            android:icon="@drawable/ic_refresh"
+            android:title="Reset"/>
+        </menu>
+    </item>
+
+</menu>
