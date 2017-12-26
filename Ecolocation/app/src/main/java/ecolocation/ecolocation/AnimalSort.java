@@ -5,91 +5,178 @@ import java.util.ArrayList;
 /**
  * Created by Chandler on 12/24/2017.
  */
+enum SORT_TYPE {
+    BINOMIAL,
+    ENDANGERED,
+    MASS,
+    POPULATION
+}
 
 public class AnimalSort {
     public AnimalSort(){}
 
     /// /------- Sorting Arraylists
     //int is a flag for ascending (0) or descending sort(1)
-    public ArrayList<Animal> sort(ArrayList<Animal> list, int order){
-        //TODO: sort based on ascending or descending
-
+    public ArrayList<Animal> sort(ArrayList<Animal> list, SORT_TYPE sortType, int order){
+        mergesort(list, 0, list.size()-1, sortType, order);
 
         return list;
     }
 
-    private static void printStrings(ArrayList<Animal> arr, int i, int j){
-        System.out.print("[");
-        for(int k=i; k<=j-1; k++){
-            System.out.print(arr.get(k).toString() + ", ");
-        }
-        System.out.print(arr.get(j) + "]");
-    }
 
-    public static void mergesort(ArrayList<Animal>  arr, int i, int j){
+    public static void mergesort(ArrayList<Animal>  list, int i, int j, SORT_TYPE sortType,
+                                 int order){
         int mid = 0;
 
         if(i < j) {
             mid = (i + j) / 2;
 
-            mergesort(arr, i, mid);
-            mergesort(arr, mid+1, j);
-            stringsMerge(arr, i, mid, j);
+            mergesort(list, i, mid, sortType, order);
+            mergesort(list, mid+1, j, sortType, order);
+            if(sortType == SORT_TYPE.BINOMIAL || sortType == SORT_TYPE.ENDANGERED){
+                if(order == 0){
+                    stringsMergeAscend(list, i, mid, j, sortType);
+                }
+                else{
+                    stringsMergeDescend(list, i, mid, j, sortType);
+                }
+            }
+            else if(sortType == SORT_TYPE.MASS || sortType == SORT_TYPE.POPULATION){
+                integersMerge(list, i, mid, j, sortType);
+            }
         }
     }
-    private static void stringsMerge(ArrayList<Animal> arr, int i, int mid, int j){
 
-        System.out.print("Left: ");
-        printStrings(arr, i, mid);
-        System.out.print(" Right: ");
-        printStrings(arr, mid + 1, j);
-        System.out.println();
-
+    private static void stringsMergeAscend(ArrayList<Animal> list, int leftStart, int middleStart,
+                                           int righStart, SORT_TYPE sortType){
         //initialize variables
         ArrayList<Animal> temp = new ArrayList<Animal>();
         //make temp to be the same size
-        for(int a=0; a<arr.size(); a++){
+        for(int i=0; i<list.size(); i++){
             temp.add(new Animal());
         }
 
-        int l = i;
-        int r = j;
-        int m = mid + 1;
-        int k = l;
+        //initialize variables
+        int leftIndex = leftStart;
+        int rightIndex = middleStart + 1;
+        int rightEnd = righStart;
+        int mergedIndex = leftIndex;
 
-        while (l <= mid && m <= r){
-            String strL = arr.get(l).getBinomial();
-            String strM = arr.get(m).getBinomial();
-            if(strL.compareTo(strM) <= 0){
-                temp.set(k, arr.get(l));
-                l++;
+        //start merging left & right lists
+        while (leftIndex <= middleStart && rightIndex <= rightEnd){
+            String strLeft;
+            String strRight;
+            //TODO get BINOMIAL or population based on SORT_TYPE
+            switch (sortType){
+                case BINOMIAL:
+                    strLeft = list.get(leftIndex).getBinomial();
+                    strRight = list.get(rightIndex).getBinomial();
+                    break;
+                case ENDANGERED:
+                    strLeft = list.get(leftIndex).getEndangeredLevel();
+                    strRight = list.get(rightIndex).getEndangeredLevel();
+                    break;
+                default:
+                    return;
+            }
+
+            //see if leftIndex is "smaller"
+            if(strLeft.compareTo(strRight) <= 0){
+                temp.set(mergedIndex, list.get(leftIndex));
+                leftIndex++;
             }
             else{
-                temp.set(k, arr.get(m));
-                m++;
+                temp.set(mergedIndex, list.get(rightIndex));
+                rightIndex++;
             }
-            k++;
+            mergedIndex++;
         }
 
-        //if right array is empty
-        while(l <= mid){
-            temp.set(k, arr.get(l));
-            k++;
-            l++;
+        //if right list is empty
+        while(leftIndex <= middleStart){
+            temp.set(mergedIndex, list.get(leftIndex));
+            mergedIndex++;
+            leftIndex++;
         }
-        //if eft array is empty
-        while (m <= r){
-            temp.set(k, arr.get(m));
-            k++;
-            m++;
-        }
-
-        for(int a = i; a <= j; a++){
-            arr.set(a, temp.get(a));
+        //if eft list is empty
+        while (rightIndex <= rightEnd){
+            temp.set(mergedIndex, list.get(rightIndex));
+            mergedIndex++;
+            rightIndex++;
         }
 
-        System.out.print("After Merge: ");
-        printStrings(arr, i, j);
-        System.out.println();
+        //copy temp list into given list
+        for(int i = leftStart; i <= righStart; i++){
+            list.set(i, temp.get(i));
+        }
+    }
+
+    private static void stringsMergeDescend(ArrayList<Animal> list, int leftStart, int middleStart,
+                                           int righStart, SORT_TYPE sortType){
+        //initialize variables
+        ArrayList<Animal> temp = new ArrayList<Animal>();
+        //make temp to be the same size
+        for(int i=0; i<list.size(); i++){
+            temp.add(new Animal());
+        }
+
+        //initialize variables
+        int leftIndex = leftStart;
+        int rightIndex = middleStart + 1;
+        int rightEnd = righStart;
+        int mergedIndex = leftIndex;
+
+        //start merging left & right lists
+        while (leftIndex <= middleStart && rightIndex <= rightEnd){
+            String strLeft;
+            String strRight;
+            //TODO get BINOMIAL or population based on SORT_TYPE
+            switch (sortType){
+                case BINOMIAL:
+                    strLeft = list.get(leftIndex).getBinomial();
+                    strRight = list.get(rightIndex).getBinomial();
+                    break;
+                case ENDANGERED:
+                    strLeft = list.get(leftIndex).getEndangeredLevel();
+                    strRight = list.get(rightIndex).getEndangeredLevel();
+                    break;
+                default:
+                    return;
+            }
+
+            //see if leftIndex is "smaller"
+            if(strLeft.compareTo(strRight) >= 0){
+                temp.set(mergedIndex, list.get(leftIndex));
+                leftIndex++;
+            }
+            else{
+                temp.set(mergedIndex, list.get(rightIndex));
+                rightIndex++;
+            }
+            mergedIndex++;
+        }
+
+        //if right list is empty
+        while(leftIndex <= middleStart){
+            temp.set(mergedIndex, list.get(leftIndex));
+            mergedIndex++;
+            leftIndex++;
+        }
+        //if eft list is empty
+        while (rightIndex <= rightEnd){
+            temp.set(mergedIndex, list.get(rightIndex));
+            mergedIndex++;
+            rightIndex++;
+        }
+
+        //copy temp list into given list
+        for(int i = leftStart; i <= righStart; i++){
+            list.set(i, temp.get(i));
+        }
+    }
+
+    private static void integersMerge(ArrayList<Animal> list, int leftStart, int middleStart,
+                                      int righStart, SORT_TYPE sortType){
+
     }
 }

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -184,6 +183,7 @@ public class ListViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AnimalSort sorter = new AnimalSort();
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.recalc:
@@ -196,28 +196,36 @@ public class ListViewActivity extends AppCompatActivity {
                 return true;
 
             case R.id.alph_ascending:
-                Toast.makeText(ListViewActivity.this, "AFASA", Toast.LENGTH_SHORT).show();
-                AnimalSort sorter = new AnimalSort();
-                sorter.mergesort(animalList, 0, animalList.size()-1);
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
+//                sorter.mergesort(animalList, 0, animalList.size()-1, SORT_TYPE.BINOMIAL);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.alph_descending:
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.pop_ascending:
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.pop_descending:
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_ascending:
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_descending:
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case  R.id.endang_ascending:
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.endang_descending:
