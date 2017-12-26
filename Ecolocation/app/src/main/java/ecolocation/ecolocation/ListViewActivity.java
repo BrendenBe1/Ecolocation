@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -193,14 +194,39 @@ public class ListViewActivity extends AppCompatActivity {
                 finish();
                 startActivity( intent );
                 return true;
-            case R.id.sort:
-                //TODO: sort by population (ascending & descending)
-                //TODO: sort alphabetical (ascending & descending)
-                //TODO: sort by mass (ascending & descending)
-                //TODO: endangered level (ascending & descending)
+
+            case R.id.alph_ascending:
+                Toast.makeText(ListViewActivity.this, "AFASA", Toast.LENGTH_SHORT).show();
+                AnimalSort sorter = new AnimalSort();
+                sorter.mergesort(animalList, 0, animalList.size()-1);
+                adapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.alph_descending:
+                return true;
+
+            case R.id.pop_ascending:
+                return true;
+
+            case R.id.pop_descending:
+                return true;
+
+            case R.id.mass_ascending:
+                return true;
+
+            case R.id.mass_descending:
+                return true;
+
+            case  R.id.endang_ascending:
+                return true;
+
+            case R.id.endang_descending:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //sorting
+
 }

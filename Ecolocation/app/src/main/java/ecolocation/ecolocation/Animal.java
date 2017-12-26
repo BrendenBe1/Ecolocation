@@ -81,4 +81,9 @@ public class Animal {
     public int getPopulation() {
         return population;
     }
+
+    //------------ Sorting
+
+
 }
+
