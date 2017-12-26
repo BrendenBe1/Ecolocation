@@ -42,13 +42,18 @@ public class AnimalSort {
                 }
             }
             else if(sortType == SORT_TYPE.MASS || sortType == SORT_TYPE.POPULATION){
-                integersMerge(list, i, mid, j, sortType);
+                if(order == 0){
+                    integersMergeAscend(list, i, mid, j, sortType);
+                }
+                else{
+                    integersMergeDescend(list, i, mid, j, sortType);
+                }
             }
         }
     }
 
     private static void stringsMergeAscend(ArrayList<Animal> list, int leftStart, int middleStart,
-                                           int righStart, SORT_TYPE sortType){
+                                           int rightStart, SORT_TYPE sortType){
         //initialize variables
         ArrayList<Animal> temp = new ArrayList<Animal>();
         //make temp to be the same size
@@ -59,7 +64,7 @@ public class AnimalSort {
         //initialize variables
         int leftIndex = leftStart;
         int rightIndex = middleStart + 1;
-        int rightEnd = righStart;
+        int rightEnd = rightStart;
         int mergedIndex = leftIndex;
 
         //start merging left & right lists
@@ -106,13 +111,13 @@ public class AnimalSort {
         }
 
         //copy temp list into given list
-        for(int i = leftStart; i <= righStart; i++){
+        for(int i = leftStart; i <= rightStart; i++){
             list.set(i, temp.get(i));
         }
     }
 
     private static void stringsMergeDescend(ArrayList<Animal> list, int leftStart, int middleStart,
-                                           int righStart, SORT_TYPE sortType){
+                                           int rightStart, SORT_TYPE sortType){
         //initialize variables
         ArrayList<Animal> temp = new ArrayList<Animal>();
         //make temp to be the same size
@@ -123,7 +128,7 @@ public class AnimalSort {
         //initialize variables
         int leftIndex = leftStart;
         int rightIndex = middleStart + 1;
-        int rightEnd = righStart;
+        int rightEnd = rightStart;
         int mergedIndex = leftIndex;
 
         //start merging left & right lists
@@ -170,13 +175,135 @@ public class AnimalSort {
         }
 
         //copy temp list into given list
-        for(int i = leftStart; i <= righStart; i++){
+        for(int i = leftStart; i <= rightStart; i++){
             list.set(i, temp.get(i));
         }
     }
 
-    private static void integersMerge(ArrayList<Animal> list, int leftStart, int middleStart,
-                                      int righStart, SORT_TYPE sortType){
+    private static void integersMergeAscend(ArrayList<Animal> list, int leftStart, int middleStart,
+                                            int rightStart, SORT_TYPE sortType){
+        //initialize variables
+        ArrayList<Animal> temp = new ArrayList<Animal>();
+        //make temp to be the same size
+        for(int i=0; i<list.size(); i++){
+            temp.add(new Animal());
+        }
 
+        //initialize variables
+        int leftIndex = leftStart;
+        int rightIndex = middleStart + 1;
+        int rightEnd = rightStart;
+        int mergedIndex = leftIndex;
+
+        //start merging left & right lists
+        while (leftIndex <= middleStart && rightIndex <= rightEnd){
+            double leftInt;
+            double rightInt;
+            //TODO get BINOMIAL or population based on SORT_TYPE
+            switch (sortType){
+                case MASS:
+                    leftInt = list.get(leftIndex).getMass();
+                    rightInt = list.get(rightIndex).getMass();
+                    break;
+                case POPULATION:
+                    leftInt = list.get(leftIndex).getPopulation();
+                    rightInt = list.get(rightIndex).getPopulation();
+                    break;
+                default:
+                    return;
+            }
+
+            //see if leftIndex is "smaller"
+            if(leftInt <= rightInt){
+                temp.set(mergedIndex, list.get(leftIndex));
+                leftIndex++;
+            }
+            else{
+                temp.set(mergedIndex, list.get(rightIndex));
+                rightIndex++;
+            }
+            mergedIndex++;
+        }
+
+        //if right list is empty
+        while(leftIndex <= middleStart){
+            temp.set(mergedIndex, list.get(leftIndex));
+            mergedIndex++;
+            leftIndex++;
+        }
+        //if eft list is empty
+        while (rightIndex <= rightEnd){
+            temp.set(mergedIndex, list.get(rightIndex));
+            mergedIndex++;
+            rightIndex++;
+        }
+
+        //copy temp list into given list
+        for(int i = leftStart; i <= rightStart; i++){
+            list.set(i, temp.get(i));
+        }
+    }
+
+    private static void integersMergeDescend(ArrayList<Animal> list, int leftStart, int middleStart,
+                                             int rightStart, SORT_TYPE sortType){
+        //initialize variables
+        ArrayList<Animal> temp = new ArrayList<Animal>();
+        //make temp to be the same size
+        for(int i=0; i<list.size(); i++){
+            temp.add(new Animal());
+        }
+
+        //initialize variables
+        int leftIndex = leftStart;
+        int rightIndex = middleStart + 1;
+        int rightEnd = rightStart;
+        int mergedIndex = leftIndex;
+
+        //start merging left & right lists
+        while (leftIndex <= middleStart && rightIndex <= rightEnd){
+            double leftInt;
+            double rightInt;
+            switch (sortType){
+                case MASS:
+                    leftInt = list.get(leftIndex).getMass();
+                    rightInt = list.get(rightIndex).getMass();
+                    break;
+                case POPULATION:
+                    leftInt = list.get(leftIndex).getPopulation();
+                    rightInt = list.get(rightIndex).getPopulation();
+                    break;
+                default:
+                    return;
+            }
+
+            //see if leftIndex is "smaller"
+            if(leftInt >= rightInt){
+                temp.set(mergedIndex, list.get(leftIndex));
+                leftIndex++;
+            }
+            else{
+                temp.set(mergedIndex, list.get(rightIndex));
+                rightIndex++;
+            }
+            mergedIndex++;
+        }
+
+        //if right list is empty
+        while(leftIndex <= middleStart){
+            temp.set(mergedIndex, list.get(leftIndex));
+            mergedIndex++;
+            leftIndex++;
+        }
+        //if eft list is empty
+        while (rightIndex <= rightEnd){
+            temp.set(mergedIndex, list.get(rightIndex));
+            mergedIndex++;
+            rightIndex++;
+        }
+
+        //copy temp list into given list
+        for(int i = leftStart; i <= rightStart; i++){
+            list.set(i, temp.get(i));
+        }
     }
 }

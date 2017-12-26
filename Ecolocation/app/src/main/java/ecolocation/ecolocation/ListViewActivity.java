@@ -197,7 +197,6 @@ public class ListViewActivity extends AppCompatActivity {
 
             case R.id.alph_ascending:
                 sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
-//                sorter.mergesort(animalList, 0, animalList.size()-1, SORT_TYPE.BINOMIAL);
                 adapter.notifyDataSetChanged();
                 return true;
 
@@ -207,28 +206,33 @@ public class ListViewActivity extends AppCompatActivity {
                 return true;
 
             case R.id.pop_ascending:
+                sorter.sort(animalList, SORT_TYPE.POPULATION, 0);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.pop_descending:
+                sorter.sort(animalList, SORT_TYPE.POPULATION, 1);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_ascending:
+                sorter.sort(animalList, SORT_TYPE.MASS, 0);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_descending:
-                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
+                sorter.sort(animalList, SORT_TYPE.MASS, 1);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case  R.id.endang_ascending:
-                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
+                sorter.sort(animalList, SORT_TYPE.ENDANGERED, 0);
                 adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.endang_descending:
+                sorter.sort(animalList, SORT_TYPE.ENDANGERED, 1);
+                adapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
