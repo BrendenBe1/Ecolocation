@@ -33,10 +33,8 @@ import java.util.Random;
 
 public class GraphResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
-    Button listViewButton;
     //TODO: delete these buttons after tech demo
-    Button googleButton;
-    Button dbButton;
+    Button listViewBttn;
     BarChart barChart;
 
     //Spatial Map Variables
@@ -56,19 +54,8 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //----------- Widgets
-        //TODO: Rename button
-        googleButton = (Button) findViewById(R.id.bttn_graph);
-        googleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(GraphResultsActivity.this,
-                        SpatialMapActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        dbButton = (Button) findViewById(R.id.bttn_list);
-        dbButton.setOnClickListener(new View.OnClickListener() {
+        listViewBttn = (Button) findViewById(R.id.bttn_list);
+        listViewBttn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GraphResultsActivity.this,

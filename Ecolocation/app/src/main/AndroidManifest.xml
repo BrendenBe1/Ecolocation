@@ -27,7 +27,6 @@
         </activity>
 
         <!--Spatial Map Activity-->
-        <activity android:name=".SpatialMapActivity" />
 
         <!--About Activity-->
         <activity android:name=".AboutActivity"
