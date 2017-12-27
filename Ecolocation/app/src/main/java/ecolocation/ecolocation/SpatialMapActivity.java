@@ -26,9 +26,9 @@ public class SpatialMapActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spatial_map);
 
+        //Possible colors for a pixel
         colorScale = new String[] {"#E8F5E9","#C8E6C9", "#A5D6A7", "#81C784", "#66BB6A", "#4CAF50",
                 "#43A047", "#388E3C", "#2E7D32", "#1B5E20"};
-
 
         //get a handle to the map fragment
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
