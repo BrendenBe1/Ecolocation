@@ -52,13 +52,13 @@ public class AnimalDetailActivity extends AppCompatActivity {
         //set contents of widgets
         //TODO: uncomment the below lines when the information is available
         animalPic.setImageDrawable(animal.getPicture());
-        nameText.setText(animalName);
-        descText.setText(animal.getDescription());
+        nameText.setText(capitalize(animalName));
+        descText.setText(capitalize(animal.getDescription()));
 //        wikiLink.setText(animal.get);
         massText.setText(String.valueOf(animal.getMass()));
         populationText.setText(String.valueOf(animal.getPopulation()));
 //       dietText.setText(animal.get);
-        endangeredLevel.setText(animal.getEndangeredLevel());
+        endangeredLevel.setText(capitalize(animal.getEndangeredLevel()));
 
     }
 
@@ -72,5 +72,20 @@ public class AnimalDetailActivity extends AppCompatActivity {
                 break;
         }
         return true;
+    }
+
+    //capitalize each word
+    public static String capitalize(String str){
+        //TODO: check if null
+
+        String capitalized = "";
+        String[] parts = str.split(" ");
+        for(int i=0; i<parts.length; i++){
+            String temp = parts[i].substring(0, 1).toUpperCase();
+            temp = temp + parts[i].substring(1) + " ";
+            capitalized += temp;
+        }
+
+        return capitalized;
     }
 }

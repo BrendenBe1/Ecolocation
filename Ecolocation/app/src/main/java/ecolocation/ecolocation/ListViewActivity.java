@@ -105,8 +105,12 @@ public class ListViewActivity extends AppCompatActivity {
 
                         JSONObject object = array.getJSONObject(i);
 
-                        Animal animal = new Animal(object.getString("binomial"), object.getString("common_name"), pic,
-                                "A big cat in Africa", "Carnivore", object.getString("endangered_level"),
+                        String binomial = object.getString("binomial");
+                        String commonName = object.getString("common_name");
+                        String threat = object.getString("endangered_level");
+
+                        Animal animal = new Animal(binomial, commonName, pic,
+                                "A big cat in Africa", "Carnivore", threat,
                                 object.getInt("mass"), object.getInt("population"));
 
 
@@ -141,8 +145,6 @@ public class ListViewActivity extends AppCompatActivity {
 
         return list;
     }
-
-
 
     // function to load an image into an image view
     private void loadImageFromURL(final Animal animal)

@@ -5,6 +5,7 @@
     <color name="colorAccent">#00B0FF</color>
 
     <color name="white">#FFFFFF</color>
+    <color name="googleMap">#dddddd</color>
 
     <!--least concern, near threatened, vulnerable, endangered, critically endangered,/-->
     <!--extinct in the wild, extinct, Extant (resident)-->
@@ -16,7 +17,6 @@
     <color name="extinctInTheWild">#6AE01C</color>
     <color name="extinct">#0EA214</color>
     <color name="extantResident">#0EA214</color>
-    <!--not evaluated data deficient-->
     <color name="notEvaluated">#000000</color>
     <color name="dataDeficient">#6d6f69</color>
 </resources>

@@ -26,13 +26,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback {
+import java.math.BigDecimal;
+
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
     Button nextButton;
     EditText latTxt;
     EditText longTxt;
 
-    private static final String TAG = MapActivity.class.getSimpleName();
+    private static final String TAG = LocationActivity.class.getSimpleName();
     private GoogleMap map;
     private Marker marker;
 
@@ -44,7 +46,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     // A default location (Sydney, Australia) and default zoom to use when location permission is
     // not granted.
-    private final LatLng defaultLocation = new LatLng(-33.8523341, 151.2106085);
+    private final LatLng defaultLocation = new LatLng(35.1982, -111.6513);
     private boolean locationPermissionGranted;
 
     //----- CONSTANTS
@@ -56,7 +58,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map);
+        setContentView(R.layout.activity_location);
 
         //----------- toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -73,7 +75,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MapActivity.this, GraphResultsActivity.class);
+                Intent intent = new Intent(LocationActivity.this, GraphResultsActivity.class);
                 startActivity(intent);
             }
         });
@@ -113,15 +115,16 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                                     lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
                             ), DEFAULT_ZOOM));
 
-                            latTxt.setText(String.valueOf(lastKnownLocation.getLatitude()));
-                            longTxt.setText(String.valueOf(lastKnownLocation.getLongitude()));
-
+                            setTextViewCoordinates(new LatLng(lastKnownLocation.getLatitude(),
+                                    lastKnownLocation.getLongitude()));
                         }
                         else{
                             //move camera & get UI settings
                             map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
                                     DEFAULT_ZOOM));
                             map.getUiSettings().setMyLocationButtonEnabled(false);
+
+                            setTextViewCoordinates(defaultLocation);
                         }
 
                         //places marker on current location
@@ -187,21 +190,27 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 LatLng currLocation = marker.getPosition();
-                String currLat = String.valueOf(currLocation.latitude);
-                String currLong = String.valueOf(currLocation.longitude);
-
-                latTxt.setText("Lat: " + currLat + ", ");
-                longTxt.setText("Long: " + currLong);
+                setTextViewCoordinates(currLocation);
             }
         });
+    }
+
+    private void setTextViewCoordinates(LatLng currLocation){
+        //get string of coordinates with 6 decimal places
+        BigDecimal currLatDecimal = new BigDecimal(currLocation.latitude);
+        BigDecimal currLongDecimal = new BigDecimal(currLocation.longitude);
+        String currLat = currLatDecimal.setScale(6, 0).toString();
+        String currLong = currLongDecimal.setScale(6, 0).toString();
+
+        latTxt.setText("(" + currLat + ", ");
+        longTxt.setText(currLong + ")");
     }
 
     /*
        * Set the location controls on the map.
        *
        * If the user granted location permissions, then enable My Location Layer & related controls
-       *   on the map.
-       *  Otherwise, disable them & set current location to null;
+       * on the map. Otherwise, disable them & set current location to null;
        */
     private void updateLocationUI(){
         if(map == null){

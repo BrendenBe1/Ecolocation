@@ -56,7 +56,7 @@
         <activity android:name=".AnimalDetailActivity"/>
 
         <!--Map Activity-->
-        <activity android:name=".MapActivity"
+        <activity android:name=".LocationActivity"
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
