@@ -52,8 +52,9 @@ public class ListViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
-        //TODO: initialize animalList with database/google drive stuff;
-        animalList = fillList();
+        //fill list with database data
+//        animalList = fillList();
+        animalList = sampleData();
         sEcosystem = Ecosystem.get(this);
         sEcosystem.setList(animalList);
 
@@ -69,13 +70,52 @@ public class ListViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Animal currAnimal = animalList.get(position);
-                Intent intent = new Intent(ListViewActivity.this, AnimalDetailActivity.class);
-                intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
+//                Intent intent = new Intent(ListViewActivity.this, AnimalDetailActivity.class);
+//                intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
+
+                Intent intent = DetailActivity.newIntent(ListViewActivity.this,
+                        currAnimal.getBinomial());
                 startActivity(intent);
             }
         });
 
     }
+
+    //-------- Sample Data
+    private ArrayList<Animal> sampleData(){
+        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
+
+        Animal lion = new Animal("Panthera Leo", "lion", pic,
+                "A big cat in Africa", "carnivore", "vulnerable",
+                187.5, 20000);
+
+        Animal elephant = new Animal("Loxodonta Africana", "african elephant", pic,
+                "The largest land mammal", "herbivore", "vulnerable",
+                3500, 415000);
+
+        Animal giraffe = new Animal("Giraffa Camelopardalis", "giraffe", pic,
+                "An animal with a long neck", "herbivore", "vulnerable",
+                1192, 97500);
+
+        Animal cheetah = new Animal("Acinonyx Jubatus", "cheetah", pic,
+                "A very fast animal", "carnivore", "vulnerable",
+                50, 7100);
+
+        Animal zebra = new Animal("Equus Zebra", "Zebra", pic,
+                "A striped horse.", "herbivore", "near threatened",
+                250, 150000);
+
+        ArrayList<Animal> list = new ArrayList<Animal>();
+        list.add(lion);
+        list.add(elephant);
+        list.add(giraffe);
+        list.add(cheetah);
+        list.add(zebra);
+
+        return list;
+    }
+
+    //-------- Getting Data from Databases
 
     //this is just filling it in with dummy data
     private ArrayList<Animal> fillList(){

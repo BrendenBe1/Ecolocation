@@ -22,7 +22,7 @@
     <!--Graph Results Strings-->
     <string name="bttn_run">View Animals in the Selected Ecosystem</string>
     <string name="local_spatial">Local Spatial Map of Nutrient Distribution</string>
-    <string name= "bar_graph">Bar Chart Nutrient Distributions</string>
+    <string name="bar_graph">Bar Chart Nutrient Distributions</string>
 
     <!--About Screen Strings-->
     <string name="about_str">This screen will describe stuff like where the data is from and the
