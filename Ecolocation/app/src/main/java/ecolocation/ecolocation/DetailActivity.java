@@ -35,7 +35,7 @@ public class DetailActivity extends AppCompatActivity {
                 Animal animal = animalList.get(position);
                 String binomial = animal.getBinomial();
                 //TODO: create the appropriate fragment
-                return AnimalDetailActivity.newInstance(binomial);
+                return DetailFragment.newInstance(binomial);
             }
 
             @Override

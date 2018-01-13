@@ -70,7 +70,7 @@ public class ListViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Animal currAnimal = animalList.get(position);
-//                Intent intent = new Intent(ListViewActivity.this, AnimalDetailActivity.class);
+//                Intent intent = new Intent(ListViewActivity.this, DetailFragment.class);
 //                intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
 
                 Intent intent = DetailActivity.newIntent(ListViewActivity.this,

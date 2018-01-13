@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:layout_margin="5dp">
+    android:layout_margin="5dp"
+    android:paddingRight="16dp">
 
 
     <!--TODO: add correct value for android:src  -->
@@ -13,10 +12,9 @@
         android:id="@+id/pic_animal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_margin="15dp"
-        android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:src="@mipmap/ic_launcher" />
 

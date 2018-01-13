@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
     Button nextButton;
+    ImageButton locationButton;
     EditText latTxt;
     EditText longTxt;
 
@@ -72,9 +73,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
 
         //----------- initialize widgets
-        latTxt = findViewById(R.id.txt_lat);
-        longTxt = findViewById(R.id.txt_long);
-        nextButton = findViewById(R.id.bttn_next);
+        latTxt = (EditText) findViewById(R.id.txt_lat);
+        longTxt = (EditText) findViewById(R.id.txt_long);
+        nextButton = (Button) findViewById(R.id.bttn_next);
+        locationButton = (ImageButton) findViewById(R.id.bttn_location);
 
         //---------- event listeners for widgets
         // next button event listener
@@ -126,27 +128,25 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         //see if permission to location was granted
 
         // Set a key listener callback so that users can search by pressing "Enter"
+        latTxt.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    if(event.getAction() == KeyEvent.ACTION_UP){
+                        enterOnTextViews();
+
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
         longTxt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if( keyCode == KeyEvent.KEYCODE_ENTER ) {
                     if( event.getAction() == KeyEvent.ACTION_UP ) {
-                        //set strings in lat & long TextViews
-                        updateTextViews();
-
-                        //move camera & marker to new location
-                        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                                lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
-                        ), DEFAULT_ZOOM));
-                        marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
-                                lastKnownLocation.getLongitude()));
-
-                        updateLocationUI();
-
-                        //hides keyboard
-                        // https://stackoverflow.com/questions/8785023/how-to-close-android-soft-keyboard-programmatically
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
+                       enterOnTextViews();
                     }
                     return true;
                 }
@@ -154,8 +154,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        //TODO: consider making a similar listener for latTxt when hitting enter
-
+        locationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterOnTextViews();
+            }
+        });
 
         Bundle extras = getIntent().getExtras();
         locationPermissionGranted = extras.getBoolean(GPS_PERMISSION);
@@ -305,12 +309,37 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     //------------- WORKING WITH THE TEXT VIEWS
 
     /*
+     * user hits enters button on coordinate TextViews
+     *      handles the behavior of checking the inputs and changing the last known location and
+      *     moves the camera to the new location
+     */
+    private void enterOnTextViews(){
+        //set strings in lat & long TextViews
+        updateTextViews();
+
+        //move camera & marker to new location
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
+        ), DEFAULT_ZOOM));
+        marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
+                lastKnownLocation.getLongitude()));
+
+        updateLocationUI();
+
+        //hides keyboard
+        // https://stackoverflow.com/questions/8785023/how-to-close-android-soft-keyboard-programmatically
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
+    }
+
+    /*
      * This checks that the strings inside of the latTxt & longTxt are in the correct format. This
      * means: the strings are numbers (can be decimals, and/or negative), are in the correct range
      * for longitude and latitude.
      *
      * If the previous are correct, it puts the numbers in the following format: (##.##, ##.##)
      */
+    //TODO: see if there is a better way to inform user of incorrect inputs
     private void updateTextViews(){
 //        String regex = "-?\\d+\\.?\\d+$";
         String regex = "-?\\d+(\\.\\d+$)?";
@@ -331,8 +360,22 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
          */
             Double latDouble = Double.valueOf(latStr);
             Double longDouble = Double.valueOf(longStr);
-            if(latDouble <= 90 && latDouble >= -90 &&
-                    longDouble <= 180 && longDouble >= -180){
+
+            /*
+             * first check conditions that we don't want so we can tell the user which one they
+             * entered wrong
+             */
+
+            //latitude is in the incorrect range
+            if(latDouble > 90 || latDouble < -90){
+                latTxt.setError("Latitude must be between -90 and 90 degrees");
+            }
+            //longitude is in the incorrect range
+            else if(longDouble > 180 || longDouble < -180){
+                longTxt.setError("Longitude must be between -180 and 180");
+            }
+            //coordinate is in the correct range
+            else{
                 latStr = "(" + latStr + ", ";
                 longStr += ")";
 
@@ -344,13 +387,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 lastKnownLocation.setLatitude(latDouble);
                 lastKnownLocation.setLongitude(longDouble);
             }
-            else{
-                //TODO: tell user correct ranges for latitude & longitude
-                Toast.makeText(this, "", Toast.LENGTH_LONG).show();
-            }
         }
         else{
-            Toast.makeText(this, "Must enter a number", Toast.LENGTH_LONG).show();
+
+            if(!latStr.matches(regex)){
+                latTxt.setError("Must enter a valid number.");
+            }
+            if(!longStr.matches(regex)){
+                longTxt.setError("Must enter a valid number.");
+            }
         }
     }
 

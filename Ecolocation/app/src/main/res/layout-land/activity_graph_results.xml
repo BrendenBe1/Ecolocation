@@ -45,7 +45,7 @@
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="16dp"
                 map:cameraZoom="10" />
 
             <TextView
@@ -62,6 +62,7 @@
                 android:id="@+id/barChart"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
+                android:layout_margin="16dp"
                 android:layout_marginBottom="20dp"
                 android:foregroundGravity="center" />
         </LinearLayout>

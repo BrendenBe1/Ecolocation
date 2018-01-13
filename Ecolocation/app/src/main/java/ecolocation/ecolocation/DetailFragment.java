@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class AnimalDetailActivity extends android.support.v4.app.Fragment {
+public class DetailFragment extends android.support.v4.app.Fragment {
     //widgets
     ImageView animalPic;
     TextView nameText;
@@ -31,10 +31,10 @@ public class AnimalDetailActivity extends android.support.v4.app.Fragment {
     //this is necessary b/c fragment arguments (similar to activity extras) cannot be added to the
     //fragment before it's added to the FragmentManager's transactions list. This allows the app to
     // do that
-    public static AnimalDetailActivity newInstance(String animalBinomial){
+    public static DetailFragment newInstance(String animalBinomial){
         Bundle args = new Bundle();
         args.putString(SELECTED_ANIMAL, animalBinomial);
-        AnimalDetailActivity fragment = new AnimalDetailActivity();
+        DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -49,7 +49,7 @@ public class AnimalDetailActivity extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View view = inflater.inflate(R.layout.activity_animal_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_detail, container, false);
 
         //----------- toolbar setup
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);

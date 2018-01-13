@@ -57,7 +57,7 @@
         </activity>
 
         <!-- Animal Detail Activity -->
-        <activity android:name=".AnimalDetailActivity" />
+        <activity android:name=".DetailFragment" />
 
         <!-- Map Activity -->
         <activity

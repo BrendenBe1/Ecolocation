@@ -33,7 +33,7 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
     */
     @Override
     public View getView(final int position, View view, ViewGroup parent){
-        //create inflator
+        //create inflater
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -57,7 +57,9 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
 
         //------- Color-Code rows
         Resources res = getContext().getResources();    //allows access to the color files
-        switch (currAnimal.getEndangeredLevel()){
+        String threatLevel = capitalize(currAnimal.getEndangeredLevel());
+        threatLevel = threatLevel.trim();
+        switch (threatLevel){
             case "Least Concern":
                 nameText.setTextColor(res.getColor(R.color.leastConcern));
                 break;
