@@ -109,10 +109,10 @@ public class GoogleDriveDemoActivity extends AppCompatActivity {
                 OkHttpClient client = new OkHttpClient();
                 // animals.php is old db call for just getting binomial
                 /*Request request = new Request.Builder()
-                        .url("http://18.220.129.239/animals.php?")
+                        .url("http://18.216.195.218/animals.php?")
                         .build();*/
                 Request request = new Request.Builder()
-                        .url("http://18.220.129.239/mammals.php?")
+                        .url("http://18.216.195.218/mammals.php?")
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
