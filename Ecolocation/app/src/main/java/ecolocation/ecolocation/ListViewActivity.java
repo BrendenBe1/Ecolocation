@@ -53,8 +53,8 @@ public class ListViewActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //fill list with database data
-//        animalList = fillList();
-        animalList = sampleData();
+        animalList = fillList();
+//        animalList = sampleData();
         sEcosystem = Ecosystem.get(this);
         sEcosystem.setList(animalList);
 
@@ -134,7 +134,7 @@ public class ListViewActivity extends AppCompatActivity {
                         .url("http://18.220.129.239/animals.php?")
                         .build();*/
                 Request request = new Request.Builder()
-                        .url("http://18.220.129.239/mammals.php?")
+                        .url("http://18.216.195.218/mammals.php?")
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
