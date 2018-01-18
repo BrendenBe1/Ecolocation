@@ -15,34 +15,29 @@
 
 
     <Button
-        android:id="@+id/bttn_list_view"
+        android:id="@+id/bttn_graph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/bttn_database"
+        android:layout_alignBottom="@+id/bttn_database"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:text="@string/bttn_run" />
-
-    <Button
-        android:id="@+id/bttn_google"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="false"
-        android:layout_centerHorizontal="false"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="30dp"
-        android:layout_toRightOf="@+id/bttn_database"
-        android:text="Google Demo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:text="Spatial Map"
         android:textSize="12sp" />
+
 
     <Button
         android:id="@+id/bttn_database"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="10dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
         android:text="Database Demo"
         android:textSize="12sp" />
 </RelativeLayout>
