@@ -54,7 +54,6 @@ public class ListViewActivity extends AppCompatActivity {
 
         //fill list with database data
         animalList = fillList();
-//        animalList = sampleData();
         sEcosystem = Ecosystem.get(this);
         sEcosystem.setList(animalList);
 
@@ -70,49 +69,12 @@ public class ListViewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Animal currAnimal = animalList.get(position);
-//                Intent intent = new Intent(ListViewActivity.this, DetailFragment.class);
-//                intent.putExtra(SELECTED_ANIMAL, currAnimal.getBinomial());
-
                 Intent intent = DetailActivity.newIntent(ListViewActivity.this,
                         currAnimal.getBinomial());
                 startActivity(intent);
             }
         });
 
-    }
-
-    //-------- Sample Data
-    private ArrayList<Animal> sampleData(){
-        Drawable pic = getResources().getDrawable(R.drawable.ic_launcher_background);
-
-        Animal lion = new Animal("Panthera Leo", "lion", pic,
-                "A big cat in Africa", "carnivore", "vulnerable",
-                187.5, 20000);
-
-        Animal elephant = new Animal("Loxodonta Africana", "african elephant", pic,
-                "The largest land mammal", "herbivore", "vulnerable",
-                3500, 415000);
-
-        Animal giraffe = new Animal("Giraffa Camelopardalis", "giraffe", pic,
-                "An animal with a long neck", "herbivore", "vulnerable",
-                1192, 97500);
-
-        Animal cheetah = new Animal("Acinonyx Jubatus", "cheetah", pic,
-                "A very fast animal", "carnivore", "vulnerable",
-                50, 7100);
-
-        Animal zebra = new Animal("Equus Zebra", "Zebra", pic,
-                "A striped horse.", "herbivore", "near threatened",
-                250, 150000);
-
-        ArrayList<Animal> list = new ArrayList<Animal>();
-        list.add(lion);
-        list.add(elephant);
-        list.add(giraffe);
-        list.add(cheetah);
-        list.add(zebra);
-
-        return list;
     }
 
     //-------- Getting Data from Databases
@@ -130,9 +92,6 @@ public class ListViewActivity extends AppCompatActivity {
 
                 OkHttpClient client = new OkHttpClient();
                 // animals.php is old db call for just getting binomial
-                /*Request request = new Request.Builder()
-                        .url("http://18.220.129.239/animals.php?")
-                        .build();*/
                 Request request = new Request.Builder()
                         .url("http://18.216.195.218/mammals.php?")
                         .build();
@@ -147,14 +106,14 @@ public class ListViewActivity extends AppCompatActivity {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threat = object.getString("endangered_level");
+                        String threatStr = object.getString("endangered_level");
+                        ThreatLevel threatLevel = determineThreatLevel(threatStr);
 
+                        //TODO: get description
                         Animal animal = new Animal(binomial, commonName, pic,
-                                "A big cat in Africa", "Carnivore", threat,
+                                "A big cat in Africa", "Carnivore", threatLevel,
                                 object.getInt("mass"), object.getInt("population"));
 
-
-                        //ListViewActivity.this.animalList.add(animal);
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
                     }
@@ -225,6 +184,7 @@ public class ListViewActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AnimalSort sorter = new AnimalSort();
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.recalc:
@@ -233,34 +193,95 @@ public class ListViewActivity extends AppCompatActivity {
                 //TODO: replace this with restoring sliders to original values
                 Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
                 finish();
-                startActivity( intent );
+                startActivity(intent);
                 return true;
 
             case R.id.alph_ascending:
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.alph_descending:
+                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.pop_ascending:
+                sorter.sort(animalList, SORT_TYPE.POPULATION, 0);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.pop_descending:
+                sorter.sort(animalList, SORT_TYPE.POPULATION, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_ascending:
+                sorter.sort(animalList, SORT_TYPE.MASS, 0);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.mass_descending:
+                sorter.sort(animalList, SORT_TYPE.MASS, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case  R.id.endang_ascending:
+                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 1);
+                adapter.notifyDataSetChanged();
                 return true;
 
             case R.id.endang_descending:
+                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 0);
+                adapter.notifyDataSetChanged();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    //------Handle Strings
+    //converts a string into an enumeration of the threat level
+    private ThreatLevel determineThreatLevel(String string){
+        string = string.toLowerCase();
+        ThreatLevel threatLevel;
+        switch (string){
+            case "least concerned":
+                threatLevel = ThreatLevel.LEAST_CONCERNED;
+                break;
+            case "near threatened":
+                threatLevel = ThreatLevel.NEAR_THREATENED;
+                break;
+            case "vulnerable":
+                threatLevel = ThreatLevel.VULNERABLE;
+                break;
+            case "endangered":
+                threatLevel = ThreatLevel.ENDANGERED;
+                break;
+            case "critically endangered":
+                threatLevel = ThreatLevel.CRITICALLY_ENDANGERED;
+                break;
+            case "extinct in the wild":
+                threatLevel = ThreatLevel.EXTINCT_IN_THE_WILD;
+                break;
+            case "extinct":
+                threatLevel = ThreatLevel.EXTINCT;
+                break;
+            case "extant (resident)":
+                threatLevel = ThreatLevel.EXTANT;
+                break;
+            case "data deficient":
+                threatLevel = ThreatLevel.DATA_DEFICIENT;
+                break;
+            case "not evaluated":
+                threatLevel = ThreatLevel.NOT_EVALUATED;
+                break;
+            default:
+                threatLevel = ThreatLevel.DATA_DEFICIENT;
+                break;
+        }
+        return threatLevel;
+    }
+
 }

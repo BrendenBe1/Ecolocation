@@ -14,8 +14,7 @@ public class Animal {
     private String description;
     //TODO: consider making diet an enumeration
     private String diet;    //herbivore, omnivore, carnivore
-    //TODO: consider making endangeredLevel an enumeration
-    private String endangeredLevel;
+    private ThreatLevel threatLevel;
     private double mass; //in kilograms
     private int population;   //population density
 
@@ -25,19 +24,19 @@ public class Animal {
         //    picture =
         description = "Description";
         diet = "Herbivore";
-        endangeredLevel = "Vulnerable";
+        threatLevel = ThreatLevel.VULNERABLE;
         mass = 7000;
         population = 415000;
     }
 
     public Animal(String binomial, String name, Drawable picture, String description,
-                  String diet, String endangeredLevel, double mass, int population){
+                  String diet, ThreatLevel threatLevel, double mass, int population){
         this.binomial = binomial;
         this.name = name;
         this.picture = picture;
         this.description = description;
         this.diet = diet;
-        this.endangeredLevel = endangeredLevel;
+        this.threatLevel = threatLevel;
         this.mass = mass;
         this.population = population;
     }
@@ -70,8 +69,8 @@ public class Animal {
         return diet;
     }
 
-    public String getEndangeredLevel() {
-        return endangeredLevel;
+    public ThreatLevel getThreatLevel() {
+        return threatLevel;
     }
 
     public double getMass() {
