@@ -84,6 +84,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LocationActivity.this, GraphResultsActivity.class);
+                intent.putExtra("COORDS", lastKnownLocation);
                 startActivity(intent);
             }
         });

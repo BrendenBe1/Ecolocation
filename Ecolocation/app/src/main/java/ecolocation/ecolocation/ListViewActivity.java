@@ -3,6 +3,7 @@ package ecolocation.ecolocation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -24,8 +26,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ListViewActivity extends AppCompatActivity {
@@ -37,6 +41,7 @@ public class ListViewActivity extends AppCompatActivity {
     private AnimalAdapter adapter;
     static int flag = 0;
     private static Ecosystem sEcosystem;
+    Location chosenLocation;
 
     //constants
     static final String SELECTED_ANIMAL = "selected animal";
@@ -45,6 +50,11 @@ public class ListViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
+        chosenLocation = getIntent().getExtras().getParcelable("COORDS"); // get coordinates
+        Log.d("LATITUDE: ", String.valueOf(chosenLocation.getLatitude()));
+        Log.d("LONGITUDE: ", String.valueOf(chosenLocation.getLongitude()));
+
 
         //----------- toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,9 +101,14 @@ public class ListViewActivity extends AppCompatActivity {
             protected Void doInBackground(Integer... Void) {
 
                 OkHttpClient client = new OkHttpClient();
+                RequestBody arguments = new FormBody.Builder()
+                        .add("latitude", String.valueOf(chosenLocation.getLatitude()))
+                        .add("longitude", String.valueOf(chosenLocation.getLongitude()))
+                        .build();
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
                         .url("http://18.216.195.218/mammals.php?")
+                        .post(arguments)
                         .build();
                 try {
                     Response response = client.newCall(request).execute();
