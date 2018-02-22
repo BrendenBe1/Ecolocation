@@ -43,6 +43,7 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
 
         //get the rowView from the inflater
         //The rowView allows acccess to the widgets on the layout
+        // need this to be the solution set for tomorrow.
         View rowView = inflater.inflate(R.layout.list_item, parent, false);
 
         //------------- Initializing Widgets from list_item
@@ -52,7 +53,8 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
 
         //----------- Setting Up Values of Widgets
         animalPic.setImageDrawable(currAnimal.getPicture());
-        nameText.setText(capitalize(currAnimal.getBinomial()));
+        //nameText.setText(capitalize(currAnimal.getBinomial()));
+        nameText.setText(capitalize(currAnimal.getName()));
         seekBar.setProgress(currAnimal.getPopulation());
 
         //------- Color-Code rows
