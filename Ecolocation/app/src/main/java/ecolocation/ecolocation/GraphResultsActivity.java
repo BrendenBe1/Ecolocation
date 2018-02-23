@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -37,6 +38,9 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
     Button listViewBttn;
     BarChart barChart;
 
+    //animal variablees
+    ArrayList<Animal> animalList;
+
     //Spatial Map Variables
     private String[] colorScale;
     private  double[] latitudes = new double[30];  //9.607168 9.761728 = 94
@@ -46,6 +50,14 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_results);
+
+        final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
+        Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
+
+        //get Ecosystem instance and get database info & set coordinates for it
+        Ecosystem ecosystem = Ecosystem.get(this);
+        animalList = ecosystem.getAnimalList(chosenLocation);
+
 
         //----------- Toolbar Setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -60,6 +72,7 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
             public void onClick(View v) {
                 Intent intent = new Intent(GraphResultsActivity.this,
                         ListViewActivity.class);
+                intent.putExtra("COORDS", chosenLocation);
                 startActivity(intent);
             }
         });

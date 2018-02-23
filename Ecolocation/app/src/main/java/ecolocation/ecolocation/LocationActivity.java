@@ -47,11 +47,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private FusedLocationProviderClient fusedLocationProviderClient;
     // location retrieved by the Fused Location Provider.
     private Location lastKnownLocation;
-
-
-    // A default location (Sydney, Australia) and default zoom to use when location permission is
-    // not granted.
-    private final LatLng defaultLocation = new LatLng(35.1982, -111.6513);
+//    private LatLng chosenLocation;
+    // A default location (Flagstaff, Arizona) to use when location permission is not granted.
+    private LatLng chosenLocation = new LatLng(35.1982, -111.6513);
     private boolean locationPermissionGranted;
 
     //----- CONSTANTS
@@ -84,46 +82,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(LocationActivity.this, GraphResultsActivity.class);
+                intent.putExtra("COORDS", chosenLocation);
                 startActivity(intent);
             }
         });
-
-//        //latText event listener
-//        latTxt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-//
-//            //move to new location
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                String latStr = s.toString();
-//                latStr = latStr.replaceAll("[(), ]", "");
-//                Double latitude = Double.valueOf(latStr);
-//               map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,
-//                        lastKnownLocation.getLongitude()), DEFAULT_ZOOM));
-//            }
-//        });
-//
-//        //longText event listener
-//        longTxt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) { }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                String longStr = s.toString();
-//                longStr = longStr.replaceAll("[(), ]", "");
-//                Double longitude = Double.valueOf(longStr);
-//                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(lastKnownLocation
-//                        .getLatitude(), Double.valueOf(longStr)), DEFAULT_ZOOM));
-//            }
-//        });
 
         //see if permission to location was granted
 
@@ -190,21 +152,20 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                         {
                             //set the map's camera position to current location
                             lastKnownLocation = task.getResult();
+                            chosenLocation = new LatLng(lastKnownLocation.getLatitude(),
+                                    lastKnownLocation.getLongitude());
 
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                                    lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
-                            ), DEFAULT_ZOOM));
-
-                            setTextViewCoordinates(new LatLng(lastKnownLocation.getLatitude(),
-                                    lastKnownLocation.getLongitude()));
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation,
+                                    DEFAULT_ZOOM));
+                            setTextViewCoordinates(chosenLocation);
                         }
                         else{
                             //move camera & get UI settings
-                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(defaultLocation,
+                            map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation,
                                     DEFAULT_ZOOM));
                             map.getUiSettings().setMyLocationButtonEnabled(false);
 
-                            setTextViewCoordinates(defaultLocation);
+                            setTextViewCoordinates(chosenLocation);
                         }
 
                         //places marker on current location
@@ -250,13 +211,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     //---------- shows the draggable marker and related event listeners
     private void setMarker(){
-        marker = map.addMarker(new MarkerOptions().position(new LatLng(defaultLocation.latitude,
-                defaultLocation.longitude)).title("Default Location").draggable(true));
+        marker = map.addMarker(new MarkerOptions().position(new LatLng(chosenLocation.latitude,
+                chosenLocation.longitude)).title("Default Location").draggable(true));
 
         //add marker to current location or default location (if location is denied)
         if (lastKnownLocation != null){
-            marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
-                    lastKnownLocation.getLongitude()));
+            marker.setPosition(chosenLocation);
         }
 
         //event listener for marker
@@ -269,8 +229,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                LatLng currLocation = marker.getPosition();
-                setTextViewCoordinates(currLocation);
+                chosenLocation = marker.getPosition();
+                setTextViewCoordinates(chosenLocation);
             }
         });
     }
@@ -318,11 +278,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         updateTextViews();
 
         //move camera & marker to new location
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-                lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude()
-        ), DEFAULT_ZOOM));
-        marker.setPosition(new LatLng(lastKnownLocation.getLatitude(),
-                lastKnownLocation.getLongitude()));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation, DEFAULT_ZOOM));
+        marker.setPosition(chosenLocation);
 
         updateLocationUI();
 
@@ -384,8 +341,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 longTxt.setText(longStr);
 
                 //save new location
-                lastKnownLocation.setLatitude(latDouble);
-                lastKnownLocation.setLongitude(longDouble);
+                chosenLocation = new LatLng(latDouble, longDouble);
             }
         }
         else{
