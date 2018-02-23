@@ -3,7 +3,6 @@ package ecolocation.ecolocation;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -41,7 +40,7 @@ public class ListViewActivity extends AppCompatActivity {
     private AnimalAdapter adapter;
     static int flag = 0;
     private static Ecosystem sEcosystem;
-    Location chosenLocation;
+    LatLng chosenLocation;
 
     //constants
     static final String SELECTED_ANIMAL = "selected animal";
@@ -52,8 +51,8 @@ public class ListViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_view);
 
         chosenLocation = getIntent().getExtras().getParcelable("COORDS"); // get coordinates
-        Log.d("LATITUDE: ", String.valueOf(chosenLocation.getLatitude()));
-        Log.d("LONGITUDE: ", String.valueOf(chosenLocation.getLongitude()));
+        Log.d("LATITUDE: ", String.valueOf(chosenLocation.latitude));
+        Log.d("LONGITUDE: ", String.valueOf(chosenLocation.longitude));
 
 
         //----------- toolbar setup
@@ -102,8 +101,8 @@ public class ListViewActivity extends AppCompatActivity {
 
                 OkHttpClient client = new OkHttpClient();
                 RequestBody arguments = new FormBody.Builder()
-                        .add("latitude", String.valueOf(chosenLocation.getLatitude()))
-                        .add("longitude", String.valueOf(chosenLocation.getLongitude()))
+                        .add("latitude", String.valueOf(chosenLocation.latitude))
+                        .add("longitude", String.valueOf(chosenLocation.longitude))
                         .build();
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()

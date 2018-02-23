@@ -3,7 +3,6 @@ package ecolocation.ecolocation;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,8 +48,8 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_results);
 
-        final Location chosenLocation = getIntent().getExtras().getParcelable("COORDS");
-        Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.getLatitude()));
+        final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
+        Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
 
         //----------- Toolbar Setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
