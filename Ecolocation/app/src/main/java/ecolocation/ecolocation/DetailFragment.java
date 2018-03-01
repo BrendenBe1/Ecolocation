@@ -74,8 +74,6 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         descText.setText(capitalize(animal.getDescription()));
 //        wikiLink.setText(animal.get);
         massText.setText(String.valueOf(animal.getMass()));
-        populationText.setText(String.valueOf(animal.getPopulation()));
-//       dietText.setText(animal.get);
         endangeredLevel.setText(capitalize(animal.getThreatLevel().getName()));
 
 

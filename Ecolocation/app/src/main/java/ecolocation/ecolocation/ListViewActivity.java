@@ -10,8 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
@@ -21,21 +19,11 @@ public class ListViewActivity extends AppCompatActivity {
     //variables for creating the list
     private ArrayList<Animal> animalList;
     private AnimalAdapter adapter;
-    private static Ecosystem sEcosystem;
-    LatLng chosenLocation;
-
-    //constants
-    static final String SELECTED_ANIMAL = "selected animal";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-
-//        chosenLocation = getIntent().getExtras().getParcelable("COORDS"); // get coordinates
-//        Log.d("LATITUDE: ", String.valueOf(chosenLocation.latitude));
-//        Log.d("LONGITUDE: ", String.valueOf(chosenLocation.longitude));
-
 
         //----------- toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -52,7 +40,7 @@ public class ListViewActivity extends AppCompatActivity {
         // ----------- Adapter Stuff
         // setting up the individual list items with the adapter
         adapter = new AnimalAdapter(this, animalList);
-        //the adapater fills the list with the array list
+        //the adapter fills the list with the array list
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

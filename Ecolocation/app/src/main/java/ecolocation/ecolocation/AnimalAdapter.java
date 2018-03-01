@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -42,26 +41,22 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
 
 
         //get the rowView from the inflater
-        //The rowView allows acccess to the widgets on the layout
+        //The rowView allows access to the widgets on the layout
         // need this to be the solution set for tomorrow.
         View rowView = inflater.inflate(R.layout.list_item, parent, false);
 
         //------------- Initializing Widgets from list_item
         ImageView animalPic = (ImageView) rowView.findViewById(R.id.pic_animal);
         TextView nameText = (TextView) rowView.findViewById(R.id.txt_animal_name);
-        SeekBar seekBar = (SeekBar) rowView.findViewById(R.id.seek_bar);
+        TextView binomialText = (TextView) rowView.findViewById(R.id.txt_binomial_title);
 
         //----------- Setting Up Values of Widgets
         animalPic.setImageDrawable(currAnimal.getPicture());
-        //nameText.setText(capitalize(currAnimal.getBinomial()));
         nameText.setText(capitalize(currAnimal.getName()));
-        seekBar.setProgress(currAnimal.getPopulation());
+        binomialText.setText(capitalize(currAnimal.getBinomial()));
 
         //------- Color-Code rows
         Resources res = getContext().getResources();    //allows access to the color files
-//        String threatLevel = capitalize(currAnimal.getThreatLevel().getName());
-//        threatLevel = threatLevel.trim();
-//        switch (threatLevel){
         switch (currAnimal.getThreatLevel().getName()){
             case "Least Concern":
                 nameText.setTextColor(res.getColor(R.color.leastConcern));
