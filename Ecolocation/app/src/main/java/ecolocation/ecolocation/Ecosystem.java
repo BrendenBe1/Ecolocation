@@ -140,12 +140,12 @@ public class Ecosystem {
             @Override
             protected void onPostExecute(Void aVoid) {
 //                adapter.notifyDataSetChanged();
-//                for(int i=0; i<animalList.size(); i++) {
-//                    Animal currAnimal = animalList.get(i);
-//                    loadImageFromURL(currAnimal);
-//                    Log.d("currAnimal", currAnimal.getBinomial());
-//                    // Do something with the value
-//                }
+                for(int i=0; i<animalList.size(); i++) {
+                    Animal currAnimal = animalList.get(i);
+                    loadImageFromURL(currAnimal);
+                    Log.d("currAnimal", currAnimal.getBinomial());
+                    // Do something with the value
+                }
             }
         };
 
@@ -159,7 +159,10 @@ public class Ecosystem {
     {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);
-        String url = "http://cefns.nau.edu/~mh973/images/" + animal.getName() + ".jpg";
+
+        String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
+        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/current/"  + fileName + ".jpg";
+//        String url = "http://cefns.nau.edu/~mh973/images/" +
         // call to get picture
         Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
 
