@@ -99,9 +99,12 @@ public class Ecosystem {
                         .add("latitude", String.valueOf(coordinates.latitude))
                         .add("longitude", String.valueOf(coordinates.longitude))
                         .build();
+                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
+                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
-                        .url("http://18.216.195.218/mammals.php?")
+                        //.url("http://18.216.195.218/mammals.php?") // old one
+                        .url("http://18.222.2.88/get_data.php?") // new one. gets binomial, common_name, mass, endangered_status, wiki_link, description
                         .post(arguments)
                         .build();
                 try {
@@ -115,13 +118,13 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatStr = object.getString("endangered_level");
+                        String threatStr = object.getString("endangered_status");
                         ThreatLevel threatLevel = determineThreatLevel(threatStr);
 
                         //TODO: get description
                         Animal animal = new Animal(binomial, commonName, pic,
                                 "A big cat in Africa", "Carnivore", threatLevel,
-                                object.getInt("mass"), object.getInt("population"));
+                                object.getInt("mass"), 1001);
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
