@@ -1,4 +1,4 @@
-package ecolocation.ecolocation;
+package ecolocation.ecolocation.AnimalInfo;
 
 /**
  * Created by Chandler on 1/23/2018.

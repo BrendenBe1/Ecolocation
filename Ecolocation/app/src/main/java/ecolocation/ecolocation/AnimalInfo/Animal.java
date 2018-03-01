@@ -1,4 +1,4 @@
-package ecolocation.ecolocation;
+package ecolocation.ecolocation.AnimalInfo;
 
 import android.graphics.drawable.Drawable;
 

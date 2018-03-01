@@ -32,6 +32,10 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import java.util.ArrayList;
 import java.util.Random;
 
+import ecolocation.ecolocation.AnimalInfo.Animal;
+import ecolocation.ecolocation.AnimalInfo.Ecosystem;
+import ecolocation.ecolocation.AnimalInfo.ListViewActivity;
+
 public class GraphResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
     //TODO: delete these buttons after tech demo

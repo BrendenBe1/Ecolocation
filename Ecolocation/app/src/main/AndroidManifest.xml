@@ -57,7 +57,7 @@
         </activity>
 
         <!-- Animal Detail Activity -->
-        <activity android:name=".DetailFragment" />
+        <activity android:name=".AnimalInfo.DetailFragment" />
 
         <!-- Map Activity -->
         <activity
@@ -70,7 +70,7 @@
 
         <!-- List View Activity -->
         <activity
-            android:name=".ListViewActivity"
+            android:name=".AnimalInfo.ListViewActivity"
             android:parentActivityName=".GraphResultsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -85,7 +85,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".DetailActivity"></activity>
+        <activity android:name=".AnimalInfo.DetailActivity"></activity>
     </application>
 
 </manifest>
