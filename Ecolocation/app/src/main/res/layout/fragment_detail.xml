@@ -1,142 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="ecolocation.ecolocation.DetailFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_below="@+id/toolbar">
 
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
 
-        <TextView
-            android:id="@+id/txt_animal_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Species' Name"
-            android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textSize="40sp" />
-
-        <ImageView
-            android:id="@+id/pic_animal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_margin="10dp"
-            android:src="@mipmap/ic_launcher" />
-
-        <TextView
-            android:id="@+id/txt_desc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="0dp"
-            android:text="Species Description"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <TextView
-            android:id="@+id/txt_wiki_link"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:text="Wikipedia Link"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                android:id="@+id/txt_binomial_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="Scientific Name"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_binomial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txt_binomial_title"
-                android:layout_marginLeft="10dp"
-                android:text="Panthera leo"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp">
-
-            <TextView
-                android:id="@+id/endangered_level_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/population_title"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/end_lev_title"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/txt_endangered_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/endangered_level_title"
-                android:layout_marginLeft="10dp"
-                android:text="Species Endangered Level"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-        </RelativeLayout>
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="5dp">
+
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/mass_title"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_animal_name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/main_linear_layout"
-                android:layout_marginBottom="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:text="@string/mass_title"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Species' Name"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/pic_animal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
-                android:id="@+id/txt_mass"
-                android:layout_width="wrap_content"
+                android:id="@+id/txt_desc"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mass_title"
-                android:layout_marginLeft="10dp"
-                android:text="Species Mass"
+                android:layout_margin="10dp"
+                android:padding="0dp"
+                android:text="Species Description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        </RelativeLayout>
+            <TextView
+                android:id="@+id/txt_wiki_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:clickable="true"
+                android:onClick="onClick"
+                android:text="Wikipedia Link"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/colorAccent" />
 
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/txt_binomial_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Scientific Name: "
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_binomial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_binomial_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Panthera leo"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/endangered_level_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/end_lev_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_endangered_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/endangered_level_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Species Endangered Level"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/mass_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/mass_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_mass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mass_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Species Mass"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+
+    </ScrollView>
 
     <!--TODO: add appropriate value of image -->
 
-</ScrollView>
+</RelativeLayout>

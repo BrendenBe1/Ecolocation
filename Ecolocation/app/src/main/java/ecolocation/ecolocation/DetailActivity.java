@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,13 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+        //----------- toolbar setup
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
+
+
         //get the animal the user selected
         animalList = Ecosystem.get(this).getAnimalList();
         final String animalBinomial = getIntent().getStringExtra(ANIMAL_NAME_EXTRA);
@@ -34,7 +42,6 @@ public class DetailActivity extends AppCompatActivity {
             public android.support.v4.app.Fragment getItem(int position) {
                 Animal animal = animalList.get(position);
                 String binomial = animal.getBinomial();
-                //TODO: create the appropriate fragment
                 return DetailFragment.newInstance(binomial);
             }
 

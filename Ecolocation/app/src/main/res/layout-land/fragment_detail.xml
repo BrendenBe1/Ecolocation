@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ecolocation.ecolocation.DetailFragment">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <!--TODO: add appropriate value of image -->
-        <ImageView
-            android:id="@+id/pic_animal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_margin="10dp"
-            android:src="@mipmap/ic_launcher" />
+        android:layout_below="@+id/toolbar">
 
         <LinearLayout
-            android:id="@+id/main_linear_layout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/toolbar"
-            android:layout_toRightOf="@+id/pic_animal"
             android:orientation="vertical">
 
 
-            <!--TODO: change text to appropriate value  -->
             <TextView
                 android:id="@+id/txt_animal_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="false"
+                android:layout_centerInParent="false"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Species' Name"
-                android:textAppearance="@style/TextAppearance.AppCompat.Display2" />
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textSize="40sp" />
+
+            <ImageView
+                android:id="@+id/pic_animal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:src="@mipmap/ic_launcher" />
 
             <!--TODO: add appropriate value of text  -->
+
             <TextView
                 android:id="@+id/txt_desc"
                 android:layout_width="wrap_content"
@@ -54,96 +49,94 @@
                 android:text="Species Description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-            <!--TODO: figure out how to insert a link  -->
             <TextView
                 android:id="@+id/txt_wiki_link"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Wikipedia Link"
+                android:textAllCaps="false"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/txt_binomial_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Scientific Name: "
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_binomial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_binomial_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Panthera Leo"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/endangered_level_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/end_lev_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_endangered_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/endangered_level_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Species Endangered Level"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp">
+
+                <TextView
+                    android:id="@+id/mass_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/mass_title"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txt_mass"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/mass_title"
+                    android:layout_marginLeft="10dp"
+                    android:text="Species Mass"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            </RelativeLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/mass_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_linear_layout"
-            android:layout_margin="5dp"
-            android:text="@string/mass_title"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_mass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/main_linear_layout"
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/mass_title"
-            android:text="Species Mass"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-        <TextView
-            android:id="@+id/population_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/mass_title"
-            android:layout_margin="5dp"
-            android:text="@string/pop_title"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_population"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txt_mass"
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/population_title"
-            android:text="Species Population"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-        <TextView
-            android:id="@+id/endangered_level_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/population_title"
-            android:layout_margin="5dp"
-            android:text="@string/end_lev_title"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_endangered_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/population_title"
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/endangered_level_title"
-            android:text="Species Endangered Level"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-        <TextView
-            android:id="@+id/diet_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/endangered_level_title"
-            android:layout_margin="5dp"
-            android:text="@string/diet_title"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_diet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/endangered_level_title"
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/diet_title"
-            android:text="Omnivore"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium" />
-
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

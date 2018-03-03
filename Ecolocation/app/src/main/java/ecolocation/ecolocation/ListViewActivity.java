@@ -86,16 +86,6 @@ public class ListViewActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 return true;
 
-            case R.id.pop_ascending:
-                sorter.sort(animalList, SORT_TYPE.POPULATION, 0);
-                adapter.notifyDataSetChanged();
-                return true;
-
-            case R.id.pop_descending:
-                sorter.sort(animalList, SORT_TYPE.POPULATION, 1);
-                adapter.notifyDataSetChanged();
-                return true;
-
             case R.id.mass_ascending:
                 sorter.sort(animalList, SORT_TYPE.MASS, 0);
                 adapter.notifyDataSetChanged();

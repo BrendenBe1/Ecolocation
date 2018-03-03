@@ -12,44 +12,36 @@ public class Animal {
     private String name;    //common name if applicable
     private Drawable picture;
     private String description;
-    //TODO: consider making diet an enumeration
-    private String diet;    //herbivore, omnivore, carnivore
+    private String wikiLink;
     private ThreatLevel threatLevel;
     private double mass; //in kilograms
-    private int population;   //population density
 
     //--------- Constructors
     public Animal(){
         name = "Elephant";
         //    picture =
         description = "Description";
-        diet = "Herbivore";
         threatLevel = ThreatLevel.VULNERABLE;
         mass = 7000;
-        population = 415000;
     }
 
-    public Animal(String binomial, String name, Drawable picture, String description,
-                  String diet, ThreatLevel threatLevel, double mass, int population){
+    public Animal(String binomial, String name, Drawable picture, String description, String url,
+                  ThreatLevel threatLevel, double mass){
         this.binomial = binomial;
         this.name = name;
         this.picture = picture;
         this.description = description;
-        this.diet = diet;
+        this.wikiLink = url;
         this.threatLevel = threatLevel;
         this.mass = mass;
-        this.population = population;
     }
-
-
-    //------ Getters
-    public void setPopulation(int population) {
-        this.population = population;
-    }
-    public void setImage( Drawable image ) { this.picture = image; }
 
 
     //------ Setters
+    public void setImage( Drawable image ) { this.picture = image; }
+
+
+    //------ Getters
     public String getBinomial() {
         return binomial;
     }
@@ -65,8 +57,8 @@ public class Animal {
         return description;
     }
 
-    public String getDiet() {
-        return diet;
+    public String getWikiLink(){
+        return wikiLink;
     }
 
     public ThreatLevel getThreatLevel() {
@@ -77,7 +69,4 @@ public class Animal {
         return mass;
     }
 
-    public int getPopulation() {
-        return population;
-    }
 }

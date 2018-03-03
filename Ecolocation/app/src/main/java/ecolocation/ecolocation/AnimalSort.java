@@ -9,8 +9,7 @@ import java.util.ArrayList;
 enum SORT_TYPE {
     BINOMIAL,
     THREAT_LEVEL,
-    MASS,
-    POPULATION
+    MASS
 }
 
 public class AnimalSort {
@@ -41,8 +40,7 @@ public class AnimalSort {
                     stringsMergeDescend(list, i, mid, j, sortType);
                 }
             }
-            else if(sortType == SORT_TYPE.MASS || sortType == SORT_TYPE.POPULATION
-                    || sortType == SORT_TYPE.THREAT_LEVEL){
+            else if(sortType == SORT_TYPE.MASS || sortType == SORT_TYPE.THREAT_LEVEL){
                 if(order == 0){
                     integersMergeAscend(list, i, mid, j, sortType);
                 }
@@ -179,10 +177,6 @@ public class AnimalSort {
                     leftInt = list.get(leftIndex).getMass();
                     rightInt = list.get(rightIndex).getMass();
                     break;
-                case POPULATION:
-                    leftInt = list.get(leftIndex).getPopulation();
-                    rightInt = list.get(rightIndex).getPopulation();
-                    break;
                 case THREAT_LEVEL:
                     leftInt = list.get(leftIndex).getThreatLevel().getValue();
                     rightInt = list.get(rightIndex).getThreatLevel().getValue();
@@ -245,10 +239,6 @@ public class AnimalSort {
                 case MASS:
                     leftInt = list.get(leftIndex).getMass();
                     rightInt = list.get(rightIndex).getMass();
-                    break;
-                case POPULATION:
-                    leftInt = list.get(leftIndex).getPopulation();
-                    rightInt = list.get(rightIndex).getPopulation();
                     break;
                 case THREAT_LEVEL:
                     leftInt = list.get(leftIndex).getThreatLevel().getValue();

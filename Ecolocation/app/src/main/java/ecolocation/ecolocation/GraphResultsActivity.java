@@ -51,12 +51,18 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph_results);
 
-        final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
-        Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
-
-        //get Ecosystem instance and get database info & set coordinates for it
+        //--------- Get Ecosystem Data
+        //need to get coordinates and initialize Ecosystem
         Ecosystem ecosystem = Ecosystem.get(this);
-        animalList = ecosystem.getAnimalList(chosenLocation);
+        if(getIntent().hasExtra("COORDS")){
+            final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
+            Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
+            //get Ecosystem instance and get database info & set coordinates for it
+            animalList = ecosystem.getAnimalList(chosenLocation);
+        }
+        else{
+            animalList = ecosystem.getAnimalList();
+        }
 
 
         //----------- Toolbar Setup
@@ -72,7 +78,6 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
             public void onClick(View v) {
                 Intent intent = new Intent(GraphResultsActivity.this,
                         ListViewActivity.class);
-                intent.putExtra("COORDS", chosenLocation);
                 startActivity(intent);
             }
         });
@@ -220,6 +225,13 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
 
     private String scaleColor(int index){
         return "3"+String.valueOf(colorScale[index]);
+    }
+
+        @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putBoolean("Ecosystem has been initialized", true);
     }
 }
 

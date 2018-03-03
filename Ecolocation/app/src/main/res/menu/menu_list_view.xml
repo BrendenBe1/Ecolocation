@@ -23,18 +23,6 @@
                 </menu>
             </item>
             <item
-                android:id = "@+id/population"
-                android:title = "Population" >
-                <menu>
-                    <item
-                        android:id = "@+id/pop_ascending"
-                        android:title = "Ascending"/>
-                    <item
-                        android:id = "@+id/pop_descending"
-                        android:title="Descending"/>
-                </menu>
-            </item>
-            <item
                 android:id = "@+id/mass"
                 android:title = "Mass" >
                 <menu>

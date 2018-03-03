@@ -39,18 +39,17 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     EditText latTxt;
     EditText longTxt;
 
-    private static final String TAG = LocationActivity.class.getSimpleName();
-    private GoogleMap map;
-    private Marker marker;
+    private static GoogleMap map;
+    private static Marker marker;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
     // location retrieved by the Fused Location Provider.
-    private Location lastKnownLocation;
+    private static Location lastKnownLocation;
 //    private LatLng chosenLocation;
     // A default location (Flagstaff, Arizona) to use when location permission is not granted.
     private LatLng chosenLocation = new LatLng(35.1982, -111.6513);
-    private boolean locationPermissionGranted;
+    private static boolean locationPermissionGranted;
 
     //----- CONSTANTS
     private static final int DEFAULT_ZOOM = 15;
@@ -123,8 +122,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        Bundle extras = getIntent().getExtras();
-        locationPermissionGranted = extras.getBoolean(GPS_PERMISSION);
+        if(getIntent().hasExtra(GPS_PERMISSION)){
+            Bundle extras = getIntent().getExtras();
+            locationPermissionGranted = extras.getBoolean(GPS_PERMISSION);
+
+        }
+//        else{
+//            locationPermissionGranted = false;
+//        }
 
         //used to get the last known location of the device
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -251,6 +256,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             if(locationPermissionGranted){
                 map.setMyLocationEnabled(true);
                 map.getUiSettings().setMyLocationButtonEnabled(true);
+                if(marker == null){
+                    setMarker();
+                }
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation, DEFAULT_ZOOM));
             }
             //disable My Location layer & controls
             else{

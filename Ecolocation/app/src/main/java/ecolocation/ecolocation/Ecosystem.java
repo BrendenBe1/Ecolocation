@@ -40,9 +40,8 @@ public class Ecosystem {
     private Ecosystem(Context context){
         animalList = new ArrayList<Animal>();
         this.context = context;
-
-        //TODO: fill list with database and images
     }
+
 
     //gets the single instance of sEcosystem
     public static Ecosystem get(Context context){
@@ -75,11 +74,7 @@ public class Ecosystem {
         return null;
     }
 
-//    //sets the list b/c most of the work has to be done in an activity
-//    public void setList(ArrayList<Animal> list){
-//        animalList = list;
-//    }
-    
+
 
     //-------- Getting Data from Databases
 
@@ -99,9 +94,14 @@ public class Ecosystem {
                         .add("latitude", String.valueOf(coordinates.latitude))
                         .add("longitude", String.valueOf(coordinates.longitude))
                         .build();
+                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
+                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
+
+
+
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
-                        .url("http://18.216.195.218/mammals.php?")
+                        .url("http://18.222.2.88/get_data.php?") // new one. gets binomial, common_name, mass, endangered_status, wiki_link, description
                         .post(arguments)
                         .build();
                 try {
@@ -115,13 +115,14 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatStr = object.getString("endangered_level");
+                        String threatStr = object.getString("endangered_status");
                         ThreatLevel threatLevel = determineThreatLevel(threatStr);
+                        String description = object.getString("description");
+                        String wikiLink = object.getString("wiki_link");
+                        int mass = object.getInt("mass")/1000;  //convert it to kg
 
-                        //TODO: get description
-                        Animal animal = new Animal(binomial, commonName, pic,
-                                "A big cat in Africa", "Carnivore", threatLevel,
-                                object.getInt("mass"), object.getInt("population"));
+                        Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
+                                threatLevel, mass);
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
@@ -144,7 +145,6 @@ public class Ecosystem {
                     Animal currAnimal = animalList.get(i);
                     loadImageFromURL(currAnimal);
                     Log.d("currAnimal", currAnimal.getBinomial());
-                    // Do something with the value
                 }
             }
         };
@@ -161,10 +161,10 @@ public class Ecosystem {
         final ImageView imageView = new ImageView(context);
 
         String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
-        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/current/"  + fileName + ".jpg";
-//        String url = "http://cefns.nau.edu/~mh973/images/" +
+        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/current/" + fileName + ".jpg";
         // call to get picture
-        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
+                .picasso.Callback(){
 
 
             // because the image doesn't load all at once you have to set the image for the animal when it is successful
