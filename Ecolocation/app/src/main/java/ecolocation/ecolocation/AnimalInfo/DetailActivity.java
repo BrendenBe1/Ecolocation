@@ -1,4 +1,4 @@
-package ecolocation.ecolocation;
+package ecolocation.ecolocation.AnimalInfo;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
+
+import ecolocation.ecolocation.R;
 
 public class DetailActivity extends AppCompatActivity {
     private ViewPager viewPager;

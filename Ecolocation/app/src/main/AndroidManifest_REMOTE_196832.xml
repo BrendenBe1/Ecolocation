@@ -50,24 +50,14 @@
         <!-- Graph Results Activity -->
         <activity
             android:name=".GraphResultsActivity"
-            android:parentActivityName=".LocationActivity">
+            android:parentActivityName=".GraphResultsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LocationActivity" />
+                android:value=".GraphResultsActivity" />
         </activity>
 
         <!-- Animal Detail Activity -->
-<<<<<<< HEAD
-        <activity
-            android:name=".DetailActivity"
-            android:parentActivityName=".DetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DetailActivity" />
-        </activity>
-=======
         <activity android:name=".AnimalInfo.DetailFragment" />
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
 
         <!-- Map Activity -->
         <activity
@@ -95,16 +85,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-<<<<<<< HEAD
-        <activity android:name=".WebActivity"
-            android:parentActivityName=".DetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DetailActivity" />
-        </activity>
-=======
         <activity android:name=".AnimalInfo.DetailActivity"></activity>
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
     </application>
 
 </manifest>

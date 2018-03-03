@@ -1,4 +1,4 @@
-package ecolocation.ecolocation;
+package ecolocation.ecolocation.AnimalInfo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -17,6 +17,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ecolocation.ecolocation.R;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -40,8 +41,9 @@ public class Ecosystem {
     private Ecosystem(Context context){
         animalList = new ArrayList<Animal>();
         this.context = context;
-    }
 
+        //TODO: fill list with database and images
+    }
 
     //gets the single instance of sEcosystem
     public static Ecosystem get(Context context){
@@ -74,7 +76,11 @@ public class Ecosystem {
         return null;
     }
 
-
+//    //sets the list b/c most of the work has to be done in an activity
+//    public void setList(ArrayList<Animal> list){
+//        animalList = list;
+//    }
+    
 
     //-------- Getting Data from Databases
 
@@ -94,20 +100,9 @@ public class Ecosystem {
                         .add("latitude", String.valueOf(coordinates.latitude))
                         .add("longitude", String.valueOf(coordinates.longitude))
                         .build();
-                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
-                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
-<<<<<<< HEAD
-
-
-
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
-=======
-                // animals.php is old db call for just getting binomial
-                Request request = new Request.Builder()
-                        //.url("http://18.216.195.218/mammals.php?") // old one
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
-                        .url("http://18.222.2.88/get_data.php?") // new one. gets binomial, common_name, mass, endangered_status, wiki_link, description
+                        .url("http://18.216.195.218/mammals.php?")
                         .post(arguments)
                         .build();
                 try {
@@ -121,21 +116,13 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatStr = object.getString("endangered_status");
+                        String threatStr = object.getString("endangered_level");
                         ThreatLevel threatLevel = determineThreatLevel(threatStr);
-                        String description = object.getString("description");
-                        String wikiLink = object.getString("wiki_link");
-                        int mass = object.getInt("mass")/1000;  //convert it to kg
 
-<<<<<<< HEAD
-                        Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                threatLevel, mass);
-=======
                         //TODO: get description
                         Animal animal = new Animal(binomial, commonName, pic,
                                 "A big cat in Africa", "Carnivore", threatLevel,
-                                object.getInt("mass"), 1001);
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
+                                object.getInt("mass"), object.getInt("population"));
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
@@ -154,11 +141,12 @@ public class Ecosystem {
             @Override
             protected void onPostExecute(Void aVoid) {
 //                adapter.notifyDataSetChanged();
-                for(int i=0; i<animalList.size(); i++) {
-                    Animal currAnimal = animalList.get(i);
-                    loadImageFromURL(currAnimal);
-                    Log.d("currAnimal", currAnimal.getBinomial());
-                }
+//                for(int i=0; i<animalList.size(); i++) {
+//                    Animal currAnimal = animalList.get(i);
+//                    loadImageFromURL(currAnimal);
+//                    Log.d("currAnimal", currAnimal.getBinomial());
+//                    // Do something with the value
+//                }
             }
         };
 
@@ -172,12 +160,9 @@ public class Ecosystem {
     {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);
-
-        String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
-        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/current/" + fileName + ".jpg";
+        String url = "http://cefns.nau.edu/~mh973/images/" + animal.getName() + ".jpg";
         // call to get picture
-        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
-                .picasso.Callback(){
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
 
 
             // because the image doesn't load all at once you have to set the image for the animal when it is successful
