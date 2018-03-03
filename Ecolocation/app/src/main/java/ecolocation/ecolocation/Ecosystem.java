@@ -96,17 +96,10 @@ public class Ecosystem {
                         .build();
                 Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
                 Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
-<<<<<<< HEAD
 
-
-
-                // animals.php is old db call for just getting binomial
-                Request request = new Request.Builder()
-=======
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
                         //.url("http://18.216.195.218/mammals.php?") // old one
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
                         .url("http://18.222.2.88/get_data.php?") // new one. gets binomial, common_name, mass, endangered_status, wiki_link, description
                         .post(arguments)
                         .build();
@@ -127,15 +120,8 @@ public class Ecosystem {
                         String wikiLink = object.getString("wiki_link");
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
-<<<<<<< HEAD
                         Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
                                 threatLevel, mass);
-=======
-                        //TODO: get description
-                        Animal animal = new Animal(binomial, commonName, pic,
-                                "A big cat in Africa", "Carnivore", threatLevel,
-                                object.getInt("mass"), 1001);
->>>>>>> 5fef2107825e20570c12505cfe60a1ce6ff4ba0e
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());

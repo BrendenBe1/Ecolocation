@@ -1,4 +1,4 @@
-package ecolocation.ecolocation.AnimalInfo;
+package ecolocation.ecolocation;
 
 import java.util.ArrayList;
 
