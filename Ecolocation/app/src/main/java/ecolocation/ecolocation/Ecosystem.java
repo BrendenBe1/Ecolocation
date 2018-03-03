@@ -34,7 +34,10 @@ public class Ecosystem {
     private static Ecosystem sEcosystem;    //starts w/ 's' to indicate it's a static variable
     private ArrayList<Animal> animalList;
     private Context context;
-    static int flag = 0;    //used for getting pictures
+    private AnimalAdapter adapter;
+    private static int flag = 0;    //used for getting pictures
+    private static int updateListView = 0;  //indicates if ListView has been updated after getting
+                                            // all of the animal data
 
     //private constructor
     private Ecosystem(Context context){
@@ -55,7 +58,7 @@ public class Ecosystem {
     //gets animal data from database
     public ArrayList<Animal> getAnimalList(LatLng coordinates){
         animalList = getAnimalData(coordinates);
-
+        adapter = null;
         return animalList;
     }
 
@@ -72,6 +75,10 @@ public class Ecosystem {
             }
         }
         return null;
+    }
+
+    public  void setAdapter(AnimalAdapter adapter){
+        this.adapter = adapter;
     }
 
 
@@ -139,12 +146,12 @@ public class Ecosystem {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-//                adapter.notifyDataSetChanged();
                 for(int i=0; i<animalList.size(); i++) {
                     Animal currAnimal = animalList.get(i);
                     loadImageFromURL(currAnimal);
                     Log.d("currAnimal", currAnimal.getBinomial());
                 }
+
             }
         };
 
@@ -172,12 +179,8 @@ public class Ecosystem {
             {
                 Drawable d = imageView.getDrawable();
                 animal.setImage(d);
-                if( flag == 0 )
-                {
-//                    Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
-//                    startActivity( intent );
-//                    finish();
-                    flag = 1;
+                if(adapter != null){
+                    adapter.notifyDataSetChanged();
                 }
             }
             @Override

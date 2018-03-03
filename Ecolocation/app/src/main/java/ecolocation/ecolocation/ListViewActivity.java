@@ -42,6 +42,8 @@ public class ListViewActivity extends AppCompatActivity {
         // ----------- Adapter Stuff
         // setting up the individual list items with the adapter
         adapter = new AnimalAdapter(this, animalList);
+        Ecosystem ecosystem = Ecosystem.get(this);
+        ecosystem.setAdapter(adapter);
         //the adapter fills the list with the array list
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
