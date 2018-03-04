@@ -40,7 +40,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     EditText longTxt;
 
     private static GoogleMap map;
-    private static Marker marker;
+    private Marker marker;
 
     // The entry point to the Fused Location Provider.
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -277,6 +277,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 getLocationPermission();
             }
             map.getUiSettings().setZoomControlsEnabled(true);
+            setMarker();
         }
         catch(SecurityException e){}
     }
