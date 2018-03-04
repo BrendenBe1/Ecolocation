@@ -216,8 +216,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     //---------- shows the draggable marker and related event listeners
     private void setMarker(){
-        marker = map.addMarker(new MarkerOptions().position(new LatLng(chosenLocation.latitude,
-                chosenLocation.longitude)).title("Default Location").draggable(true));
+        if(marker == null){
+            marker = map.addMarker(new MarkerOptions().position(new LatLng(chosenLocation.latitude,
+                    chosenLocation.longitude)).title("Default Location").draggable(true));
+        }
+        else{
+            marker.setPosition(chosenLocation);
+        }
 
         //add marker to current location or default location (if location is denied)
         if (lastKnownLocation != null){
@@ -271,6 +276,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 lastKnownLocation = null;
                 getLocationPermission();
             }
+            map.getUiSettings().setZoomControlsEnabled(true);
         }
         catch(SecurityException e){}
     }

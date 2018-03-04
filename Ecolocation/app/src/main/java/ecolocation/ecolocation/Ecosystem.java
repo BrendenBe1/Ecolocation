@@ -121,7 +121,7 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatStr = object.getString("endangered_status");
+                        String threatStr = object.getString("code");
                         ThreatLevel threatLevel = determineThreatLevel(threatStr);
                         String description = object.getString("description");
                         String wikiLink = object.getString("wiki_link");
@@ -190,37 +190,33 @@ public class Ecosystem {
 
     //converts a string into an enumeration of the threat level
     private ThreatLevel determineThreatLevel(String string){
-        string = string.toLowerCase();
         ThreatLevel threatLevel;
         switch (string){
-            case "least concerned":
+            case "LC":
                 threatLevel = ThreatLevel.LEAST_CONCERNED;
                 break;
-            case "near threatened":
+            case "NT":
                 threatLevel = ThreatLevel.NEAR_THREATENED;
                 break;
-            case "vulnerable":
+            case "VU":
                 threatLevel = ThreatLevel.VULNERABLE;
                 break;
-            case "endangered":
+            case "EN":
                 threatLevel = ThreatLevel.ENDANGERED;
                 break;
-            case "critically endangered":
+            case "CR":
                 threatLevel = ThreatLevel.CRITICALLY_ENDANGERED;
                 break;
-            case "extinct in the wild":
+            case "EW":
                 threatLevel = ThreatLevel.EXTINCT_IN_THE_WILD;
                 break;
-            case "extinct":
+            case "EX":
                 threatLevel = ThreatLevel.EXTINCT;
                 break;
-            case "extant (resident)":
-                threatLevel = ThreatLevel.EXTANT;
-                break;
-            case "data deficient":
+            case "DD":
                 threatLevel = ThreatLevel.DATA_DEFICIENT;
                 break;
-            case "not evaluated":
+            case "NE":
                 threatLevel = ThreatLevel.NOT_EVALUATED;
                 break;
             default:

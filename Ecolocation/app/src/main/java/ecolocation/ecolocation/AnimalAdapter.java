@@ -79,9 +79,6 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
             case "Extinct":
                 nameText.setTextColor(res.getColor(R.color.extinct));
                 break;
-            case "Extant (resident)":
-                nameText.setTextColor(res.getColor(R.color.extantResident));
-                break;
             case "Not Evaluated":
                 nameText.setTextColor(res.getColor(R.color.notEvaluated));
                 break;

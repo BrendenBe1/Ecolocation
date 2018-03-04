@@ -11,12 +11,13 @@ import android.widget.TextView;
 
 public class DetailFragment extends android.support.v4.app.Fragment {
     //widgets
-    ImageView animalPic;
-    TextView nameText;
-    TextView descText;
-    TextView wikiLink;
-    TextView massText;
-    TextView endangeredLevel;
+    private ImageView animalPic;
+    private TextView binomialText;
+    private TextView nameText;
+    private TextView descText;
+    private TextView wikiLink;
+    private TextView massText;
+    private TextView endangeredLevel;
 
     private Animal animal;
 
@@ -49,6 +50,7 @@ public class DetailFragment extends android.support.v4.app.Fragment {
 
         //------------- implementing widgets
         animalPic = (ImageView) view.findViewById(R.id.pic_animal);
+        binomialText = (TextView) view.findViewById(R.id.txt_binomial);
         nameText = (TextView) view.findViewById(R.id.txt_animal_name);
         descText = (TextView) view.findViewById(R.id.txt_desc);
         wikiLink = (TextView) view.findViewById(R.id.txt_wiki_link);
@@ -57,7 +59,8 @@ public class DetailFragment extends android.support.v4.app.Fragment {
 
         //set contents of widgets
         animalPic.setImageDrawable(animal.getPicture());
-        nameText.setText(capitalize(animal.getBinomial()));
+        nameText.setText(animal.getName());
+        binomialText.setText(capitalize(animal.getBinomial()));
         massText.setText(String.valueOf(animal.getMass()) + " kg");
         endangeredLevel.setText(capitalize(animal.getThreatLevel().getName()));
 
