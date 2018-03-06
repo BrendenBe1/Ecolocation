@@ -7,14 +7,27 @@ import android.graphics.drawable.Drawable;
  * This interface is
  */
 
+/**
+ * This enumeration is used to determine which type of animal we are using
+ *
+ * It's useful for determining if an ImageView should be visible or not to display historic range
+ * map or data retrieval so we know which table to get data from, and more.
+ */
+enum AnimalType {
+    CURRENT_MAMMAL,
+    HISTORIC_MAMMAL
+}
+
 public class Animal {
     private String binomial;
     private String name;    //common name if applicable
     private Drawable picture;
+    private Drawable rangeMap;  //only applicable for historic mammals
     private String description;
     private String wikiLink;
     private ThreatLevel threatLevel;
     private double mass; //in kilograms
+    private AnimalType type;    //helps determine which data set it belongs to and such
 
     //--------- Constructors
     public Animal(){
@@ -26,25 +39,68 @@ public class Animal {
     }
 
     public Animal(String binomial, String name, Drawable picture, String description, String url,
-                  ThreatLevel threatLevel, double mass){
+                  String threatLevel, double mass, AnimalType type){
         this.binomial = binomial;
         this.name = name;
         this.picture = picture;
         this.description = description;
         this.wikiLink = url;
-        this.threatLevel = threatLevel;
+        this.threatLevel = determineThreatLevel(threatLevel);
         this.mass = mass;
+        this.type = type;
+    }
+
+    //converts a string into an enumeration of the threat level
+    private ThreatLevel determineThreatLevel(String string){
+        ThreatLevel threatLevel;
+        switch (string){
+            case "LC":
+                threatLevel = ThreatLevel.LEAST_CONCERNED;
+                break;
+            case "NT":
+                threatLevel = ThreatLevel.NEAR_THREATENED;
+                break;
+            case "VU":
+                threatLevel = ThreatLevel.VULNERABLE;
+                break;
+            case "EN":
+                threatLevel = ThreatLevel.ENDANGERED;
+                break;
+            case "CR":
+                threatLevel = ThreatLevel.CRITICALLY_ENDANGERED;
+                break;
+            case "EW":
+                threatLevel = ThreatLevel.EXTINCT_IN_THE_WILD;
+                break;
+            case "EX":
+                threatLevel = ThreatLevel.EXTINCT;
+                break;
+            case "DD":
+                threatLevel = ThreatLevel.DATA_DEFICIENT;
+                break;
+            case "NE":
+                threatLevel = ThreatLevel.NOT_EVALUATED;
+                break;
+            default:
+                threatLevel = ThreatLevel.DATA_DEFICIENT;
+                break;
+        }
+        return threatLevel;
     }
 
 
     //------ Setters
     public void setImage( Drawable image ) { this.picture = image; }
 
+    public void setRangeMap(Drawable rangeMap) {
+        this.rangeMap = rangeMap;
+    }
 
     //------ Getters
     public String getBinomial() {
         return binomial;
     }
+
     public String getName() {
         return name;
     }
@@ -69,4 +125,11 @@ public class Animal {
         return mass;
     }
 
+    public AnimalType getType(){
+        return type;
+    }
+
+    public Drawable getRangeMap() {
+        return rangeMap;
+    }
 }

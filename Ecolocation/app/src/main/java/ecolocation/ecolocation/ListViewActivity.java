@@ -34,7 +34,7 @@ public class ListViewActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //get animal list
-        animalList = Ecosystem.get(this).getAnimalList();
+        animalList = Ecosystem.get(this).getCurrentList();
 
         //-------- Implementing Widgets
         listView = (ListView) findViewById(R.id.layout_list);

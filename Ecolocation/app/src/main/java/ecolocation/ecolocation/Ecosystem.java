@@ -32,21 +32,33 @@ import okhttp3.Response;
 
 public class Ecosystem {
     private static Ecosystem sEcosystem;    //starts w/ 's' to indicate it's a static variable
-    private ArrayList<Animal> animalList;
+
+    //animal lists
+    private ArrayList<Animal> animalList;   //current mammals
+    private ArrayList<Animal> historicList; //historic (Pleistocene Era) Animals
+
+    //needed for updating ListViews once data is retrieved
     private Context context;
     private AnimalAdapter adapter;
-    private static int flag = 0;    //used for getting pictures
-    private static int updateListView = 0;  //indicates if ListView has been updated after getting
-                                            // all of the animal data
 
-    //private constructor
+    /**
+     * The private constructor for Ecosystem
+     *
+     * @param context application context
+     */
     private Ecosystem(Context context){
         animalList = new ArrayList<Animal>();
         this.context = context;
     }
 
 
-    //gets the single instance of sEcosystem
+    /**
+     * Gets the single instance of Ecosystem. If it's not initialized, then it uses the private
+     * constructor. Otherwise it returns the current instance.
+     *
+     * @param context:  application context
+     * @return          returns the single instance of Ecosystem
+     */
     public static Ecosystem get(Context context){
         if(sEcosystem == null){
             sEcosystem = new Ecosystem(context);
@@ -54,39 +66,101 @@ public class Ecosystem {
         return sEcosystem;
     }
 
-    //---------- for the animalList
-    //gets animal data from database
-    public ArrayList<Animal> getAnimalList(LatLng coordinates){
-        animalList = getAnimalData(coordinates);
+    //---------- Initializing ArrayLists for holding Animals
+
+    /**
+     *  Gets the data to make the current mammal list for the selected location
+     *
+     * @param coordinates:  the coordinates of the location to get the current mammal data for
+     * @return              returns an ArrayList of animals for the selected location
+     */
+    public ArrayList<Animal> getCurrentList(LatLng coordinates){
+        animalList = getAnimalData(coordinates, AnimalType.CURRENT_MAMMAL);
         adapter = null;
         return animalList;
     }
 
-    //returns animal database
-    public ArrayList<Animal> getAnimalList(){
+    /**
+     *  Returns the current mammal list for selected location, which is already initialized
+     *
+     * @return  Current Mammal List
+     */
+    public ArrayList<Animal> getCurrentList(){
         return animalList;
     }
 
-    //returns the wanted animal
-    public Animal getAnimal(String scientificName){
-        for(Animal animal : animalList){
-            if (animal.getBinomial().equals(scientificName)){
-                return animal;
+    /**
+     *  Gets the list of mammals from the Pleistocene Era for the selected location. It determines
+     *  all the historic animals in this location and gets the relevant info for each mammal.
+     *
+     * @param coordinates:  coordinates for the location to get historic list for
+     * @return              ArrayList of Pleistocene mammals for selected location
+     */
+    public ArrayList<Animal> getHistoricList(LatLng coordinates){
+        historicList = getAnimalData(coordinates, AnimalType.HISTORIC_MAMMAL);
+        adapter = null;
+
+        return historicList;
+    }
+
+    /**
+     *  Gets the already initialized list of Pleistocene Era mammals
+     *
+     * @return  ArrayList of Pleistocene mammals for selected location
+     */
+    public ArrayList<Animal> getHistoricList(){
+        return historicList;
+    }
+
+    //TODO: Add parameter to indicate which list to grab this from
+    /**
+     *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
+     *  scientific name.
+     *
+     * @param scientificName    The scientific name of the animal to return
+     * @return                  Animal object with the scientific name entered
+     */
+    public Animal getAnimal(String scientificName, AnimalType type){
+        //get animal from current mammal list if it's a current mammal
+        if(type.equals(AnimalType.CURRENT_MAMMAL)){
+            for(Animal animal : animalList){
+                if (animal.getBinomial().equals(scientificName)){
+                    return animal;
+                }
+            }
+        }
+        else if(type.equals(AnimalType.HISTORIC_MAMMAL)){
+            for(Animal animal : historicList){
+                if (animal.getBinomial().equals(scientificName)){
+                    return animal;
+                }
             }
         }
         return null;
     }
 
+    /**
+     * By binding an adapter (one used for a ListView) to this class, we can notify the adapter when
+     * changes occurs to the data set. If the list of animals is empty when the ListView page is
+     * created, the list can be updated when the data comes in
+     *
+     * @param adapter   adapter for a ListView object
+     */
     public  void setAdapter(AnimalAdapter adapter){
         this.adapter = adapter;
     }
 
 
-
     //-------- Getting Data from Databases
 
-    //this is just filling it in with dummy data
-    private ArrayList<Animal> getAnimalData(final LatLng coordinates){
+    /**
+     * Determines the animals in specified location. It gets each animal in the location along with
+     * its corresponding information from the database to initialize the current mammals list.
+     *
+     * @param coordinates   the coordinates of the location to get animal data for
+     * @return              ArrayList for current mammals
+     */
+    private ArrayList<Animal> getAnimalData(final LatLng coordinates, final AnimalType animalType){
 
         // default image to display in case something happens
         final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
@@ -121,14 +195,13 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatStr = object.getString("code");
-                        ThreatLevel threatLevel = determineThreatLevel(threatStr);
+                        String threatLevel = object.getString("code");
                         String description = object.getString("description");
                         String wikiLink = object.getString("wiki_link");
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
                         Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                threatLevel, mass);
+                                threatLevel, mass, animalType);
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
@@ -160,20 +233,37 @@ public class Ecosystem {
         return list;
     }
 
-    // function to load an image into an image view
+    /**
+     * Gets the image for the inputted Animal
+     *
+     * @param animal    the animal to get the image for
+     */
     private void loadImageFromURL(final Animal animal)
     {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);
 
         String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
-        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/current/" + fileName + ".jpg";
+        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/";
+
+        //determine which folder to retrieve data
+        if(animal.getType().equals(AnimalType.CURRENT_MAMMAL)){
+            url += "current/" + fileName + ".jpg";
+        }
+        //TODO: change this to historic mammals
+        else if(animal.getType().equals(AnimalType.HISTORIC_MAMMAL)){
+            url += "historic_range/" + fileName + ".png";
+        }
+
         // call to get picture
         Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
                 .picasso.Callback(){
 
 
-            // because the image doesn't load all at once you have to set the image for the animal when it is successful
+            /*
+             *  because the image doesn't load all at once you have to set the image for the animal
+             *  when it is successful
+             */
             @Override
             public void onSuccess()
             {
@@ -188,42 +278,34 @@ public class Ecosystem {
         });
     }
 
-    //converts a string into an enumeration of the threat level
-    private ThreatLevel determineThreatLevel(String string){
-        ThreatLevel threatLevel;
-        switch (string){
-            case "LC":
-                threatLevel = ThreatLevel.LEAST_CONCERNED;
-                break;
-            case "NT":
-                threatLevel = ThreatLevel.NEAR_THREATENED;
-                break;
-            case "VU":
-                threatLevel = ThreatLevel.VULNERABLE;
-                break;
-            case "EN":
-                threatLevel = ThreatLevel.ENDANGERED;
-                break;
-            case "CR":
-                threatLevel = ThreatLevel.CRITICALLY_ENDANGERED;
-                break;
-            case "EW":
-                threatLevel = ThreatLevel.EXTINCT_IN_THE_WILD;
-                break;
-            case "EX":
-                threatLevel = ThreatLevel.EXTINCT;
-                break;
-            case "DD":
-                threatLevel = ThreatLevel.DATA_DEFICIENT;
-                break;
-            case "NE":
-                threatLevel = ThreatLevel.NOT_EVALUATED;
-                break;
-            default:
-                threatLevel = ThreatLevel.DATA_DEFICIENT;
-                break;
-        }
-        return threatLevel;
+    private void loadImageRangeMap(final Animal animal){
+        // create an imageView to hold the picture
+        final ImageView imageView = new ImageView(context);
+
+        String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
+        String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/" +
+                "historic_range/" + fileName + ".png";
+
+        // call to get picture
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
+                .picasso.Callback(){
+
+            /*
+             *  because the image doesn't load all at once you have to set the image for the animal
+             *  when it is successful
+             */
+            @Override
+            public void onSuccess()
+            {
+                Drawable d = imageView.getDrawable();
+                animal.setImage(d);
+                if(adapter != null){
+                    adapter.notifyDataSetChanged();
+                }
+            }
+            @Override
+            public void onError(){}
+        });
     }
 
 }

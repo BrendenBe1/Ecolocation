@@ -58,10 +58,10 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
             final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
             Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
             //get Ecosystem instance and get database info & set coordinates for it
-            animalList = ecosystem.getAnimalList(chosenLocation);
+            animalList = ecosystem.getCurrentList(chosenLocation);
         }
         else{
-            animalList = ecosystem.getAnimalList();
+            animalList = ecosystem.getCurrentList();
         }
 
 

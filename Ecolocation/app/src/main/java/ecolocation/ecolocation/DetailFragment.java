@@ -40,7 +40,7 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 
         String animalBinomial = getArguments().getString(SELECTED_ANIMAL);
-        animal = Ecosystem.get(getActivity()).getAnimal(animalBinomial);
+        animal = Ecosystem.get(getActivity()).getAnimal(animalBinomial, AnimalType.CURRENT_MAMMAL);
     }
 
     @Override

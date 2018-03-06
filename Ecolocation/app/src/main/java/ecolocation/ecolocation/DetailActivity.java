@@ -31,7 +31,7 @@ public class DetailActivity extends AppCompatActivity {
 
 
         //get the animal the user selected
-        animalList = Ecosystem.get(this).getAnimalList();
+        animalList = Ecosystem.get(this).getCurrentList();
         final String animalBinomial = getIntent().getStringExtra(ANIMAL_NAME_EXTRA);
 
         //------ Set Up ViewPager

@@ -12,10 +12,10 @@
     <color name="leastConcern">#0EA214</color>
     <color name="nearThreatened">#6AE01C</color>
     <color name="vulnerable">#CDDC00</color>
-    <color name="endagered">#FFEA00</color>
-    <color name="criticallyEndangered">#FF8D07</color>
+    <color name="endagered">#ffb900</color>
+    <color name="criticallyEndangered">#fc8105</color>
     <color name="extinctInTheWild">#f44336</color>
-    <color name="extinct">#D60000</color>
+    <color name="extinct">#b50404</color>
     <color name="notEvaluated">#000000</color>
     <color name="dataDeficient">#6d6f69</color>
 </resources>
