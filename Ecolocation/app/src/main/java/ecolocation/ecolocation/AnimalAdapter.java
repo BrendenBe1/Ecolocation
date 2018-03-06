@@ -27,7 +27,7 @@ public class AnimalAdapter extends ArrayAdapter<Animal> {
     }
 
     /*
-    * This method puts each item of animalList into a list_item.
+    * This method puts each item of currentMammalList into a list_item.
     * It's responsible for handling the data and the view of the data
     */
     @Override

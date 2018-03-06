@@ -97,10 +97,46 @@ public class Ecosystem {
      * @return              ArrayList of Pleistocene mammals for selected location
      */
     public ArrayList<Animal> getHistoricList(LatLng coordinates){
-        historicList = getAnimalData(coordinates, AnimalType.HISTORIC_MAMMAL);
+        //TODO: uncomment below
+//        historicList = getAnimalData(coordinates, AnimalType.HISTORIC_MAMMAL);
+        historicList = sampleHistoricData();
         adapter = null;
 
         return historicList;
+    }
+
+    //TODO: delete below
+    private ArrayList<Animal> sampleHistoricData(){
+       final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
+
+        Animal a1 = new Animal("Acratocnus odontrigonus", "Acratocnus odontrigonus",
+                pic, "Animal Description", "WikiLink", "CR", 10,
+                AnimalType.HISTORIC_MAMMAL);
+
+        Animal a2 = new Animal("Acratocnus ye", "Acratocnus ye", pic,
+                "Animal Description", "WikiLink", "CR", 10,
+                AnimalType.HISTORIC_MAMMAL);
+
+        Animal a3 = new Animal("Agalmaceros blicki", "Agalmaceros blicki", pic,
+                "Animal Description", "WikiLink", "CR", 10,
+                AnimalType.HISTORIC_MAMMAL);
+
+        Animal a4 = new Animal("Alces scotti", "Alces scotti", pic,
+                "Animal Description", "WikiLink", "CR", 10,
+                AnimalType.HISTORIC_MAMMAL);
+
+        Animal a5 = new Animal("Alouatta seniculus", "Alouatta seniculus", pic,
+                "Animal Description", "WikiLink", "CR", 10,
+                AnimalType.HISTORIC_MAMMAL);
+
+        ArrayList<Animal> list = new ArrayList<Animal>();
+        list.add(a1);
+        list.add(a2);
+        list.add(a3);
+        list.add(a4);
+        list.add(a5);
+
+        return list;
     }
 
     /**
@@ -112,7 +148,6 @@ public class Ecosystem {
         return historicList;
     }
 
-    //TODO: Add parameter to indicate which list to grab this from
     /**
      *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
      *  scientific name.
@@ -278,6 +313,12 @@ public class Ecosystem {
         });
     }
 
+    /**
+     *  This method is used for animals that range maps (Historic animals) It gets their
+     *  corresponding image of their range map
+     *
+     * @param animal
+     */
     private void loadImageRangeMap(final Animal animal){
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);

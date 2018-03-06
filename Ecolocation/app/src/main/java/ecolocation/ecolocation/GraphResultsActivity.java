@@ -38,8 +38,9 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
     Button listViewBttn;
     BarChart barChart;
 
-    //animal variablees
-    ArrayList<Animal> animalList;
+    //animal variables
+    ArrayList<Animal> currentMammalList;
+    ArrayList<Animal> historicMammalList;
 
     //Spatial Map Variables
     private String[] colorScale;
@@ -57,11 +58,14 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         if(getIntent().hasExtra("COORDS")){
             final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
             Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
+
             //get Ecosystem instance and get database info & set coordinates for it
-            animalList = ecosystem.getCurrentList(chosenLocation);
+            currentMammalList = ecosystem.getCurrentList(chosenLocation);
+            historicMammalList = ecosystem.getHistoricList(chosenLocation);
         }
         else{
-            animalList = ecosystem.getCurrentList();
+            currentMammalList = ecosystem.getCurrentList();
+            historicMammalList = ecosystem.getHistoricList();
         }
 
 
