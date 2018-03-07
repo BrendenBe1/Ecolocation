@@ -13,12 +13,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- The actual list, where each item has the layout of list_item.xml -->
-    <ListView
-        android:id="@+id/layout_list"
+    <!--https://guides.codepath.com/android/Google-Play-Style-Tabs-using-TabLayout#create-fragment-->
+
+    <!--This where the fragment will go-->
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:layout_gravity="center" />
+        android:layout_below="@+id/toolbar">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Current" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right" />
+    </android.support.design.widget.TabLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tab_layout" />
+
+    <!--&lt;!&ndash; The actual list, where each item has the layout of list_item.xml &ndash;&gt;-->
+    <!--<ListView-->
+        <!--android:id="@+id/layout_list"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@+id/toolbar"-->
+        <!--android:layout_gravity="center" />-->
 
 </RelativeLayout>

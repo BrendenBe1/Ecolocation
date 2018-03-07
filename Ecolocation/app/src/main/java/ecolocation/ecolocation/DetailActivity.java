@@ -12,11 +12,16 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 public class DetailActivity extends AppCompatActivity {
+    //widgets
     private ViewPager viewPager;
     private ArrayList<Animal> animalList;
 
+    //class variables
+    private AnimalType animalType;
+
     //constants
-    private static final String ANIMAL_NAME_EXTRA = "ANIMAL_NAME_EXTRA";
+    private static final String EXTRA_ANIMAL_NAME = "ANIMAL_NAME_EXTRA";
+    private static final String EXTRA_ANIMAL_TYPE = "ANIMAL_TYPE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +35,18 @@ public class DetailActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
 
-        //get the animal the user selected
-        animalList = Ecosystem.get(this).getCurrentList();
-        final String animalBinomial = getIntent().getStringExtra(ANIMAL_NAME_EXTRA);
+        //---------- Get the Animal the User Selected
+        animalType = (AnimalType) getIntent().getSerializableExtra(EXTRA_ANIMAL_TYPE);
+
+        //determine which
+        if(animalType.equals(AnimalType.CURRENT_MAMMAL)){
+            animalList = Ecosystem.get(this).getCurrentList();
+        }
+        else if(animalType.equals(AnimalType.HISTORIC_MAMMAL)){
+            animalList = Ecosystem.get(this).getHistoricList();
+        }
+        final String animalBinomial = getIntent().getStringExtra(EXTRA_ANIMAL_NAME);
+
 
         //------ Set Up ViewPager
         viewPager = (ViewPager) findViewById(R.id.view_pager);
@@ -42,7 +56,7 @@ public class DetailActivity extends AppCompatActivity {
             public android.support.v4.app.Fragment getItem(int position) {
                 Animal animal = animalList.get(position);
                 String binomial = animal.getBinomial();
-                return DetailFragment.newInstance(binomial);
+                return DetailFragment.newInstance(binomial, animalType);
             }
 
             @Override
@@ -52,13 +66,6 @@ public class DetailActivity extends AppCompatActivity {
         });
 
         viewPager.setCurrentItem(findSelectedAnimal(animalBinomial));
-    }
-
-    //encapsulates calling an intent for the activity that starts this activity
-    public static Intent newIntent(Context packagePackage, String animalBinomial){
-        Intent intent = new Intent(packagePackage, DetailActivity.class);
-        intent.putExtra(ANIMAL_NAME_EXTRA, animalBinomial);
-        return intent;
     }
 
     private  int findSelectedAnimal(String animalBinomial){
@@ -71,5 +78,19 @@ public class DetailActivity extends AppCompatActivity {
         return 0;
     }
 
-
+    /**
+     *
+     *
+     *
+     * @param activity      the activity requesting this page
+     * @param animalName    the name of the animal to display
+     * @param type    the type of animal to display (0 = current, 1 = historic)
+     * @return              returns the intent with the extras in it
+     */
+    public static Intent newIntent(Context activity, String animalName, AnimalType type){
+        Intent intent = new Intent(activity, DetailActivity.class);
+        intent.putExtra(EXTRA_ANIMAL_NAME, animalName);
+        intent.putExtra(EXTRA_ANIMAL_TYPE, type);
+        return intent;
+    }
 }

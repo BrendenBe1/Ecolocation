@@ -1,26 +1,21 @@
 package ecolocation.ecolocation;
 
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
-
-import android.content.Intent;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-
-import java.util.ArrayList;
 
 public class ListViewActivity extends AppCompatActivity {
     //Widgets
-    ListView listView;
-
-    //variables for creating the list
-    private ArrayList<Animal> animalList;
-    private AnimalAdapter adapter;
+    ViewPager viewPager;
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,29 +28,16 @@ public class ListViewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
-        //get animal list
-        animalList = Ecosystem.get(this).getCurrentList();
+        //------------ Widgets
 
-        //-------- Implementing Widgets
-        listView = (ListView) findViewById(R.id.layout_list);
+        //view pager
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(adapter);
 
-        // ----------- Adapter Stuff
-        // setting up the individual list items with the adapter
-        adapter = new AnimalAdapter(this, animalList);
-        Ecosystem ecosystem = Ecosystem.get(this);
-        ecosystem.setAdapter(adapter);
-        //the adapter fills the list with the array list
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Animal currAnimal = animalList.get(position);
-                Intent intent = DetailActivity.newIntent(ListViewActivity.this,
-                        currAnimal.getBinomial());
-                startActivity(intent);
-            }
-        });
-
+        //tab layout
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     //------------- Menu
@@ -66,53 +48,80 @@ public class ListViewActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        AnimalSort sorter = new AnimalSort();
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.recalc:
-                return true;
-            case R.id.reset:
-                //TODO: replace this with restoring sliders to original values
-                Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
-                finish();
-                startActivity(intent);
-                return true;
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        AnimalSort sorter = new AnimalSort();
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.recalc:
+//                return true;
+//            case R.id.reset:
+//                //TODO: replace this with restoring sliders to original values
+//                Intent intent = new Intent( ListViewActivity.this, ListViewActivity.class );
+//                finish();
+//                startActivity(intent);
+//                return true;
+//
+//            case R.id.alph_ascending:
+//                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            case R.id.alph_descending:
+//                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            case R.id.mass_ascending:
+//                sorter.sort(animalList, SORT_TYPE.MASS, 0);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            case R.id.mass_descending:
+//                sorter.sort(animalList, SORT_TYPE.MASS, 1);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            case  R.id.endang_ascending:
+//                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 1);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            case R.id.endang_descending:
+//                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 0);
+//                adapter.notifyDataSetChanged();
+//                return true;
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
-            case R.id.alph_ascending:
-                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 0);
-                adapter.notifyDataSetChanged();
-                return true;
+}
 
-            case R.id.alph_descending:
-                sorter.sort(animalList, SORT_TYPE.BINOMIAL, 1);
-                adapter.notifyDataSetChanged();
-                return true;
+class TabLayoutAdapter extends FragmentPagerAdapter{
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[] { "Current", "Historic"};
+    private Context context;
 
-            case R.id.mass_ascending:
-                sorter.sort(animalList, SORT_TYPE.MASS, 0);
-                adapter.notifyDataSetChanged();
-                return true;
-
-            case R.id.mass_descending:
-                sorter.sort(animalList, SORT_TYPE.MASS, 1);
-                adapter.notifyDataSetChanged();
-                return true;
-
-            case  R.id.endang_ascending:
-                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 1);
-                adapter.notifyDataSetChanged();
-                return true;
-
-            case R.id.endang_descending:
-                sorter.sort(animalList, SORT_TYPE.THREAT_LEVEL, 0);
-                adapter.notifyDataSetChanged();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public TabLayoutAdapter(FragmentManager fm, Context context) {
+        super(fm);
+        this.context = context;
     }
 
+    @Override
+    public int getCount() {
+        return PAGE_COUNT;
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+        return ListViewFragment.newInstance(position);
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        // Generate title based on item position
+        return tabTitles[position];
+    }
 }

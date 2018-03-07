@@ -136,6 +136,25 @@
                     android:text="Species Mass"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_range_map_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Range Map"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/img_range_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher"
+                android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>
 

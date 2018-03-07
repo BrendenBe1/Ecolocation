@@ -100,6 +100,13 @@ public class Ecosystem {
         //TODO: uncomment below
 //        historicList = getAnimalData(coordinates, AnimalType.HISTORIC_MAMMAL);
         historicList = sampleHistoricData();
+        //get range maps
+        for(int i=0; i<historicList.size(); i++) {
+            Animal currAnimal = historicList.get(i);
+            loadImageRangeMap(currAnimal);
+            Log.d("currAnimal", currAnimal.getBinomial());
+        }
+
         adapter = null;
 
         return historicList;
@@ -323,7 +330,7 @@ public class Ecosystem {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);
 
-        String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
+        String fileName = animal.getBinomial();
         String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/" +
                 "historic_range/" + fileName + ".png";
 
@@ -339,7 +346,7 @@ public class Ecosystem {
             public void onSuccess()
             {
                 Drawable d = imageView.getDrawable();
-                animal.setImage(d);
+                animal.setRangeMap(d);
                 if(adapter != null){
                     adapter.notifyDataSetChanged();
                 }

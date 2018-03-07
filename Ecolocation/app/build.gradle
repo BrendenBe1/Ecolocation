@@ -20,6 +20,9 @@ android {
     }
     buildToolsVersion '26.0.1'
 }
+ext {
+    supportLibVersion = '26.1.0'  // variable that can be referenced to keep support libs consistent
+}
 repositories {
     maven { url "https://jitpack.io" }
 }
@@ -41,4 +44,8 @@ dependencies {
     // compile dependency for picasso library
     // allows for access to images from url
     compile 'com.squareup.picasso:picasso:2.5.2'
+
+    //used for tab layout
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support:design:${supportLibVersion}"
 }

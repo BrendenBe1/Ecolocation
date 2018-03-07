@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ecolocation.ecolocation.AnimalInfo.DetailFragment">
+    tools:context="ecolocation.ecolocation.DetailFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,13 +54,13 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:clickable="true"
-                android:onClick="onClick"
                 android:text="Wikipedia Link"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textColor="@color/colorAccent" />
 
             <RelativeLayout
+                android:id="@+id/scientific_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
@@ -86,6 +87,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/threat_level"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp">
@@ -112,6 +114,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/mass"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="5dp">
@@ -137,11 +140,27 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
             </RelativeLayout>
+
+            <TextView
+                android:id="@+id/txt_range_map_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:text="Range Map"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/img_range_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/range_map"
+                android:visibility="invisible" />
         </LinearLayout>
 
 
     </ScrollView>
-
-    <!--TODO: add appropriate value of image -->
 
 </RelativeLayout>

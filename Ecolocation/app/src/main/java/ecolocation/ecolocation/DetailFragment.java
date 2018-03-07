@@ -12,6 +12,8 @@ import android.widget.TextView;
 public class DetailFragment extends android.support.v4.app.Fragment {
     //widgets
     private ImageView animalPic;
+    private ImageView rangeMapPic;
+    private TextView rangeMapText;
     private TextView binomialText;
     private TextView nameText;
     private TextView descText;
@@ -19,17 +21,21 @@ public class DetailFragment extends android.support.v4.app.Fragment {
     private TextView massText;
     private TextView endangeredLevel;
 
+    //variables
     private Animal animal;
+    private AnimalType animalType;
 
     //constants
-    static final String SELECTED_ANIMAL = "selected animal";
+    private static final String SELECTED_ANIMAL = "selected animal";
+    private static final String ANIMAL_TYPE = "animal type";
 
     //this is necessary b/c fragment arguments (similar to activity extras) cannot be added to the
     //fragment before it's added to the FragmentManager's transactions list. This allows the app to
     // do that
-    public static DetailFragment newInstance(String animalBinomial){
+    public static DetailFragment newInstance(String animalBinomial, AnimalType type){
         Bundle args = new Bundle();
         args.putString(SELECTED_ANIMAL, animalBinomial);
+        args.putSerializable(ANIMAL_TYPE, type);
         DetailFragment fragment = new DetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -40,7 +46,15 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         super.onCreate(savedInstanceState);
 
         String animalBinomial = getArguments().getString(SELECTED_ANIMAL);
-        animal = Ecosystem.get(getActivity()).getAnimal(animalBinomial, AnimalType.CURRENT_MAMMAL);
+        animalType = (AnimalType) getArguments().getSerializable(ANIMAL_TYPE);
+        if(animalType.equals(AnimalType.CURRENT_MAMMAL)){
+            animal = Ecosystem.get(getActivity()).getAnimal(animalBinomial, AnimalType
+                    .CURRENT_MAMMAL);
+        }
+        else if(animalType.equals(AnimalType.HISTORIC_MAMMAL)){
+            animal = Ecosystem.get(getActivity()).getAnimal(animalBinomial, AnimalType
+                    .HISTORIC_MAMMAL);
+        }
     }
 
     @Override
@@ -56,6 +70,20 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         wikiLink = (TextView) view.findViewById(R.id.txt_wiki_link);
         massText = (TextView) view.findViewById(R.id.txt_mass);
         endangeredLevel = (TextView) view.findViewById(R.id.txt_endangered_level);
+
+        //show range map if animal is Pleistocene animal (AKA: historic)
+        if(animalType.equals(AnimalType.HISTORIC_MAMMAL)){
+            //initialize the historic related widgets
+            rangeMapPic = (ImageView) view.findViewById(R.id.img_range_map);
+            rangeMapText = (TextView) view.findViewById(R.id.txt_range_map_title);
+
+            //make visible
+            rangeMapPic.setVisibility(View.VISIBLE);
+            rangeMapText.setVisibility(View.VISIBLE);
+
+            //get picture for range map
+            rangeMapPic.setImageDrawable(animal.getRangeMap());
+        }
 
         //set contents of widgets
         animalPic.setImageDrawable(animal.getPicture());
@@ -95,7 +123,7 @@ public class DetailFragment extends android.support.v4.app.Fragment {
     }
 
     //capitalize each word
-    public static String capitalize(String str){
+    private static String capitalize(String str){
         String capitalized = "";
         String[] parts = str.split(" ");
         for(int i=0; i<parts.length; i++){
