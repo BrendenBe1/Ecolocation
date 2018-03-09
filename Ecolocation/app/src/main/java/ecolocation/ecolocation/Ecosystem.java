@@ -75,7 +75,7 @@ public class Ecosystem {
      * @return              returns an ArrayList of animals for the selected location
      */
     public ArrayList<Animal> getCurrentList(LatLng coordinates){
-        animalList = getAnimalData(coordinates, AnimalType.CURRENT_MAMMAL);
+        animalList = getAnimalData(coordinates);
         adapter = null;
         return animalList;
     }
@@ -97,9 +97,7 @@ public class Ecosystem {
      * @return              ArrayList of Pleistocene mammals for selected location
      */
     public ArrayList<Animal> getHistoricList(LatLng coordinates){
-        //TODO: uncomment below
-//        historicList = getAnimalData(coordinates, AnimalType.HISTORIC_MAMMAL);
-        historicList = sampleHistoricData();
+        historicList = getHistoricData(coordinates);
         //get range maps
         for(int i=0; i<historicList.size(); i++) {
             Animal currAnimal = historicList.get(i);
@@ -155,6 +153,8 @@ public class Ecosystem {
         return historicList;
     }
 
+
+
     /**
      *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
      *  scientific name.
@@ -202,7 +202,7 @@ public class Ecosystem {
      * @param coordinates   the coordinates of the location to get animal data for
      * @return              ArrayList for current mammals
      */
-    private ArrayList<Animal> getAnimalData(final LatLng coordinates, final AnimalType animalType){
+    private ArrayList<Animal> getAnimalData(final LatLng coordinates){
 
         // default image to display in case something happens
         final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
@@ -222,8 +222,7 @@ public class Ecosystem {
 
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
-                        //.url("http://18.216.195.218/mammals.php?") // old one
-                        .url("http://18.222.2.88/get_data.php?") // new one. gets binomial, common_name, mass, endangered_status, wiki_link, description
+                        .url("http://18.222.2.88/get_data.php?")
                         .post(arguments)
                         .build();
                 try {
@@ -243,7 +242,77 @@ public class Ecosystem {
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
                         Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                threatLevel, mass, animalType);
+                                threatLevel, mass, AnimalType.CURRENT_MAMMAL);
+
+                        if(!list.contains(animal)){
+                            list.add(animal);
+                        }
+                        Log.d("return", animal.getBinomial());
+                    }
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                for(int i=0; i<animalList.size(); i++) {
+                    Animal currAnimal = animalList.get(i);
+                    loadImageFromURL(currAnimal);
+                    Log.d("currAnimal", currAnimal.getBinomial());
+                }
+
+            }
+        };
+
+        asyncTask.execute();
+
+        return list;
+    }
+
+    private ArrayList<Animal> getHistoricData(final LatLng coordinates){
+        // default image to display in case something happens
+        final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
+        final ArrayList<Animal> list = new ArrayList<>();
+
+        @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
+            @Override
+            protected Void doInBackground(Integer... Void) {
+
+                OkHttpClient client = new OkHttpClient();
+                RequestBody arguments = new FormBody.Builder()
+                        .add("latitude", String.valueOf(coordinates.latitude))
+                        .add("longitude", String.valueOf(coordinates.longitude))
+                        .build();
+                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
+                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
+
+                // animals.php is old db call for just getting binomial
+                Request request = new Request.Builder()
+                        .url("http://18.222.2.88/get_data.php?")
+                        .post(arguments)
+                        .build();
+                try {
+                    Response response = client.newCall(request).execute();
+
+                    JSONArray array = new JSONArray(response.body().string());
+
+                    for (int i = 0; i < array.length(); i++) {
+
+                        JSONObject object = array.getJSONObject(i);
+
+                        String binomial = object.getString("binomial");
+                        String commonName = object.getString("common_name");
+                        String description = object.getString("description");
+                        String wikiLink = object.getString("wiki_link");
+                        int mass = object.getInt("mass")/1000;  //convert it to kg
+
+                        Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
+                                "NE", mass, AnimalType.HISTORIC_MAMMAL);
 
                         list.add(animal);
                         Log.d("return", animal.getBinomial());
@@ -294,13 +363,12 @@ public class Ecosystem {
         }
         //TODO: change this to historic mammals
         else if(animal.getType().equals(AnimalType.HISTORIC_MAMMAL)){
-            url += "historic_range/" + fileName + ".png";
+            url += "current/" + fileName + ".png";
         }
 
         // call to get picture
         Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
                 .picasso.Callback(){
-
 
             /*
              *  because the image doesn't load all at once you have to set the image for the animal
