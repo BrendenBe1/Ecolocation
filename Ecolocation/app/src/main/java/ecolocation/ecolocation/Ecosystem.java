@@ -98,50 +98,10 @@ public class Ecosystem {
      */
     public ArrayList<Animal> getHistoricList(LatLng coordinates){
         historicList = getHistoricData(coordinates);
-        //get range maps
-        for(int i=0; i<historicList.size(); i++) {
-            Animal currAnimal = historicList.get(i);
-            loadImageRangeMap(currAnimal);
-            Log.d("currAnimal", currAnimal.getBinomial());
-        }
 
         adapter = null;
 
         return historicList;
-    }
-
-    //TODO: delete below
-    private ArrayList<Animal> sampleHistoricData(){
-       final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
-
-        Animal a1 = new Animal("Acratocnus odontrigonus", "Acratocnus odontrigonus",
-                pic, "Animal Description", "WikiLink", "CR", 10,
-                AnimalType.HISTORIC_MAMMAL);
-
-        Animal a2 = new Animal("Acratocnus ye", "Acratocnus ye", pic,
-                "Animal Description", "WikiLink", "CR", 10,
-                AnimalType.HISTORIC_MAMMAL);
-
-        Animal a3 = new Animal("Agalmaceros blicki", "Agalmaceros blicki", pic,
-                "Animal Description", "WikiLink", "CR", 10,
-                AnimalType.HISTORIC_MAMMAL);
-
-        Animal a4 = new Animal("Alces scotti", "Alces scotti", pic,
-                "Animal Description", "WikiLink", "CR", 10,
-                AnimalType.HISTORIC_MAMMAL);
-
-        Animal a5 = new Animal("Alouatta seniculus", "Alouatta seniculus", pic,
-                "Animal Description", "WikiLink", "CR", 10,
-                AnimalType.HISTORIC_MAMMAL);
-
-        ArrayList<Animal> list = new ArrayList<Animal>();
-        list.add(a1);
-        list.add(a2);
-        list.add(a3);
-        list.add(a4);
-        list.add(a5);
-
-        return list;
     }
 
     /**
@@ -293,7 +253,7 @@ public class Ecosystem {
 
                 // animals.php is old db call for just getting binomial
                 Request request = new Request.Builder()
-                        .url("http://18.222.2.88/get_data.php?")
+                        .url("http://18.222.2.88/get_historic_data.php?")
                         .post(arguments)
                         .build();
                 try {
@@ -330,9 +290,10 @@ public class Ecosystem {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                for(int i=0; i<animalList.size(); i++) {
-                    Animal currAnimal = animalList.get(i);
+                for(int i=0; i<historicList.size(); i++) {
+                    Animal currAnimal = historicList.get(i);
                     loadImageFromURL(currAnimal);
+                    loadImageRangeMap(currAnimal);
                     Log.d("currAnimal", currAnimal.getBinomial());
                 }
 
@@ -354,17 +315,17 @@ public class Ecosystem {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(context);
 
-        String fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
+        String fileName = "";
+        if(animal.getType().equals(AnimalType.CURRENT_MAMMAL)){
+            fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
+        }
+        else{
+            fileName = animal.getBinomial().replace(" ", "_").toLowerCase();
+        }
+
         String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/";
 
-        //determine which folder to retrieve data
-        if(animal.getType().equals(AnimalType.CURRENT_MAMMAL)){
-            url += "current/" + fileName + ".jpg";
-        }
-        //TODO: change this to historic mammals
-        else if(animal.getType().equals(AnimalType.HISTORIC_MAMMAL)){
-            url += "current/" + fileName + ".png";
-        }
+        url += "current/" + fileName + ".jpg";
 
         // call to get picture
         Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup

@@ -156,7 +156,6 @@
                 android:id="@+id/img_range_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/range_map"
                 android:visibility="invisible" />
         </LinearLayout>
 
