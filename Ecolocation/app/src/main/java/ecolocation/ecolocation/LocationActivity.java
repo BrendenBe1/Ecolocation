@@ -209,7 +209,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
-
         //turn on My Location Layer & related control on the map
         updateLocationUI();
     }

@@ -1,13 +1,16 @@
 package ecolocation.ecolocation;
 
 import android.content.Intent;
-import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
@@ -19,29 +22,30 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.AxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MapStyleOptions;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GraphResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
-    //TODO: delete these buttons after tech demo
     Button listViewBttn;
+    ImageView spatialImg;
     BarChart barChart;
 
     //animal variables
     ArrayList<Animal> currentMammalList;
     ArrayList<Animal> historicMammalList;
 
-    //Spatial Map Variables
-    private String[] colorScale;
-    private  double[] latitudes = new double[30];  //9.607168 9.761728 = 94
-    private double[] longitudes = new double [30];
+    // spatial map variables
+    LatLng chosenLocation;
+    double[][] currNutrientMovement = new double[360][180];
+    ArrayList<WeightedLatLng> currentNutrientList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +56,7 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         //need to get coordinates and initialize Ecosystem
         Ecosystem ecosystem = Ecosystem.get(this);
         if(getIntent().hasExtra("COORDS")){
-            final LatLng chosenLocation = getIntent().getExtras().getParcelable("COORDS");
+            chosenLocation = getIntent().getExtras().getParcelable("COORDS");
             Log.d("LATITUDE graph: ", String.valueOf(chosenLocation.latitude));
 
             //get Ecosystem instance and get database info & set coordinates for it
@@ -81,6 +85,8 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
                 startActivity(intent);
             }
         });
+
+        spatialImg = (ImageView) findViewById(R.id.img_spatial);
 
 
         //-------- BarChart
@@ -136,6 +142,9 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
 
+        currentNutrientList = new ArrayList<WeightedLatLng>();
+        displaySpatialMap();
+
     }
 
     public class MyXAxisValueFormatter implements AxisValueFormatter {
@@ -159,20 +168,22 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
     //--------- Methods for Creating the Spatial Map
     @Override
     public void onMapReady(GoogleMap map){
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = map.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.style_json));
+    }
 
-            if (!success) {
-            }
-        } catch (Resources.NotFoundException e) {
-        }
-        // Position the map's camera near Flagstaff, Arizona
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.179940, -111.645842),
-                5));
+    private void displaySpatialMap(){
+        Bitmap currentMap = BitmapFactory.decodeResource(getResources(), R.drawable
+                .current_nutrient_map);
+        int height = currentMap.getWidth();
+        int width = currentMap.getHeight();
+        int newHeight = 300;
+        int newWidth = 300;
+        float scaledHeight = ((float) newWidth) / width;
+        float scaledWidth = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaledWidth, scaledHeight);
+        Bitmap currentMapZoomed = Bitmap.createBitmap(currentMap, 0, 0, width, height, matrix,
+                true);
+        spatialImg.setImageBitmap(currentMapZoomed);
     }
 
         @Override
@@ -180,6 +191,30 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
         super.onSaveInstanceState(outState);
 
         outState.putBoolean("Ecosystem has been initialized", true);
+    }
+
+    private void createNutrientArray(){
+        try{
+            BufferedReader br = new BufferedReader(new FileReader("current_nut_mov.txt"));
+            String line = br.readLine();
+
+            int row = 0;
+            while(line != null){
+                String[] rowStrings = line.split(" ");
+
+                for(int col = 0; col<rowStrings.length; col++){
+                    double value = Double.valueOf(rowStrings[col];
+                    WeightedLatLng coordinateValue = new WeightedLatLng(col, row, value);
+                    currentNutrientList.add(coordinateValue);
+                }
+
+                row += 1;
+            }
+
+            br.close();
+        } catch (IOException e){
+            System.out.println(e);
+        }
     }
 }
 
