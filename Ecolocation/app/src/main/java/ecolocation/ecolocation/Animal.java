@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
  * This enumeration is used to determine which type of animal we are using
  *
  * It's useful for determining if an ImageView should be visible or not to display historic range
- * map or data retrieval so we know which table to get data from, and more.
+ * map or current_nutrient retrieval so we know which table to get current_nutrient from, and more.
  */
 enum AnimalType {
     CURRENT_MAMMAL,
@@ -54,7 +54,7 @@ public class Animal {
     private String wikiLink;
     private ThreatLevel threatLevel;
     private double mass; //in kilograms
-    private AnimalType type;    //helps determine which data set it belongs to and such
+    private AnimalType type;    //helps determine which current_nutrient set it belongs to and such
 
     //--------- Constructors
     public Animal(){

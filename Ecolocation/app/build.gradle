@@ -42,10 +42,12 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
 
     // compile dependency for picasso library
-    // allows for access to images from url
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     //used for tab layout
     compile "com.android.support:appcompat-v7:${supportLibVersion}"
     compile "com.android.support:design:${supportLibVersion}"
+
+    //-------- Google Maps Utility Dependency
+    compile 'com.google.maps.android:android-maps-utils:0.5+'
 }

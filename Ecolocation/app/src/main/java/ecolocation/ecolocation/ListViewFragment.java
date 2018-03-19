@@ -117,7 +117,7 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
 
     /*
     * This method puts each item of currentMammalList into a list_item.
-    * It's responsible for handling the data and the view of the data
+    * It's responsible for handling the current_nutrient and the view of the current_nutrient
     */
     @Override
     public View getView(final int position, View view, ViewGroup parent){
