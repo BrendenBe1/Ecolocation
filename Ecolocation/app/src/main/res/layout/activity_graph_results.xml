@@ -65,12 +65,6 @@
                 android:layout_height="500dp"
                 android:layout_margin="16dp"
                 map:cameraZoom="10" />
-
-            <ImageView
-                android:id="@+id/img_spatial"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                map:srcCompat="@mipmap/ic_launcher" />
         </LinearLayout>
     <!--</ScrollView>-->
 

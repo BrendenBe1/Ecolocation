@@ -8,12 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.formatter.AxisValueFormatter;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,7 +41,6 @@ import java.util.Scanner;
 public class GraphResultsActivity extends AppCompatActivity implements OnMapReadyCallback {
     //widgets
     Button listViewBttn;
-    ImageView spatialImg;
     BarChart barChart;
 
     //animal variables
@@ -93,55 +96,52 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
             }
         });
 
-        spatialImg = (ImageView) findViewById(R.id.img_spatial);
-
-
         //-------- BarChart
-//        barChart = (BarChart) findViewById(R.id.barChart);
-//
-//        barChart.setDrawBarShadow(false);
-//        barChart.setDrawValueAboveBar(true);
-//        barChart.setMaxVisibleValueCount(50);
-//        barChart.setPinchZoom(false);
-//        barChart.setDrawGridBackground(true);
-//        barChart.setDescription("");
-//        barChart.setFitBars(true);
-//
-//        barChart.animateY(4000, Easing.EasingOption.EaseInQuart);
-//
-//        ArrayList<BarEntry> barEntries = new ArrayList<>();
-//
-//        barEntries.add(new BarEntry(1f, 10f));
-//        barEntries.add(new BarEntry(2f, 7f));
-//        barEntries.add(new BarEntry(3f, 0f));
-//
-//        BarDataSet dataSet = new BarDataSet(barEntries, "");
-//
-//        String[] labels = new String[] {"" ,"Historic", "Current", "Change"};
-//
-//        barChart.getXAxis().setValueFormatter(new MyXAxisValueFormatter(labels));
-//
-//        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
-//
-//        BarData current_nutrient = new BarData(dataSet);
-//        current_nutrient.setBarWidth(.8f);
-//
-//        barChart.setData(current_nutrient);
-//
-//        barChart.getAxisRight().setDrawLabels(false);
-//
-//        XAxis xAxis = barChart.getXAxis();
-//        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-//        xAxis.setDrawGridLines(false);
-//        xAxis.setGranularity(1f);
-//
-//        YAxis yLAxis = barChart.getAxisLeft();
-//        yLAxis.setAxisMinValue(0f);
-//        yLAxis.setLabelCount(6);
-//        yLAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
-//
-//        YAxis yRAxis = barChart.getAxisRight();
-//        yRAxis.setAxisMinValue(0f);
+        barChart = (BarChart) findViewById(R.id.barChart);
+
+        barChart.setDrawBarShadow(false);
+        barChart.setDrawValueAboveBar(true);
+        barChart.setMaxVisibleValueCount(50);
+        barChart.setPinchZoom(false);
+        barChart.setDrawGridBackground(true);
+        barChart.setDescription("");
+        barChart.setFitBars(true);
+
+        barChart.animateY(4000, Easing.EasingOption.EaseInQuart);
+
+        ArrayList<BarEntry> barEntries = new ArrayList<>();
+
+        barEntries.add(new BarEntry(1f, 10f));
+        barEntries.add(new BarEntry(2f, 7f));
+        barEntries.add(new BarEntry(3f, 0f));
+
+        BarDataSet dataSet = new BarDataSet(barEntries, "");
+
+        String[] labels = new String[] {"" ,"Historic", "Current", "Change"};
+
+        barChart.getXAxis().setValueFormatter(new MyXAxisValueFormatter(labels));
+
+        dataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        BarData current_nutrient = new BarData(dataSet);
+        current_nutrient.setBarWidth(.8f);
+
+        barChart.setData(current_nutrient);
+
+        barChart.getAxisRight().setDrawLabels(false);
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
+        xAxis.setGranularity(1f);
+
+        YAxis yLAxis = barChart.getAxisLeft();
+        yLAxis.setAxisMinValue(0f);
+        yLAxis.setLabelCount(6);
+        yLAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
+
+        YAxis yRAxis = barChart.getAxisRight();
+        yRAxis.setAxisMinValue(0f);
 
         //--------- Spatial Map
         //get a handle to the map fragment
@@ -153,23 +153,23 @@ public class GraphResultsActivity extends AppCompatActivity implements OnMapRead
 
     }
 
-    public class MyXAxisValueFormatter implements AxisValueFormatter {
-
-        private String[] mValues;
-
-        public MyXAxisValueFormatter(String[] values) {
-            this.mValues = values;
-        }
-
-        @Override
-        public String getFormattedValue(float value, AxisBase axis) {
-
-            return mValues[(int) value];
-        }
-
-
-        public int getDecimalDigits() { return 0; }
-    }
+//    public class MyXAxisValueFormatter implements AxisValueFormatter {
+//
+//        private String[] mValues;
+//
+//        public MyXAxisValueFormatter(String[] values) {
+//            this.mValues = values;
+//        }
+//
+//        @Override
+//        public String getFormattedValue(float value, AxisBase axis) {
+//
+//            return mValues[(int) value];
+//        }
+//
+//
+//        public int getDecimalDigits() { return 0; }
+//    }
 
     //--------- Methods for Creating the Spatial Map
     @Override

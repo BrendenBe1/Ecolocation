@@ -26,7 +26,6 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
 
@@ -38,7 +37,6 @@ public class HomeActivity extends AppCompatActivity {
 
     // A default location (Flagstaff, Arizona) and default zoom to use when location permission is
     // not granted.
-    private final LatLng defaultLocation = new LatLng(35.198284, -111.651299);
     private boolean locationPermissionGranted;
 
     //for default location
