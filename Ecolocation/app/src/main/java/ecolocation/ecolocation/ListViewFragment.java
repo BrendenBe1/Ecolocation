@@ -102,6 +102,13 @@ public class ListViewFragment extends Fragment {
         return view;
     }
 
+    public void updateListView(){
+        if(adapter != null){
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+
 }
 
 class AnimalAdapter extends ArrayAdapter<Animal> {

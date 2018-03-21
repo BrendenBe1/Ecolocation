@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 enum SORT_TYPE {
     BINOMIAL,
+    COMMON_NAME,
     THREAT_LEVEL,
     MASS
 }
@@ -32,7 +33,7 @@ public class AnimalSort {
 
             mergesort(list, i, mid, sortType, order);
             mergesort(list, mid+1, j, sortType, order);
-            if(sortType == SORT_TYPE.BINOMIAL){
+            if(sortType == SORT_TYPE.BINOMIAL || sortType == SORT_TYPE.COMMON_NAME){
                 if(order == 0){
                     stringsMergeAscend(list, i, mid, j, sortType);
                 }
@@ -68,8 +69,20 @@ public class AnimalSort {
 
         //start merging left & right lists
         while (leftIndex <= middleStart && rightIndex <= rightEnd){
-            String strLeft = list.get(leftIndex).getBinomial();
-            String strRight = list.get(rightIndex).getBinomial();
+            String strLeft = "";
+            String strRight = "";
+
+            switch(sortType){
+                case COMMON_NAME:
+                    strLeft = list.get(leftIndex).getName();
+                    strRight = list.get(rightIndex).getName();
+                    break;
+
+                case BINOMIAL:
+                    strLeft = list.get(leftIndex).getBinomial();
+                    strRight = list.get(rightIndex).getBinomial();
+                    break;
+            }
 
             //see if leftIndex is "smaller"
             if(strLeft.compareTo(strRight) <= 0){
@@ -119,8 +132,20 @@ public class AnimalSort {
 
         //start merging left & right lists
         while (leftIndex <= middleStart && rightIndex <= rightEnd){
-            String strLeft = list.get(leftIndex).getBinomial();
-            String strRight = list.get(rightIndex).getBinomial();
+            String strLeft = "";
+            String strRight = "";
+
+            switch(sortType){
+                case COMMON_NAME:
+                    strLeft = list.get(leftIndex).getName();
+                    strRight = list.get(rightIndex).getName();
+                    break;
+
+                case BINOMIAL:
+                    strLeft = list.get(leftIndex).getBinomial();
+                    strRight = list.get(rightIndex).getBinomial();
+                    break;
+            }
 
             //see if leftIndex is "smaller"
             if(strLeft.compareTo(strRight) >= 0){

@@ -66,7 +66,7 @@
                 android:value=".ListViewActivity" />
         </activity>
 
-        <!-- Map Activity -->
+        <!-- Location Activity -->
         <activity
             android:name=".LocationActivity"
             android:parentActivityName=".HomeActivity">
@@ -84,6 +84,20 @@
                 android:value=".GraphResultsActivity" />
         </activity>
 
+        <activity
+            android:name=".WebActivity"
+            android:parentActivityName=".DetailActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".DetailActivity" />
+        </activity>
+        <activity android:name=".DataResultsActivity"
+            android:parentActivityName=".LocationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LocationActivity" />
+        </activity>
+
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.gms.version"
@@ -92,14 +106,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity
-            android:name=".WebActivity"
-            android:parentActivityName=".DetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DetailActivity" />
-        </activity>
-        <activity android:name=".DataResultsActivity"></activity>
+
     </application>
 
 </manifest>

@@ -11,15 +11,27 @@
         app:showAsAction="always">
         <menu>
             <item
-                android:id = "@+id/alphabetical"
-                android:title = "Alphabetical">
+                android:id="@+id/common_name"
+                android:title="Common Name">
                 <menu>
                     <item
-                        android:id = "@+id/alph_ascending"
-                        android:title = "Ascending"/>
+                        android:id="@+id/comm_ascending"
+                        android:title="Ascending" />
                     <item
-                        android:id = "@+id/alph_descending"
-                        android:title="Descending"/>
+                        android:id="@+id/comm_descending"
+                        android:title="Descending" />
+                </menu>
+            </item>
+            <item
+                android:id="@+id/binomial"
+                android:title="Scientific Name">
+                <menu>
+                    <item
+                        android:id="@+id/bin_ascending"
+                        android:title="Ascending" />
+                    <item
+                        android:id="@+id/bin_descending"
+                        android:title="Descending" />
                 </menu>
             </item>
             <item
@@ -46,22 +58,6 @@
                         android:title="Descending"/>
                 </menu>
             </item>
-        </menu>
-    </item>
-
-    <item
-        android:id="@+id/submenu"
-        android:title="SubMenu"
-        android:icon="@drawable/ic_more_vert"
-        app:showAsAction="always">
-        <menu>
-        <item
-            android:id="@+id/recalc"
-            android:title="Re-Calculate"/>
-        <item
-            android:id="@+id/reset"
-            android:icon="@drawable/ic_refresh"
-            android:title="Reset"/>
         </menu>
     </item>
 

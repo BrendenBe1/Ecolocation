@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,7 +35,12 @@ import java.util.Scanner;
  * Created by Chandler on 3/19/2018.
  */
 
-public class SpatialMapFragment extends Fragment implements OnMapReadyCallback {
+public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
+        AdapterView.OnItemSelectedListener {
+    // spinner variables
+    private Spinner spinner;
+    private boolean isCurrentMap = true;   //when true show current map, when false show historic
+
     // google maps variables
     private GoogleMap map;
     private ArrayList<WeightedLatLng> currentNutrientList;
@@ -55,9 +63,26 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_spatial_mapping, container,
                 false);
 
+        // ------------ Google Maps
         SupportMapFragment mapFrag = (SupportMapFragment) getChildFragmentManager()
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
+
+        // ------------ Set Up Spinner to set up which map to show
+        spinner = (Spinner) view.findViewById(R.id.spinner);
+
+        //set up list of values to show in spinner
+        String[] mapStrings = {"Current Nutrient Movement", "Historic Nutrient Movement"};
+
+        // set up adapter & the layout type for its list of values
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout
+                .simple_spinner_item, mapStrings);
+        //set up layout for when it drops down
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // add listener
+        spinner.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -74,7 +99,12 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback {
 
         //get the current_nutrient
         try{
-            list = readJSONData(R.raw.data_current);
+            if(isCurrentMap){
+                list = readJSONData(R.raw.data_current);
+            }
+            else{
+                list = readJSONData(R.raw.data_historic);
+            }
         } catch (JSONException e){
             Toast.makeText(getContext(), "Problems reading json", Toast.LENGTH_SHORT).show();
         }
@@ -119,7 +149,7 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback {
         return list;
     }
 
-    /*
+    /**
        * Set the location controls on the map.
        *
        * If the user granted location permissions, then enable My Location Layer & related controls
@@ -132,5 +162,23 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.1982, -111.6513),
                 8));
         map.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id){
+        // position 0 = current map, position 1 = historic map
+        if(pos == 0){
+            isCurrentMap = true;
+        }
+        else{
+            isCurrentMap = false;
+        }
+
+        // ------------ Replace Heat Map w/ Selected Map
+        overlay.remove();
+        addHeatMap();
+    }
+
+    public void onNothingSelected(AdapterView<?> parent){
+        // do nothing
     }
 }
