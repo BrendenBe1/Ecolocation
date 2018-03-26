@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
+/**
+ *
+ */
 public class DetailFragment extends android.support.v4.app.Fragment {
     //widgets
     private ImageView animalPic;

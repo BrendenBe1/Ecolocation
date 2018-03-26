@@ -4,20 +4,27 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by Chandler on 11/28/2017.
- * This interface is
+ * This class represents an animal with the following attributes: common name, scientific name
+ * (binomial), threat level, image, wikipedia description, wikipedia link, mass, animal type
+ * (current or historic [Pleistocene Era]), and range map if it's a historic animal
  */
 
 /**
- * This enumeration is used to determine which type of animal we are using
+ *  This enumeration is used to determine which type of animal we are using
  *
- * It's useful for determining if an ImageView should be visible or not to display historic range
- * map or current_nutrient retrieval so we know which table to get current_nutrient from, and more.
+ *  It's useful for determining if an ImageView should be visible or not to display historic range
+ *  map or current_nutrient retrieval so we know which table to get current_nutrient from, and more.
  */
 enum AnimalType {
     CURRENT_MAMMAL,
     HISTORIC_MAMMAL
 }
 
+/**
+ *  This enumeration is used to represent the threat level of animal. Making this enumeration
+ *  guarantees that only the values below are entered as a threat level and makes sorting by threat
+ *  level much easier.
+ */
 enum ThreatLevel {
     //define each type of threat level
     LEAST_CONCERNED (0, "Least Concern"),
@@ -46,24 +53,20 @@ enum ThreatLevel {
 }
 
 public class Animal {
+    // attributes
     private String binomial;
-    private String name;    //common name if applicable
+    private String name;    // common name if applicable
     private Drawable picture;
-    private Drawable rangeMap;  //only applicable for historic mammals
+    private Drawable rangeMap;  // only applicable for historic mammals
     private String description;
     private String wikiLink;
     private ThreatLevel threatLevel;
-    private double mass; //in kilograms
-    private AnimalType type;    //helps determine which current_nutrient set it belongs to and such
+    private double mass; // in kilograms
+    private AnimalType type;    // tells if the animal is on the current or historic list
 
     //--------- Constructors
-    public Animal(){
-        name = "Elephant";
-        //    picture =
-        description = "Description";
-        threatLevel = ThreatLevel.VULNERABLE;
-        mass = 7000;
-    }
+    // empty constructor
+    public Animal(){}
 
     public Animal(String binomial, String name, Drawable picture, String description, String url,
                   String threatLevel, double mass, AnimalType type){
@@ -77,7 +80,12 @@ public class Animal {
         this.type = type;
     }
 
-    //converts a string into an enumeration of the threat level
+    /**
+     *  Converts a string version of the threat level into the enumeration
+     *
+     * @param string this is the value stored in the database to represent the threat level
+     * @return  the enumeration of the threat level the string was representing
+     */
     private ThreatLevel determineThreatLevel(String string){
         ThreatLevel threatLevel;
         switch (string){

@@ -20,23 +20,36 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 
 /**
- * Created by Chandler on 3/19/2018.
+ *  Created by Chandler on 3/19/2018.
+ *
+ *  This class builds and sets up a bar chart to display the nutrient movement of the current
+ *  ecosystem and the historic version of the ecosystem (from the Pleistocene Era). If the user
+ *  wants to explore "what-if" scenarios (removing sets of populations) then it will display a third
+ *  bar representing the nutrient movement of the hypothetical situation
  */
 
 public class BarChartFragment extends Fragment {
     private BarChart barChart;
 
+    /**
+     *  Encapsulates the creation of a BarChartFragment. It returns an instance of a
+     *  BarChartFragment.
+     *
+     * @return  BarChartFragment
+     */
     public static BarChartFragment newInstance(){
         BarChartFragment fragment = new BarChartFragment();
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-    }
-
+    /**
+     *  Creating the view the fragment will displayed in and wiring up the BarChart widget.
+     *
+     * @param inflater              used to inflate the view
+     * @param container             the parent view that the fragment's UI should be attached to
+     * @param savedInstanceState    if it's not null, this is a previous stat's version
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
@@ -46,10 +59,16 @@ public class BarChartFragment extends Fragment {
         // ------------ Customize Bar Chart
         barChart = (BarChart) view.findViewById(R.id.barChart);
 
+        setUpBarChart();
+
         return view;
     }
 
+    /**
+     *  All of the customizations for creating the BarChart and the data for it
+     */
     private void setUpBarChart(){
+        // setting up some of the bar chart's attributes
         barChart.setDrawBarShadow(false);
         barChart.setDrawValueAboveBar(true);
         barChart.setMaxVisibleValueCount(50);
@@ -96,10 +115,13 @@ public class BarChartFragment extends Fragment {
     }
 }
 
+/**
+ * This class formats the X-Axis for the Bar Chart
+ */
 class MyXAxisValueFormatter implements AxisValueFormatter {
-
     private String[] mValues;
 
+    // constructor
     public MyXAxisValueFormatter(String[] values) {
         this.mValues = values;
     }
