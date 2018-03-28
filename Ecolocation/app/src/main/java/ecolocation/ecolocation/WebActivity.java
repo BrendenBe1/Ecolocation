@@ -3,6 +3,7 @@ package ecolocation.ecolocation;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -48,27 +49,6 @@ public class WebActivity extends AppCompatActivity {
                 view.loadUrl(url);
                 return true;
             }
-
-            //show progressDialog while loading url
-            public void onLoadResource(WebView view, String url){
-//                if(progressDialog == null){
-//                    progressDialog = new ProgressDialog(WebActivity.this);
-//                    progressDialog.setMessage("Loading");
-//                    progressDialog.show();
-//                }
-            }
-
-            //hide progress dialog when page finishes loading
-            public void onPageFinished(WebView view, String url){
-//                try{
-//                    if(progressDialog.isShowing()){
-//                        progressDialog.dismiss();
-//                        progressDialog = null;
-//                    }
-//                } catch(Exception e){
-//                    e.printStackTrace();
-//                }
-            }
         });
 
         //enable JS
@@ -88,6 +68,16 @@ public class WebActivity extends AppCompatActivity {
         else{
            super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

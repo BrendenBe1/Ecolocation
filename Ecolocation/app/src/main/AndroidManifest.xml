@@ -19,84 +19,36 @@
         android:theme="@style/AppTheme">
 
         <!-- Home Activity -->
-        <activity android:name=".HomeActivity">
+        <activity android:name=".HomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <!-- Spatial Map Activity -->
-
-
-        <!-- About Activity -->
-        <activity
-            android:name=".AboutActivity"
-            android:parentActivityName=".HomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
-
-        <!-- Info Activity -->
-        <activity
-            android:name=".InfoActivity"
-            android:parentActivityName=".HomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".AboutActivity" />
-        </activity>
-
         <!-- Graph Results Activity -->
         <activity
-            android:name=".GraphResultsActivity"
-            android:parentActivityName=".LocationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LocationActivity" />
-        </activity>
+            android:name=".GraphResultsActivity" />
 
         <!-- Animal Detail Activity -->
         <activity
-            android:name=".DetailActivity"
-            android:parentActivityName=".ListViewActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ListViewActivity" />
-        </activity>
+            android:name=".DetailActivity" />
 
         <!-- Location Activity -->
         <activity
-            android:name=".LocationActivity"
-            android:parentActivityName=".HomeActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
-        </activity>
+            android:name=".LocationActivity" />
 
         <!-- List View Activity -->
         <activity
-            android:name=".ListViewActivity"
-            android:parentActivityName=".GraphResultsActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GraphResultsActivity" />
-        </activity>
+            android:name=".ListViewActivity" />
 
+        <!-- Data Results Activity -->
+        <activity android:name=".DataResultsActivity" />
+
+        <!-- Web Activity -->
         <activity
-            android:name=".WebActivity"
-            android:parentActivityName=".DetailActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".DetailActivity" />
-        </activity>
-        <activity android:name=".DataResultsActivity"
-            android:parentActivityName=".LocationActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LocationActivity" />
-        </activity>
+            android:name=".WebActivity" />
+
 
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data
@@ -105,7 +57,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
-
 
     </application>
 

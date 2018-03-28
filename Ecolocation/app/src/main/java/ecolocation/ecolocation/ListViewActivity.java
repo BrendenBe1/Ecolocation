@@ -127,6 +127,10 @@ public class ListViewActivity extends AppCompatActivity {
                 updateFragment();
                 return true;
 
+            case R.id.home:
+                onBackPressed();
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

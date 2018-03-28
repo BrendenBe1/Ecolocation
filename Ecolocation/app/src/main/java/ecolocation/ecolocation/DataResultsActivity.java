@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -34,20 +35,10 @@ public class DataResultsActivity extends AppCompatActivity {
         //---------- Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //----------- Widgets
-        // initializing button for going to the next page
-
-//        listViewBttn = (Button) findViewById(R.id.bttn_list);
-//        listViewBttn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(DataResultsActivity.this,
-//                        ListViewActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
         // setting up the view pager widget
         ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new ResultsAdapter(getSupportFragmentManager(), this));
@@ -55,6 +46,16 @@ public class DataResultsActivity extends AppCompatActivity {
         // setting up the tab layout widget
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

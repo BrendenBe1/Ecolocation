@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -302,14 +303,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         imm.toggleSoftInput(InputMethodManager.RESULT_HIDDEN, 0);
     }
 
-    /*
+    /**
      * This checks that the strings inside of the latTxt & longTxt are in the correct format. This
      * means: the strings are numbers (can be decimals, and/or negative), are in the correct range
      * for longitude and latitude.
      *
      * If the previous are correct, it puts the numbers in the following format: (##.##, ##.##)
      */
-    //TODO: see if there is a better way to inform user of incorrect inputs
     private void updateTextViews(){
 //        String regex = "-?\\d+\\.?\\d+$";
         String regex = "-?\\d+(\\.\\d+$)?";
@@ -379,5 +379,15 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
         latTxt.setText("(" + currLat + ", ");
         longTxt.setText(currLong + ")");
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if(id == android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
