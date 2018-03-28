@@ -44,16 +44,16 @@
         android:layout_above="@+id/bttn_list"
         android:layout_below="@+id/tab_layout" />
 
-    <Button
-        android:id="@+id/bttn_list"
-        style="@style/CustomButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="@string/bttn_run"
-        android:textSize="12sp" />
+    <!--<Button-->
+        <!--android:id="@+id/bttn_list"-->
+        <!--style="@style/CustomButton"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:paddingLeft="5dp"-->
+        <!--android:paddingRight="5dp"-->
+        <!--android:text="@string/bttn_run"-->
+        <!--android:textSize="12sp" />-->
 
 </RelativeLayout>

@@ -32,6 +32,7 @@ import okhttp3.Response;
 
 public class Ecosystem {
     private static Ecosystem sEcosystem;    //starts w/ 's' to indicate it's a static variable
+    private LatLng chosenLocation;
 
     //animal lists
     private ArrayList<Animal> animalList;   //current mammals
@@ -71,11 +72,10 @@ public class Ecosystem {
     /**
      *  Gets the data to make the current mammal list for the selected location
      *
-     * @param coordinates:  the coordinates of the location to get the current mammal data for
      * @return              returns an ArrayList of animals for the selected location
      */
-    public ArrayList<Animal> getCurrentList(LatLng coordinates){
-        animalList = getAnimalData(coordinates);
+    private ArrayList<Animal> getCurrentData(){
+        animalList = getAnimalData(chosenLocation);
         adapter = null;
         return animalList;
     }
@@ -93,11 +93,10 @@ public class Ecosystem {
      *  Gets the list of mammals from the Pleistocene Era for the selected location. It determines
      *  all the historic animals in this location and gets the relevant info for each mammal.
      *
-     * @param coordinates:  coordinates for the location to get historic list for
      * @return              ArrayList of Pleistocene mammals for selected location
      */
-    public ArrayList<Animal> getHistoricList(LatLng coordinates){
-        historicList = getHistoricData(coordinates);
+    private ArrayList<Animal> getHistoricData(){
+        historicList = getHistoricData(chosenLocation);
 
         adapter = null;
 
@@ -112,8 +111,6 @@ public class Ecosystem {
     public ArrayList<Animal> getHistoricList(){
         return historicList;
     }
-
-
 
     /**
      *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
@@ -385,4 +382,14 @@ public class Ecosystem {
         });
     }
 
+    // -------- Chosen Location's Getter & Setters
+    public LatLng getChosenLocation() {
+        return chosenLocation;
+    }
+
+    public void setChosenLocation(LatLng chosenLocation) {
+        this.chosenLocation = chosenLocation;
+        getCurrentData();
+        getHistoricData();
+    }
 }

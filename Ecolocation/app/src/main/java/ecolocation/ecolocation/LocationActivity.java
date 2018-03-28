@@ -1,7 +1,6 @@
 package ecolocation.ecolocation;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -80,10 +79,9 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LocationActivity.this,
-                        DataResultsActivity.class);
-                intent.putExtra("COORDS", chosenLocation);
-                startActivity(intent);
+                // go to ListViewActivity
+                startActivity(ListViewActivity.newIntent(LocationActivity.this,
+                        chosenLocation));
             }
         });
 
@@ -96,7 +94,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 if(keyCode == KeyEvent.KEYCODE_ENTER){
                     if(event.getAction() == KeyEvent.ACTION_UP){
                         enterOnTextViews();
-
                     }
                     return true;
                 }

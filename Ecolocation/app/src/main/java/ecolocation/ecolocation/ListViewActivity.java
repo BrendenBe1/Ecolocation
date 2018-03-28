@@ -2,6 +2,7 @@ package ecolocation.ecolocation;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 
@@ -20,11 +26,26 @@ public class ListViewActivity extends AppCompatActivity {
     //Widgets
     ViewPager viewPager;
     TabLayout tabLayout;
+    Button nextButton;
+
+    // constants
+    private final static String EXTRA_COORDINATES = "coordinates";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
+
+        // --------- Get Data From Database
+        //need to get coordinates and initialize Ecosystem
+        Ecosystem ecosystem = Ecosystem.get(this);
+        // if the intent has coordinates then we need to get them
+        if(getIntent().hasExtra(EXTRA_COORDINATES)){
+            //get the chosen location's coordinates & send it to Ecosystem instance
+            LatLng coordinates = getIntent().getExtras().getParcelable(EXTRA_COORDINATES);
+            Log.d("LATITUDE graph: ", String.valueOf(coordinates.latitude));
+            ecosystem.setChosenLocation(coordinates);
+        }
 
         //----------- toolbar setup
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -33,7 +54,6 @@ public class ListViewActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
 
         //------------ Widgets
-
         //view pager
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         TabLayoutAdapter adapter = new TabLayoutAdapter(getSupportFragmentManager(), this);
@@ -42,6 +62,16 @@ public class ListViewActivity extends AppCompatActivity {
         //tab layout
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+        // button to go to the DataResultsActivity
+        nextButton = (Button) findViewById(R.id.bttn_next);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListViewActivity.this, DataResultsActivity
+                        .class));
+            }
+        });
     }
 
     //------------- Menu
@@ -119,6 +149,13 @@ public class ListViewActivity extends AppCompatActivity {
         TabLayoutAdapter adapter = (TabLayoutAdapter) viewPager.getAdapter();
         ListViewFragment frag = (ListViewFragment) adapter.getCurrentFragment();
         frag.updateListView();
+    }
+
+
+    public static Intent newIntent(Context context, LatLng coordinates){
+        Intent intent = new Intent(context, ListViewActivity.class);
+        intent.putExtra(EXTRA_COORDINATES, coordinates);
+        return intent;
     }
 }
 

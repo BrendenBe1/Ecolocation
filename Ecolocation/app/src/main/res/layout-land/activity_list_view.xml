@@ -16,6 +16,7 @@
     <!--https://guides.codepath.com/android/Google-Play-Style-Tabs-using-TabLayout#create-fragment-->
 
     <!--This where the fragment will go-->
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
@@ -37,7 +38,21 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tab_layout" />
+        android:layout_below="@+id/tab_layout" >
+
+    </android.support.v4.view.ViewPager>
+
+    <Button
+        android:id="@+id/bttn_next"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary"
+        android:text="View Data Results"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
 
     <!--&lt;!&ndash; The actual list, where each item has the layout of list_item.xml &ndash;&gt;-->
     <!--<ListView-->

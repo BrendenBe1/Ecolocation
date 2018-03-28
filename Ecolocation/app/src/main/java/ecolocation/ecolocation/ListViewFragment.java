@@ -82,6 +82,7 @@ public class ListViewFragment extends Fragment {
 
         // ----------- Adapter Stuff
         // setting up the individual list items with the adapter
+        // new ArrayList<Animal>()
         adapter = new AnimalAdapter(getContext(), animalList);
         Ecosystem ecosystem = Ecosystem.get(getContext());
         ecosystem.setAdapter(adapter);
@@ -122,7 +123,7 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
         this.animalList = animalList;
     }
 
-    /*
+    /**
     * This method puts each item of currentMammalList into a list_item.
     * It's responsible for handling the current_nutrient and the view of the current_nutrient
     */
