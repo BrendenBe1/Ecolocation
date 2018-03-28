@@ -52,7 +52,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private static boolean locationPermissionGranted;
 
     //----- CONSTANTS
-    private static final int DEFAULT_ZOOM = 15;
+    private static final int DEFAULT_ZOOM = 4;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final String GPS_PERMISSION = "gps permission";
 

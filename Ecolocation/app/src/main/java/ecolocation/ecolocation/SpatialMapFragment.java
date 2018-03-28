@@ -16,6 +16,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.maps.android.heatmaps.Gradient;
@@ -43,9 +44,9 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
 
     // google maps variables
     private GoogleMap map;
-    private ArrayList<WeightedLatLng> currentNutrientList;
     private HeatmapTileProvider provider;
     private TileOverlay overlay;
+    private LatLng chosenLocation;
 
     public static SpatialMapFragment newInstance(){
         SpatialMapFragment fragment = new SpatialMapFragment();
@@ -55,6 +56,8 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
+        chosenLocation = Ecosystem.get(getContext()).getChosenLocation();
     }
 
     @Override
@@ -92,6 +95,7 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
         this.map = map;
         addHeatMap();
         updateLocationUI();
+        map.addMarker(new MarkerOptions().position(chosenLocation));
     }
 
     private void addHeatMap(){
@@ -159,8 +163,7 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
         if (map == null) {
             return;
         }
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(35.1982, -111.6513),
-                8));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation, 3));
         map.getUiSettings().setZoomControlsEnabled(true);
     }
 
