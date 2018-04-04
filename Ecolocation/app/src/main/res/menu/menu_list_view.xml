@@ -47,14 +47,14 @@
                 </menu>
             </item>
             <item
-                android:id = "@+id/endangeredLevel"
-                android:title = "Endangered Level">
+                android:id = "@+id/threatLevel"
+                android:title = "Threat Level">
                 <menu>
                     <item
-                        android:id = "@+id/endang_ascending"
+                        android:id = "@+id/threat_ascending"
                         android:title = "Ascending"/>
                     <item
-                        android:id = "@+id/endang_descending"
+                        android:id = "@+id/threat_descending"
                         android:title="Descending"/>
                 </menu>
             </item>

@@ -117,12 +117,12 @@ public class ListViewActivity extends AppCompatActivity {
                 updateFragment();
                 return true;
 
-            case  R.id.endang_ascending:
+            case  R.id.threat_ascending:
                 sorter.sort(getDisplayedList(), SORT_TYPE.THREAT_LEVEL, 0);
                 updateFragment();
                 return true;
 
-            case R.id.endang_descending:
+            case R.id.threat_descending:
                 sorter.sort(getDisplayedList(), SORT_TYPE.THREAT_LEVEL, 1);
                 updateFragment();
                 return true;

@@ -40,7 +40,12 @@
 
         <!-- List View Activity -->
         <activity
-            android:name=".ListViewActivity" />
+            android:name=".ListViewActivity"
+            android:parentActivityName=".LocationActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".LocationActivity"/>
+        </activity>
 
         <!-- Data Results Activity -->
         <activity android:name=".DataResultsActivity" />

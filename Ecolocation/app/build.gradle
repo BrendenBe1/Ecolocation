@@ -18,7 +18,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '26.0.1'
+    buildToolsVersion '27.0.3'
 }
 ext {
     supportLibVersion = '26.1.0'  // variable that can be referenced to keep support libs consistent

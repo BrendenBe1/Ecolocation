@@ -201,6 +201,7 @@ public class Ecosystem {
                         Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
                                 threatLevel, mass, AnimalType.CURRENT_MAMMAL);
 
+                        // make sure there are no repeats
                         if(!list.contains(animal)){
                             list.add(animal);
                         }
@@ -269,9 +270,13 @@ public class Ecosystem {
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
                         Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                "NE", mass, AnimalType.HISTORIC_MAMMAL);
+                                "EX", mass, AnimalType.HISTORIC_MAMMAL);
 
-                        list.add(animal);
+                        // make sure there are no repeats
+                        if(!list.contains(animal)){
+                            list.add(animal);
+                        }
+
                         Log.d("return", animal.getBinomial());
                     }
 

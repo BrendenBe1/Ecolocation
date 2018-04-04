@@ -113,17 +113,14 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
             Toast.makeText(getContext(), "Problems reading json", Toast.LENGTH_SHORT).show();
         }
 
-        // create the gradient from bright green to dark green
-        int[] colors = {Color.rgb(255, 0, 0), Color.rgb(51, 0, 0)};
+        // create the gradient from red to blue
+        int[] colors = {Color.rgb(0, 0, 255), Color.rgb(255, 0, 0)};
         float[] startPoints = {0.2f, 1f};   // indicates when to transition
         Gradient gradient = new Gradient(colors, startPoints);
 
 
         provider = new HeatmapTileProvider.Builder().weightedData(list)
                 .gradient(gradient).build();
-        //change the radius
-        provider.setRadius(50);
-//        provider.setOpacity(1);
         overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
 
 

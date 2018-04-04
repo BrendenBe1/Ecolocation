@@ -91,8 +91,15 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         animalPic.setImageDrawable(animal.getPicture());
         nameText.setText(animal.getName());
         binomialText.setText(capitalize(animal.getBinomial()));
-        massText.setText(String.valueOf(animal.getMass()) + " kg");
         endangeredLevel.setText(capitalize(animal.getThreatLevel().getName()));
+
+        // hide mass if it's zero
+        if(animal.getMass() == 0){
+            massText.setText("Not Available");
+        }
+        else{
+            massText.setText(String.valueOf(animal.getMass()) + " kg");
+        }
 
         //-------------- Handling Cases For Empty Description and/or Wiki Links
         //if the description is empty, then set the TextView to says so
