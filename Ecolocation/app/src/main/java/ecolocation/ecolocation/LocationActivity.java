@@ -32,7 +32,8 @@ import com.google.android.gms.tasks.Task;
 
 import java.math.BigDecimal;
 
-public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class LocationActivity extends AppCompatActivity implements OnMapReadyCallback,
+        GoogleMap.OnMapLongClickListener {
     //widgets
     Button nextButton;
     ImageButton locationButton;
@@ -139,10 +140,11 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
     }
-    /*
-   * Use the fuseLocationProvider to get the device's last-known location & use that to position
-   *   the map.
-   */
+
+    /**
+    * Use the fuseLocationProvider to get the device's last-known location & use that to position
+    *   the map.
+    */
     public void getDeviceLocation(){
         //get the best & most recent location of the device
         try{
@@ -184,10 +186,10 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    /*
-    * Request permissions to access user's location but first checks if the location permission was
-    * already granted, if not then it asks.
-    */
+    /**
+     * Request permissions to access user's location but first checks if the location permission was
+     * already granted, if not then it asks.
+     */
     private void getLocationPermission(){
         //request permission to use location services
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
@@ -208,6 +210,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap map) {
         this.map = map;
+        map.setOnMapLongClickListener(this);
+
         //turn on My Location Layer & related control on the map
         updateLocationUI();
     }
@@ -243,7 +247,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         });
     }
 
-    /*
+    /**
        * Set the location controls on the map.
        *
        * If the user granted location permissions, then enable My Location Layer & related controls
@@ -280,12 +284,17 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         catch(SecurityException e){}
     }
 
+    @Override
+    public void onMapLongClick(LatLng point){
+        marker.setPosition(point);
+    }
+
     //------------- WORKING WITH THE TEXT VIEWS
 
-    /*
+    /**
      * user hits enters button on coordinate TextViews
      *      handles the behavior of checking the inputs and changing the last known location and
-      *     moves the camera to the new location
+     *     moves the camera to the new location
      */
     private void enterOnTextViews(){
         //set strings in lat & long TextViews
