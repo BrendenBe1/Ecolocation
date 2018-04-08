@@ -67,50 +67,6 @@ public class Ecosystem {
         return sEcosystem;
     }
 
-    //---------- Initializing ArrayLists for holding Animals
-
-    /**
-     *  Gets the data to make the current mammal list for the selected location
-     *
-     * @return              returns an ArrayList of animals for the selected location
-     */
-    private ArrayList<Animal> getCurrentData(){
-        animalList = getAnimalData(chosenLocation);
-        adapter = null;
-        return animalList;
-    }
-
-    /**
-     *  Returns the current mammal list for selected location, which is already initialized
-     *
-     * @return  Current Mammal List
-     */
-    public ArrayList<Animal> getCurrentList(){
-        return animalList;
-    }
-
-    /**
-     *  Gets the list of mammals from the Pleistocene Era for the selected location. It determines
-     *  all the historic animals in this location and gets the relevant info for each mammal.
-     *
-     * @return              ArrayList of Pleistocene mammals for selected location
-     */
-    private ArrayList<Animal> getHistoricData(){
-        historicList = getHistoricData(chosenLocation);
-
-        adapter = null;
-
-        return historicList;
-    }
-
-    /**
-     *  Gets the already initialized list of Pleistocene Era mammals
-     *
-     * @return  ArrayList of Pleistocene mammals for selected location
-     */
-    public ArrayList<Animal> getHistoricList(){
-        return historicList;
-    }
 
     /**
      *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
@@ -138,6 +94,7 @@ public class Ecosystem {
         return null;
     }
 
+
     /**
      * By binding an adapter (one used for a ListView) to this class, we can notify the adapter when
      * changes occurs to the data set. If the list of animals is empty when the ListView page is
@@ -149,8 +106,57 @@ public class Ecosystem {
         this.adapter = adapter;
     }
 
+    //---------- Initializing & Returning ArrayList<Animal>
+
+
+    /**
+     *  Gets the data to make the current mammal list for the selected location
+     *
+     * @return              returns an ArrayList of animals for the selected location
+     */
+    private ArrayList<Animal> getCurrentData(){
+        animalList = getAnimalData(chosenLocation);
+        adapter = null;
+        return animalList;
+    }
+
+
+    /**
+     *  Returns the current mammal list for selected location, which is already initialized
+     *
+     * @return  Current Mammal List
+     */
+    public ArrayList<Animal> getCurrentList(){
+        return animalList;
+    }
+
+
+    /**
+     *  Gets the list of mammals from the Pleistocene Era for the selected location. It determines
+     *  all the historic animals in this location and gets the relevant info for each mammal.
+     *
+     * @return              ArrayList of Pleistocene mammals for selected location
+     */
+    private ArrayList<Animal> getHistoricData(){
+        historicList = getHistoricData(chosenLocation);
+
+        adapter = null;
+
+        return historicList;
+    }
+
+
+    /**
+     *  Gets the already initialized list of Pleistocene Era mammals
+     *
+     * @return  ArrayList of Pleistocene mammals for selected location
+     */
+    public ArrayList<Animal> getHistoricList(){
+        return historicList;
+    }
 
     //-------- Getting Data from Databases
+
 
     /**
      * Determines the animals in specified location. It gets each animal in the location along with
@@ -198,8 +204,9 @@ public class Ecosystem {
                         String wikiLink = object.getString("wiki_link");
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
-                        Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                threatLevel, mass, AnimalType.CURRENT_MAMMAL);
+                        Animal animal = new Animal(binomial, commonName,
+                                pic, description, wikiLink, threatLevel, mass,
+                                AnimalType.CURRENT_MAMMAL);
 
                         // make sure there are no repeats
                         if(!list.contains(animal)){
@@ -231,6 +238,7 @@ public class Ecosystem {
 
         return list;
     }
+
 
     private ArrayList<Animal> getHistoricData(final LatLng coordinates){
         // default image to display in case something happens
@@ -307,6 +315,7 @@ public class Ecosystem {
         return list;
     }
 
+
     /**
      * Gets the image for the inputted Animal
      *
@@ -351,6 +360,7 @@ public class Ecosystem {
         });
     }
 
+
     /**
      *  This method is used for animals that range maps (Historic animals) It gets their
      *  corresponding image of their range map
@@ -388,9 +398,12 @@ public class Ecosystem {
     }
 
     // -------- Chosen Location's Getter & Setters
+
+
     public LatLng getChosenLocation() {
         return chosenLocation;
     }
+
 
     public void setChosenLocation(LatLng chosenLocation) {
         this.chosenLocation = chosenLocation;

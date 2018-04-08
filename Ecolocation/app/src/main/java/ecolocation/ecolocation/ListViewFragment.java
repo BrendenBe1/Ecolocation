@@ -149,8 +149,8 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
 
         //----------- Setting Up Values of Widgets
         animalPic.setImageDrawable(currAnimal.getPicture());
-        nameText.setText(capitalize(currAnimal.getName()));
-        binomialText.setText(capitalize(currAnimal.getBinomial()));
+        nameText.setText(currAnimal.getName());
+        binomialText.setText(currAnimal.getBinomial());
 
         //------- Color-Code rows
         Resources res = getContext().getResources();    //allows access to the color files
@@ -189,18 +189,18 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
         return rowView;
     }
 
-    //capitalize each word
-    public static String capitalize(String str){
-        //TODO: check if null
-
-        String capitalized = "";
-        String[] parts = str.split(" ");
-        for(int i=0; i<parts.length; i++){
-            String temp = parts[i].substring(0, 1).toUpperCase();
-            temp = temp + parts[i].substring(1) + " ";
-            capitalized += temp;
-        }
-
-        return capitalized;
-    }
+//    //capitalize each word
+//    public static String capitalize(String str){
+//        //TODO: check if null
+//
+//        String capitalized = "";
+//        String[] parts = str.split(" ");
+//        for(int i=0; i<parts.length; i++){
+//            String temp = parts[i].substring(0, 1).toUpperCase();
+//            temp = temp + parts[i].substring(1) + " ";
+//            capitalized += temp;
+//        }
+//
+//        return capitalized;
+//    }
 }

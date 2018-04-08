@@ -142,7 +142,7 @@ public class Animal {
     }
 
     public String getName() {
-        return name;
+        return capitalize(name);
     }
 
     public Drawable getPicture() {
@@ -172,4 +172,54 @@ public class Animal {
     public Drawable getRangeMap() {
         return rangeMap;
     }
+
+    // ------ Helpers
+    //capitalize each word in a string
+    private String capitalize(String str){
+        String capitalized = "";
+        String[] parts = str.split(" ");
+
+        for(int i=0; i<parts.length; i++){
+            if(parts[i].contains("-")){
+                String[] parts2 = parts[i].split("-");
+
+                // first word
+                String temp = parts2[0].substring(0, 1).toUpperCase();
+                temp = temp + parts2[0].substring(1) + "-";
+
+                // second word
+                String temp2 = parts2[1].substring(0, 1).toUpperCase();
+                temp2 = temp2 + parts2[1].substring(1) + " ";
+
+                // combine
+                capitalized += temp + temp2;
+            }
+            else if(parts[i].contains("(")){
+                String[] parts2 = parts[i].split("\\(");
+
+                // first word
+                capitalized += "(" + parts2[1].substring(0, 1).toUpperCase();
+                capitalized += parts2[1].substring(1) + " ";
+            }
+            else{
+                String temp = parts[i].substring(0, 1).toUpperCase();
+                temp = temp + parts[i].substring(1) + " ";
+                capitalized += temp;
+            }
+        }
+
+       return capitalized;
+    }
+
+//    private String capitalize(String str){
+//        String capitalized = "";
+//        String[] parts = str.split(" ");
+//        for(int i=0; i<parts.length; i++){
+//            String temp = parts[i].substring(0, 1).toUpperCase();
+//            temp = temp + parts[i].substring(1) + " ";
+//            capitalized += temp;
+//        }
+//
+//        return capitalized;
+//    }
 }
