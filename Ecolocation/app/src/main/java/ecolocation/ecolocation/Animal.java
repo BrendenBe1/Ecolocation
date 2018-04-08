@@ -208,18 +208,6 @@ public class Animal {
             }
         }
 
-       return capitalized;
+        return capitalized;
     }
-
-//    private String capitalize(String str){
-//        String capitalized = "";
-//        String[] parts = str.split(" ");
-//        for(int i=0; i<parts.length; i++){
-//            String temp = parts[i].substring(0, 1).toUpperCase();
-//            temp = temp + parts[i].substring(1) + " ";
-//            capitalized += temp;
-//        }
-//
-//        return capitalized;
-//    }
 }

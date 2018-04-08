@@ -90,7 +90,7 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         //set contents of widgets
         animalPic.setImageDrawable(animal.getPicture());
         nameText.setText(animal.getName());
-        binomialText.setText(animal.getBinomial());
+        binomialText.setText(capitalize(animal.getBinomial()));
         endangeredLevel.setText(animal.getThreatLevel().getName());
 
         // hide mass if it's zero

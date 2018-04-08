@@ -150,7 +150,7 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
         //----------- Setting Up Values of Widgets
         animalPic.setImageDrawable(currAnimal.getPicture());
         nameText.setText(currAnimal.getName());
-        binomialText.setText(currAnimal.getBinomial());
+        binomialText.setText(capitalize(currAnimal.getBinomial()));
 
         //------- Color-Code rows
         Resources res = getContext().getResources();    //allows access to the color files
@@ -189,18 +189,19 @@ class AnimalAdapter extends ArrayAdapter<Animal> {
         return rowView;
     }
 
-//    //capitalize each word
-//    public static String capitalize(String str){
-//        //TODO: check if null
-//
-//        String capitalized = "";
-//        String[] parts = str.split(" ");
-//        for(int i=0; i<parts.length; i++){
-//            String temp = parts[i].substring(0, 1).toUpperCase();
-//            temp = temp + parts[i].substring(1) + " ";
-//            capitalized += temp;
-//        }
-//
-//        return capitalized;
-//    }
+    //capitalize each word
+    // for some reason the app freezes when I capitalize the binomial in the Animal class
+    public static String capitalize(String str){
+        //TODO: check if null
+
+        String capitalized = "";
+        String[] parts = str.split(" ");
+        for(int i=0; i<parts.length; i++){
+            String temp = parts[i].substring(0, 1).toUpperCase();
+            temp = temp + parts[i].substring(1) + " ";
+            capitalized += temp;
+        }
+
+        return capitalized;
+    }
 }
