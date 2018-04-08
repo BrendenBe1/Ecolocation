@@ -47,16 +47,21 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     private FusedLocationProviderClient fusedLocationProviderClient;
     // location retrieved by the Fused Location Provider.
     private static Location lastKnownLocation;
-//    private LatLng chosenLocation;
     // A default location (Flagstaff, Arizona) to use when location permission is not granted.
+    /* Set to the default location if user doesn't grant location permission. If the user grants
+    * location, its value will be over-written with that value or a custom value if the user
+    * chooses a custom location*/
     private LatLng chosenLocation = new LatLng(35.1982, -111.6513);
     private static boolean locationPermissionGranted;
 
     //----- CONSTANTS
+    // map constants
     private static final int DEFAULT_ZOOM = 4;
     private static final int PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
     private static final String GPS_PERMISSION = "gps permission";
 
+    // saved instant states constants
+    private static final String EXTRA_CHOSEN_LOCATION = "chosen location";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +92,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        //see if permission to location was granted
-
         // Set a key listener callback so that users can search by pressing "Enter"
         latTxt.setOnKeyListener(new View.OnKeyListener(){
             @Override
@@ -102,6 +105,8 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 return false;
             }
         });
+
+        // Set a key listener callback so that users can search by pressing "Enter"
         longTxt.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -115,6 +120,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+        // enter button for setting a custom coordinate
         locationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,18 +128,21 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
+
         if(getIntent().hasExtra(GPS_PERMISSION)){
             Bundle extras = getIntent().getExtras();
             locationPermissionGranted = extras.getBoolean(GPS_PERMISSION);
 
         }
-//        else{
-//            locationPermissionGranted = false;
-//        }
 
-        //used to get the last known location of the device
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        getDeviceLocation();
+        if(savedInstanceState == null){
+            //used to get the last known location of the device
+            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+            getDeviceLocation();
+        }
+        else{
+            chosenLocation = savedInstanceState.getParcelable(EXTRA_CHOSEN_LOCATION);
+        }
 
         //get a handle to the map fragment
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
@@ -286,10 +295,12 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
 
     @Override
     public void onMapLongClick(LatLng point){
+        chosenLocation = point;
         marker.setPosition(point);
+        setTextViewCoordinates(chosenLocation);
     }
 
-    //------------- WORKING WITH THE TEXT VIEWS
+    //------------- Latitude & Longitude Text Box Methods
 
     /**
      * user hits enters button on coordinate TextViews
@@ -377,7 +388,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         }
     }
 
-    //--------- with the given location, changes the current latitude & longitude to it & their
+    //with the given location, changes the current latitude & longitude to it & their
     //          corresponding TextViews
     private void setTextViewCoordinates(LatLng currLocation){
         //get string of coordinates with 6 decimal places
@@ -390,6 +401,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         longTxt.setText(currLong + ")");
     }
 
+    // --------- Activity Methods
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
@@ -398,5 +410,24 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Save all the variable values that we need when going back to this page
+     *
+     * @param savedInstanceState  holds variable values that we want to save
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putParcelable(EXTRA_CHOSEN_LOCATION, chosenLocation);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+
+        chosenLocation = savedInstanceState.getParcelable(EXTRA_CHOSEN_LOCATION);
     }
 }

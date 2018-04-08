@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="ecolocation.ecolocation">
 
     <!-- Permission for Location Services -->
@@ -36,12 +37,14 @@
 
         <!-- Location Activity -->
         <activity
-            android:name=".LocationActivity" />
+            android:name=".LocationActivity"
+            android:launchMode="singleTop"/>
 
         <!-- List View Activity -->
         <activity
             android:name=".ListViewActivity"
-            android:parentActivityName=".LocationActivity">
+            android:parentActivityName=".LocationActivity"
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".LocationActivity"/>
