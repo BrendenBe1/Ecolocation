@@ -151,7 +151,7 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
         if (map == null) {
             return;
         }
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation, 3));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(chosenLocation, 0));
         map.getUiSettings().setZoomControlsEnabled(true);
     }
 
