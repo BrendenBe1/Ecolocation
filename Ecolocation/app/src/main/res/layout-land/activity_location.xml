@@ -75,4 +75,15 @@
         android:layout_marginRight="60dp"
         android:text="Next" />
 
+    <Button
+        android:id="@+id/bttn_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="19dp"
+        android:layout_marginRight="19dp"
+        android:text="help" />
+
 </RelativeLayout>

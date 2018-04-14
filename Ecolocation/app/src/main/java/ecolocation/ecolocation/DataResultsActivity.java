@@ -1,15 +1,19 @@
 package ecolocation.ecolocation;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -21,6 +25,7 @@ public class DataResultsActivity extends AppCompatActivity {
     // private variables
 //    Button listViewBttn;
     LatLng chosenLocation;
+    Button helpButton;
 
     /**
      *  Sets up the view and tool bar of the activity
@@ -37,6 +42,14 @@ public class DataResultsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
+        helpButton = (Button) findViewById(R.id.bttn_help);
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialog();
+            }
+        });
 
         //----------- Widgets
         // setting up the view pager widget
@@ -46,6 +59,25 @@ public class DataResultsActivity extends AppCompatActivity {
         // setting up the tab layout widget
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("What Does This Represent?:\n" +
+                "Both the 'Bar Chart' and the 'Spatial Maps' represent the ability to distribute nutrients in an ecosystem both in the current era and in the Pleistocene Era (2,500,000 to 11,000 years ago). " +
+                "This is a service provided by the animals in an ecosystem that is vital for maintaining its health.\n\n" +
+                "What If Scenarios:\n" +
+                "The blue slider represents the weight threshold for mammals in that ecosystem. By moving the nodes, you can see the effect of species of certain weights being removed from that ecosystem.\n\n" +
+                "Switching Eras:\n" +
+                "The drop down menu can be used to switch from the current spatial map to the Pleistocene Era spatial map").setTitle("Graph Help")
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     @Override

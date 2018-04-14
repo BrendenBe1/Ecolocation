@@ -1,6 +1,7 @@
 package ecolocation.ecolocation;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -34,6 +36,7 @@ public class HomeActivity extends AppCompatActivity {
     Button runButton;
     Button infoButton;
     Button aboutButton;
+    Button helpButton;
 
     // A default location (Flagstaff, Arizona) and default zoom to use when location permission is
     // not granted.
@@ -62,6 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         runButton = (Button) findViewById(R.id.bttn_run);
         infoButton = (Button) findViewById(R.id.bttn_info);
         aboutButton = (Button) findViewById(R.id.bttn_about);
+        helpButton = (Button) findViewById(R.id.bttn_help);
 
         getLocationPermission();
         checkLocationServices();
@@ -77,6 +81,28 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialog();
+            }
+        });
+    }
+
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Press the 'run' button to begin choosing a location")
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /*

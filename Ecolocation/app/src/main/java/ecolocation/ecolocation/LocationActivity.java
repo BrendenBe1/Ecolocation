@@ -1,12 +1,14 @@
 package ecolocation.ecolocation;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         GoogleMap.OnMapLongClickListener {
     //widgets
     Button nextButton;
+    Button helpButton;
     ImageButton locationButton;
     EditText latTxt;
     EditText longTxt;
@@ -80,6 +83,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         longTxt = (EditText) findViewById(R.id.txt_long);
         nextButton = (Button) findViewById(R.id.bttn_next);
         locationButton = (ImageButton) findViewById(R.id.bttn_location);
+        helpButton = (Button) findViewById(R.id.bttn_help);
 
         //---------- event listeners for widgets
         // next button event listener
@@ -89,6 +93,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 // go to ListViewActivity
                 startActivity(ListViewActivity.newIntent(LocationActivity.this,
                         chosenLocation));
+            }
+        });
+
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialog();
             }
         });
 
@@ -148,6 +159,24 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         SupportMapFragment mapFrag = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFrag.getMapAsync(this);
+    }
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("There are two ways to choose a location:" +
+                "\n\n 1) Move the Marker:\n" +
+                "Hold your finger on the desired location and the marker will move to that location\n\n" +
+                "2) Enter Coordinates:\n" +
+                "Enter the coordinates into the text boxes at the top of the screen. Enter the latitude (-90° to 90°) in the left textbox and the longitude (-180° to 180°) in the right textbox. Press the checkmark to confirm the coordinates.\n" +
+                "\n Once a location has been chosen press the 'next' button to view a list of the mammals in that ecosystem.").setTitle("Map Help")
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     /**

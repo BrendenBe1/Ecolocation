@@ -2,6 +2,7 @@ package ecolocation.ecolocation;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,6 +29,7 @@ public class ListViewActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Button nextButton;
+    Button helpButton;
 
     // constants
     private final static String EXTRA_COORDINATES = "coordinates";
@@ -72,6 +75,35 @@ public class ListViewActivity extends AppCompatActivity {
                         .class));
             }
         });
+
+        helpButton = (Button) findViewById(R.id.bttn_help);
+        helpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createDialog();
+            }
+        });
+    }
+
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("‘Current’ Tab\n" +
+                "This tab has a list of mammals that currently live in the chosen ecosystem.\n\n" +
+                "‘Historic’ Tab\n" +
+                "This tab has a list of mammals that existed in the chosen ecosystem during the Pleistocene Era (2,500,000 to 11,000 years ago). Mammals during this era are typically larger than current mammals.\n\n" +
+                "Sorting\n" +
+                "The icon with three lines can be used to sort the list by common name, scientific name, mass, and threat level in ascending or descending order.\n\n" +
+                "Additional Information\n" +
+                "Click on an animal to view a page of information on that animal, as well as a link to its Wikipedia page").setTitle("List Help")
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     //------------- Menu
