@@ -28,8 +28,6 @@
         </activity>
 
         <!-- Graph Results Activity -->
-        <activity
-            android:name=".GraphResultsActivity" />
 
         <!-- Animal Detail Activity -->
         <activity

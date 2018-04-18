@@ -44,17 +44,6 @@
         android:layout_above="@+id/bttn_list"
         android:layout_below="@+id/tab_layout" />
 
-    <Button
-        android:id="@+id/bttn_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tab_layout"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginEnd="18dp"
-        android:layout_marginRight="18dp"
-        android:text="help" />
-
     <!--<Button-->
         <!--android:id="@+id/bttn_list"-->
         <!--style="@style/CustomButton"-->

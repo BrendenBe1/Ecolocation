@@ -75,14 +75,6 @@ public class ListViewActivity extends AppCompatActivity {
                         .class));
             }
         });
-
-        helpButton = (Button) findViewById(R.id.bttn_help);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDialog();
-            }
-        });
     }
 
 
@@ -119,6 +111,10 @@ public class ListViewActivity extends AppCompatActivity {
         AnimalSort sorter = new AnimalSort();
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.help:
+                createDialog();
+                return true;
+
             case R.id.comm_ascending:
                 sorter.sort(getDisplayedList(), SORT_TYPE.COMMON_NAME, 0);
                 updateFragment();

@@ -1,5 +1,6 @@
 package ecolocation.ecolocation;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.TileOverlay;
 import com.google.android.gms.maps.model.TileOverlayOptions;
+import com.google.maps.android.heatmaps.Gradient;
 import com.google.maps.android.heatmaps.HeatmapTileProvider;
 import com.google.maps.android.heatmaps.WeightedLatLng;
 
@@ -111,7 +113,22 @@ public class SpatialMapFragment extends Fragment implements OnMapReadyCallback,
             Toast.makeText(getContext(), "Problems reading json", Toast.LENGTH_SHORT).show();
         }
 
-        provider = new HeatmapTileProvider.Builder().weightedData(list).build();
+        // ----- Heat Map Customizations
+        // set the color scale
+        int[] colors = {
+                Color.rgb(0, 0, 255),  //blue
+                Color.rgb(251, 255, 0),// yellow
+                Color.rgb(255, 0, 0), // red
+        };
+        // set starting points for each color
+        float[] startPoints = {0.1f, 0.5f, 1f};
+
+        // set the Gradient
+        Gradient gradient = new Gradient(colors, startPoints);
+
+
+        provider = new HeatmapTileProvider.Builder().weightedData(list)
+                .gradient(gradient).build();
         overlay = map.addTileOverlay(new TileOverlayOptions().tileProvider(provider));
 
 

@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -83,7 +84,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         longTxt = (EditText) findViewById(R.id.txt_long);
         nextButton = (Button) findViewById(R.id.bttn_next);
         locationButton = (ImageButton) findViewById(R.id.bttn_location);
-        helpButton = (Button) findViewById(R.id.bttn_help);
 
         //---------- event listeners for widgets
         // next button event listener
@@ -96,12 +96,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
             }
         });
 
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDialog();
-            }
-        });
 
         // Set a key listener callback so that users can search by pressing "Enter"
         latTxt.setOnKeyListener(new View.OnKeyListener(){
@@ -434,9 +428,14 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-        if(id == android.R.id.home){
-            onBackPressed();
-            return true;
+        switch(id){
+            case R.id.help:
+                createDialog();
+                return true;
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -451,6 +450,13 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putParcelable(EXTRA_CHOSEN_LOCATION, chosenLocation);
+    }
+
+    // inflate menu custom icons
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
     @Override

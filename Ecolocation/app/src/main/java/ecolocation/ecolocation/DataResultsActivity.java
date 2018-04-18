@@ -11,9 +11,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -25,7 +24,6 @@ public class DataResultsActivity extends AppCompatActivity {
     // private variables
 //    Button listViewBttn;
     LatLng chosenLocation;
-    Button helpButton;
 
     /**
      *  Sets up the view and tool bar of the activity
@@ -42,14 +40,6 @@ public class DataResultsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_up_navigation);
-        helpButton = (Button) findViewById(R.id.bttn_help);
-
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDialog();
-            }
-        });
 
         //----------- Widgets
         // setting up the view pager widget
@@ -80,16 +70,25 @@ public class DataResultsActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // -------- Menu
+    // inflate menu custom icons
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        int id = item.getItemId();
-        if(id == android.R.id.home){
-            onBackPressed();
-            return true;
+        switch (item.getItemId()){
+            case R.id.help:
+                createDialog();
+                break;
+            case R.id.home:
+                onBackPressed();
         }
+
         return super.onOptionsItemSelected(item);
     }
-
 }
 
 /**

@@ -14,6 +14,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -65,7 +67,6 @@ public class HomeActivity extends AppCompatActivity {
         runButton = (Button) findViewById(R.id.bttn_run);
         infoButton = (Button) findViewById(R.id.bttn_info);
         aboutButton = (Button) findViewById(R.id.bttn_about);
-        helpButton = (Button) findViewById(R.id.bttn_help);
 
         getLocationPermission();
         checkLocationServices();
@@ -79,14 +80,6 @@ public class HomeActivity extends AppCompatActivity {
                 Intent intent = new Intent(HomeActivity.this, LocationActivity.class);
                 intent.putExtra(GPS_PERMISSION, locationPermissionGranted);
                 startActivity(intent);
-            }
-        });
-
-
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createDialog();
             }
         });
     }
@@ -221,4 +214,20 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    // -------- Menu
+    // inflate menu custom icons
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.help:
+                createDialog();
+        }
+
+        return true;
+    }
 }
