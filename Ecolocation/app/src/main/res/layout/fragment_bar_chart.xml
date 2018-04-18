@@ -11,7 +11,6 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/bttn_list"
         android:layout_below="@+id/toolbar"
         android:layout_marginTop="15dp"
         android:isScrollContainer="true"
@@ -22,13 +21,34 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="Nutrient Movement of Ecosystem"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
             <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/barChart"
                 android:layout_width="match_parent"
                 android:layout_height="500dp"
                 android:layout_margin="10dp"
                 android:layout_marginBottom="20dp"
-                android:foregroundGravity="center" />
+                android:foregroundGravity="center" >
+
+            </com.github.mikephil.charting.charts.BarChart>
+
+            <TextView
+                android:id="@+id/what_if_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="What-If Scenarios"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -47,6 +67,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" max"/>
+
+                <TextView
+                    android:id="@+id/units"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text=" kg" />
             </LinearLayout>
             <io.apptik.widget.MultiSlider
                 android:id="@+id/range_slider"
