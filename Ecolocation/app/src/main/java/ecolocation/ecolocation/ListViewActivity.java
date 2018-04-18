@@ -29,7 +29,6 @@ public class ListViewActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     Button nextButton;
-    Button helpButton;
 
     // constants
     private final static String EXTRA_COORDINATES = "coordinates";
@@ -75,9 +74,11 @@ public class ListViewActivity extends AppCompatActivity {
                         .class));
             }
         });
+
     }
 
 
+    // ---------- Dialogs
     public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("‘Current’ Tab\n" +
