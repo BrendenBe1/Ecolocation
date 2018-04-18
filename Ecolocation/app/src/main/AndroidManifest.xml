@@ -27,8 +27,6 @@
             </intent-filter>
         </activity>
 
-        <!-- Graph Results Activity -->
-
         <!-- Animal Detail Activity -->
         <activity
             android:name=".DetailActivity" />
@@ -49,7 +47,8 @@
         </activity>
 
         <!-- Data Results Activity -->
-        <activity android:name=".DataResultsActivity" />
+        <activity android:name=".DataResultsActivity"
+            android:screenOrientation="portrait"/>
 
         <!-- Web Activity -->
         <activity
