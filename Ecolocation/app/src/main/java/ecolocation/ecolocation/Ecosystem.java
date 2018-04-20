@@ -336,8 +336,7 @@ public class Ecosystem {
         url += "current/" + fileName + ".jpg";
 
         // call to get picture
-        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).fit().centerCrop()
-                .into(imageView, new com.squareup.picasso.Callback(){
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
 
             /*
              *  because the image doesn't load all at once you have to set the image for the animal
@@ -373,8 +372,7 @@ public class Ecosystem {
                 "historic_range/" + fileName + ".png";
 
         // call to get picture
-        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).fit().centerCrop()
-                .into(imageView, new com.squareup.picasso.Callback(){
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup.picasso.Callback(){
 
             /*
              *  because the image doesn't load all at once you have to set the image for the animal
