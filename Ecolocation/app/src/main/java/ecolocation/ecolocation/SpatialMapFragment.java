@@ -29,7 +29,7 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                      Bundle savedInstanceState){
+                             Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_spatial_mapping, container,
                 false);
 

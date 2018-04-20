@@ -35,7 +35,7 @@ public class Ecosystem {
     private LatLng chosenLocation;
 
     //animal lists
-    private ArrayList<Animal> animalList;   //current mammals
+    private ArrayList<Animal> currentList;   //current mammals
     private ArrayList<Animal> historicList; //historic (Pleistocene Era) Animals
 
     //needed for updating ListViews once data is retrieved
@@ -48,7 +48,7 @@ public class Ecosystem {
      * @param context application context
      */
     private Ecosystem(Context context){
-        animalList = new ArrayList<Animal>();
+        currentList = new ArrayList<Animal>();
         this.context = context;
     }
 
@@ -78,7 +78,7 @@ public class Ecosystem {
     public Animal getAnimal(String scientificName, AnimalType type){
         //get animal from current mammal list if it's a current mammal
         if(type.equals(AnimalType.CURRENT_MAMMAL)){
-            for(Animal animal : animalList){
+            for(Animal animal : currentList){
                 if (animal.getBinomial().equals(scientificName)){
                     return animal;
                 }
@@ -108,43 +108,14 @@ public class Ecosystem {
 
     //---------- Initializing & Returning ArrayList<Animal>
 
-
-    /**
-     *  Gets the data to make the current mammal list for the selected location
-     *
-     * @return              returns an ArrayList of animals for the selected location
-     */
-    private ArrayList<Animal> getCurrentData(){
-        animalList = getAnimalData(chosenLocation);
-        adapter = null;
-        return animalList;
-    }
-
-
     /**
      *  Returns the current mammal list for selected location, which is already initialized
      *
      * @return  Current Mammal List
      */
     public ArrayList<Animal> getCurrentList(){
-        return animalList;
+        return currentList;
     }
-
-
-    /**
-     *  Gets the list of mammals from the Pleistocene Era for the selected location. It determines
-     *  all the historic animals in this location and gets the relevant info for each mammal.
-     *
-     * @return              ArrayList of Pleistocene mammals for selected location
-     */
-    private ArrayList<Animal> getHistoricData(){
-        historicList = getHistoricData(chosenLocation);
-
-        adapter = null;
-
-        return historicList;
-    }
-
 
     /**
      *  Gets the already initialized list of Pleistocene Era mammals
@@ -155,17 +126,15 @@ public class Ecosystem {
         return historicList;
     }
 
-    //-------- Getting Data from Databases
-
-
     /**
      * Determines the animals in specified location. It gets each animal in the location along with
      * its corresponding information from the database to initialize the current mammals list.
+     //-------- Getting Data from Databases
      *
-     * @param coordinates   the coordinates of the location to get animal data for
-     * @return              ArrayList for current mammals
+     * @param type  the type of animals to retrieve: either the current or historic animals
+     * @return      ArrayList for current mammals
      */
-    private ArrayList<Animal> getAnimalData(final LatLng coordinates){
+    private ArrayList<Animal> getAnimalData(final AnimalType type){
 
         // default image to display in case something happens
         final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
@@ -177,17 +146,27 @@ public class Ecosystem {
 
                 OkHttpClient client = new OkHttpClient();
                 RequestBody arguments = new FormBody.Builder()
-                        .add("latitude", String.valueOf(coordinates.latitude))
-                        .add("longitude", String.valueOf(coordinates.longitude))
+                        .add("latitude", String.valueOf(chosenLocation.latitude))
+                        .add("longitude", String.valueOf(chosenLocation.longitude))
                         .build();
-                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
-                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
+                Log.d("latitude:::::::::::", String.valueOf(chosenLocation.latitude));
+                Log.d("longitude:::::::::::", String.valueOf(chosenLocation.longitude));
 
-                // animals.php is old db call for just getting binomial
-                Request request = new Request.Builder()
-                        .url("http://18.222.2.88/get_data.php?")
-                        .post(arguments)
-                        .build();
+                // determine the correct request object to make depending on animal type
+                Request request;
+                if(type == AnimalType.CURRENT_MAMMAL){
+                    request = new Request.Builder()
+                            .url("http://18.222.2.88/get_data.php?")
+                            .post(arguments)
+                            .build();
+                }
+                else{
+                    request = new Request.Builder()
+                            .url("http://18.222.2.88/get_historic_data.php?")
+                            .post(arguments)
+                            .build();
+                }
+
                 try {
                     Response response = client.newCall(request).execute();
 
@@ -199,14 +178,20 @@ public class Ecosystem {
 
                         String binomial = object.getString("binomial");
                         String commonName = object.getString("common_name");
-                        String threatLevel = object.getString("code");
                         String description = object.getString("description");
                         String wikiLink = object.getString("wiki_link");
                         int mass = object.getInt("mass")/1000;  //convert it to kg
 
-                        Animal animal = new Animal(binomial, commonName,
-                                pic, description, wikiLink, threatLevel, mass,
-                                AnimalType.CURRENT_MAMMAL);
+                        Animal animal;
+                        if(type == AnimalType.CURRENT_MAMMAL){
+                            animal = new Animal(binomial, commonName,
+                                    pic, description, wikiLink, object.getString("code"), mass,
+                                    AnimalType.CURRENT_MAMMAL);
+                        }
+                        else{
+                            animal = new Animal(binomial, commonName, pic, description, wikiLink,
+                                    "EX", mass, AnimalType.HISTORIC_MAMMAL);
+                        }
 
                         // make sure there are no repeats
                         if(!list.contains(animal)){
@@ -225,10 +210,22 @@ public class Ecosystem {
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                for(int i=0; i<animalList.size(); i++) {
-                    Animal currAnimal = animalList.get(i);
-                    loadImageFromURL(currAnimal);
-                    Log.d("currAnimal", currAnimal.getBinomial());
+                if(type == AnimalType.CURRENT_MAMMAL) {
+                    for(int i = 0; i< currentList.size(); i++) {
+                        Animal currAnimal = currentList.get(i);
+                        loadImageFromURL(currAnimal);
+
+                        Log.d("currAnimal", currAnimal.getBinomial());
+                    }
+                }
+                else{
+                    for(int i = 0; i< historicList.size(); i++) {
+                        Animal currAnimal = historicList.get(i);
+                        loadImageFromURL(currAnimal);
+                        loadImageRangeMap(currAnimal);
+
+                        Log.d("currAnimal", currAnimal.getBinomial());
+                    }
                 }
 
             }
@@ -407,7 +404,8 @@ public class Ecosystem {
 
     public void setChosenLocation(LatLng chosenLocation) {
         this.chosenLocation = chosenLocation;
-        getCurrentData();
-        getHistoricData();
+        currentList = getAnimalData(AnimalType.CURRENT_MAMMAL);
+        historicList = getAnimalData(AnimalType.HISTORIC_MAMMAL);
+        adapter = null;
     }
 }
