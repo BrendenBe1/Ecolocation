@@ -166,6 +166,20 @@ public class ListViewFragment extends Fragment {
             }
         }
 
+        public final void notifyImageChange(AnimalType type){
+                if(animalType == AnimalType.CURRENT_MAMMAL && animalType == type){
+                    list.clear();
+                    list.addAll(Ecosystem.get(getContext()).getCurrentList());
+                    notifyDataSetChanged();
+                }
+                else if(animalType == AnimalType.HISTORIC_MAMMAL && animalType == type){
+                    ArrayList<Animal> temp = (ArrayList<Animal>) list.clone();
+                    list.clear();
+                    list.addAll(temp);
+                    notifyDataSetChanged();
+                }
+        }
+
         public class AnimalViewHolder extends RecyclerView.ViewHolder {
             // widgets
             ImageView animalPic;
@@ -181,22 +195,5 @@ public class ListViewFragment extends Fragment {
                 binomialTxt = (TextView) view.findViewById(R.id.txt_binomial_title);
             }
         }
-    }
-
-
-    //capitalize each word
-    // for some reason the app freezes when I capitalize the binomial in the Animal class
-    public static String capitalize(String str){
-        //TODO: check if null
-
-        String capitalized = "";
-        String[] parts = str.split(" ");
-        for(int i=0; i<parts.length; i++){
-            String temp = parts[i].substring(0, 1).toUpperCase();
-            temp = temp + parts[i].substring(1) + " ";
-            capitalized += temp;
-        }
-
-        return capitalized;
     }
 }

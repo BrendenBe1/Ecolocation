@@ -52,7 +52,6 @@ public class Ecosystem {
         this.context = context;
     }
 
-
     /**
      * Gets the single instance of Ecosystem. If it's not initialized, then it uses the private
      * constructor. Otherwise it returns the current instance.
@@ -66,7 +65,6 @@ public class Ecosystem {
         }
         return sEcosystem;
     }
-
 
     /**
      *  Uses the scientificName as a unique id and returns the Animal object that corresponds to the
@@ -94,7 +92,6 @@ public class Ecosystem {
         return null;
     }
 
-
     /**
      * By binding an adapter (one used for a ListView) to this class, we can notify the adapter when
      * changes occurs to the data set. If the list of animals is empty when the ListView page is
@@ -105,6 +102,7 @@ public class Ecosystem {
     public  void setAdapter(ListViewFragment.AnimalAdapter adapter){
         this.adapter = adapter;
     }
+
 
     //---------- Initializing & Returning ArrayList<Animal>
 
@@ -236,83 +234,6 @@ public class Ecosystem {
         return list;
     }
 
-
-    private ArrayList<Animal> getHistoricData(final LatLng coordinates){
-        // default image to display in case something happens
-        final Drawable pic = context.getResources().getDrawable(R.drawable.ic_launcher_background);
-        final ArrayList<Animal> list = new ArrayList<>();
-
-        @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
-            @Override
-            protected Void doInBackground(Integer... Void) {
-
-                OkHttpClient client = new OkHttpClient();
-                RequestBody arguments = new FormBody.Builder()
-                        .add("latitude", String.valueOf(coordinates.latitude))
-                        .add("longitude", String.valueOf(coordinates.longitude))
-                        .build();
-                Log.d("latitude:::::::::::", String.valueOf(coordinates.latitude));
-                Log.d("longitude:::::::::::", String.valueOf(coordinates.longitude));
-
-                // animals.php is old db call for just getting binomial
-                Request request = new Request.Builder()
-                        .url("http://18.222.2.88/get_historic_data.php?")
-                        .post(arguments)
-                        .build();
-                try {
-                    Response response = client.newCall(request).execute();
-
-                    JSONArray array = new JSONArray(response.body().string());
-
-                    for (int i = 0; i < array.length(); i++) {
-
-                        JSONObject object = array.getJSONObject(i);
-
-                        String binomial = object.getString("binomial");
-                        String commonName = object.getString("common_name");
-                        String description = object.getString("description");
-                        String wikiLink = object.getString("wiki_link");
-                        int mass = object.getInt("mass")/1000;  //convert it to kg
-
-                        Animal animal = new Animal(binomial, commonName, pic, description, wikiLink,
-                                "EX", mass, AnimalType.HISTORIC_MAMMAL);
-
-                        // make sure there are no repeats
-                        if(!list.contains(animal)){
-                            list.add(animal);
-                        }
-
-                        Log.d("return", animal.getBinomial());
-                    }
-
-
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                for(int i=0; i<historicList.size(); i++) {
-                    Animal currAnimal = historicList.get(i);
-                    loadImageFromURL(currAnimal);
-                    loadImageRangeMap(currAnimal);
-                    Log.d("currAnimal", currAnimal.getBinomial());
-                }
-
-            }
-        };
-
-        asyncTask.execute();
-
-        return list;
-    }
-
-
     /**
      * Gets the image for the inputted Animal
      *
@@ -348,14 +269,13 @@ public class Ecosystem {
                 Drawable d = imageView.getDrawable();
                 animal.setImage(d);
                 if(adapter != null){
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyImageChange(animal.getType());
                 }
             }
             @Override
             public void onError(){}
         });
     }
-
 
     /**
      *  This method is used for animals that range maps (Historic animals) It gets their
@@ -393,12 +313,9 @@ public class Ecosystem {
     }
 
     // -------- Chosen Location's Getter & Setters
-
-
     public LatLng getChosenLocation() {
         return chosenLocation;
     }
-
 
     public void setChosenLocation(LatLng chosenLocation) {
         this.chosenLocation = chosenLocation;
