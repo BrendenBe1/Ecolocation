@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ecolocation.ecolocation">
 
     <!-- Permission for Location Services -->
@@ -20,40 +19,39 @@
         android:theme="@style/AppTheme">
 
         <!-- Home Activity -->
-        <activity android:name=".HomeActivity" >
+        <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <!-- Animal Detail Activity -->
-        <activity
-            android:name=".DetailActivity" />
+        <activity android:name=".DetailActivity" />
 
         <!-- Location Activity -->
         <activity
             android:name=".LocationActivity"
-            android:launchMode="singleTop"/>
+            android:launchMode="singleTop" />
 
         <!-- List View Activity -->
         <activity
             android:name=".ListViewActivity"
-            android:parentActivityName=".LocationActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:parentActivityName=".LocationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LocationActivity"/>
+                android:value=".LocationActivity" />
         </activity>
 
         <!-- Data Results Activity -->
-        <activity android:name=".DataResultsActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DataResultsActivity"
+            android:screenOrientation="portrait" />
 
         <!-- Web Activity -->
-        <activity
-            android:name=".WebActivity" />
-
+        <activity android:name=".WebActivity" />
 
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data
@@ -63,6 +61,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
+        <activity android:name=".ListView2"></activity>
     </application>
 
 </manifest>

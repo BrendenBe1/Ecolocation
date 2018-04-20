@@ -1,17 +1,15 @@
 package ecolocation.ecolocation;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,12 +23,12 @@ import java.util.ArrayList;
 
 public class ListViewFragment extends Fragment {
     //widgets
-    private TextView textView;
-    ListView listView;
+    private RecyclerView recyclerView;
 
-    //variables for creating the list
-    private ArrayList<Animal> animalList;
+    // variables for displaying the list
     private AnimalAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private ArrayList<Animal> animalList;
 
     private static final String ARG_PAGE = "ARG_PAGE";
     /**
@@ -48,25 +46,18 @@ public class ListViewFragment extends Fragment {
         return fragment;
     }
 
-    /**
-     * Get the arguments to determine which list to display
-     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         pageType = getArguments().getInt(ARG_PAGE);
     }
 
-    /**
-     * Initialize widgets and other UI elements
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
 
-        //---------- Setting Up Widgets
-        //get animal list
+        // -------- Retrieving correct list
         if(pageType == 0){
             //use current mammals list
             animalList = Ecosystem.get(getContext()).getCurrentList();
@@ -77,28 +68,17 @@ public class ListViewFragment extends Fragment {
             animalType = AnimalType.HISTORIC_MAMMAL;
         }
 
-        //-------- Implementing Widgets
-        listView = (ListView) view.findViewById(R.id.list_view);
+        // Setting Up RecyclerView
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
 
-        // ----------- Adapter Stuff
-        // setting up the individual list items with the adapter
-        // new ArrayList<Animal>()
-        adapter = new AnimalAdapter(getContext(), animalList);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        adapter = new AnimalAdapter(animalList);
+        recyclerView.setAdapter(adapter);
         Ecosystem ecosystem = Ecosystem.get(getContext());
         ecosystem.setAdapter(adapter);
-        //the adapter fills the list with the array list
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Animal currAnimal = animalList.get(position);
-                Intent intent = DetailActivity.newIntent(getActivity(),
-                        currAnimal.getBinomial(), animalType);
-
-                startActivity(intent);
-            }
-        });
-
 
         return view;
     }
@@ -109,85 +89,100 @@ public class ListViewFragment extends Fragment {
         }
     }
 
+    class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.AnimalViewHolder>{
+        private ArrayList<Animal> list;
 
-}
-
-class AnimalAdapter extends ArrayAdapter<Animal> {
-    private final Context context;
-    private final ArrayList<Animal> animalList;
-
-    public AnimalAdapter(Context context, ArrayList<Animal> animalList){
-        super(context, R.layout.list_item, animalList);
-
-        this.context = context;
-        this.animalList = animalList;
-    }
-
-    /**
-    * This method puts each item of currentMammalList into a list_item.
-    * It's responsible for handling the current_nutrient and the view of the current_nutrient
-    */
-    @Override
-    public View getView(final int position, View view, ViewGroup parent){
-        //create inflater
-        LayoutInflater inflater = (LayoutInflater) context
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        //-------- Get Animal object from ArrayList
-        Animal currAnimal = animalList.get(position);
-
-
-        //get the rowView from the inflater
-        //The rowView allows access to the widgets on the layout
-        // need this to be the solution set for tomorrow.
-        View rowView = inflater.inflate(R.layout.list_item, parent, false);
-
-        //------------- Initializing Widgets from list_item
-        ImageView animalPic = (ImageView) rowView.findViewById(R.id.pic_animal);
-        TextView nameText = (TextView) rowView.findViewById(R.id.txt_animal_name);
-        TextView binomialText = (TextView) rowView.findViewById(R.id.txt_binomial_title);
-
-        //----------- Setting Up Values of Widgets
-        animalPic.setImageDrawable(currAnimal.getPicture());
-        nameText.setText(currAnimal.getName());
-        binomialText.setText(capitalize(currAnimal.getBinomial()));
-
-        //------- Color-Code rows
-        Resources res = getContext().getResources();    //allows access to the color files
-        switch (currAnimal.getThreatLevel().getName()){
-            case "Least Concern":
-                nameText.setTextColor(res.getColor(R.color.leastConcern));
-                break;
-            case "Near Threatened":
-                nameText.setTextColor(res.getColor(R.color.nearThreatened));
-                break;
-            case "Vulnerable":
-                nameText.setTextColor(res.getColor(R.color.vulnerable));
-                break;
-            case "Endangered":
-                nameText.setTextColor(res.getColor(R.color.endagered));
-                break;
-            case "Critically Endangered":
-                nameText.setTextColor(res.getColor(R.color.criticallyEndangered));
-                break;
-            case "Extinct in the Wild":
-                nameText.setTextColor(res.getColor(R.color.extinctInTheWild));
-                break;
-            case "Extinct":
-                nameText.setTextColor(res.getColor(R.color.extinct));
-                break;
-            case "Not Evaluated":
-                nameText.setTextColor(res.getColor(R.color.notEvaluated));
-                break;
-            case "Data Deficient":
-                nameText.setTextColor(res.getColor(R.color.dataDeficient));
-                break;
-            default:
-                nameText.setTextColor(res.getColor(R.color.notEvaluated));
+        public AnimalAdapter(ArrayList<Animal> animalList){
+            list = animalList;
         }
 
-        return rowView;
+        @Override
+        public int getItemCount(){
+            return list.size();
+        }
+
+        @Override
+        public AnimalViewHolder  onCreateViewHolder(ViewGroup parent, int i){
+            final View rowView = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.list_item, parent, false);
+            //enable selecting an item
+            rowView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = recyclerView.getChildAdapterPosition(rowView);
+                    if(pos >= 0 && pos < getItemCount()){
+                        Animal currentAnimal = list.get(pos);
+                        Intent intent = DetailActivity.newIntent(getActivity(),
+                                currentAnimal.getBinomial(), animalType);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+            AnimalViewHolder holder =  new AnimalViewHolder(rowView);
+
+            return holder;
+        }
+
+        @Override
+        public void onBindViewHolder(AnimalViewHolder viewHolder, int pos){
+            Animal animal = list.get(pos);
+            viewHolder.commonNameTxt.setText(animal.getName());
+            viewHolder.binomialTxt.setText(animal.getBinomial());
+            viewHolder.animalPic.setImageDrawable(animal.getPicture());
+
+            //------- Color-Code rows
+            Resources res = getContext().getResources();    //allows access to the color files
+            switch (animal.getThreatLevel().getName()){
+                case "Least Concern":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.leastConcern));
+                    break;
+                case "Near Threatened":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.nearThreatened));
+                    break;
+                case "Vulnerable":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.vulnerable));
+                    break;
+                case "Endangered":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.endagered));
+                    break;
+                case "Critically Endangered":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.criticallyEndangered));
+                    break;
+                case "Extinct in the Wild":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.extinctInTheWild));
+                    break;
+                case "Extinct":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.extinct));
+                    break;
+                case "Not Evaluated":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.notEvaluated));
+                    break;
+                case "Data Deficient":
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.dataDeficient));
+                    break;
+                default:
+                    viewHolder.commonNameTxt.setTextColor(res.getColor(R.color.notEvaluated));
+            }
+        }
+
+        public class AnimalViewHolder extends RecyclerView.ViewHolder {
+            // widgets
+            ImageView animalPic;
+            TextView commonNameTxt;
+            TextView binomialTxt;
+
+            public AnimalViewHolder(View view){
+                super(view);
+
+                // initialize widgets
+                animalPic = (ImageView) view.findViewById(R.id.pic_animal);
+                commonNameTxt = (TextView) view.findViewById(R.id.txt_animal_name);
+                binomialTxt = (TextView) view.findViewById(R.id.txt_binomial_title);
+            }
+        }
     }
+
 
     //capitalize each word
     // for some reason the app freezes when I capitalize the binomial in the Animal class

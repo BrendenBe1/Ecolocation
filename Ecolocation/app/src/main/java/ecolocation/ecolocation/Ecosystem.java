@@ -40,7 +40,7 @@ public class Ecosystem {
 
     //needed for updating ListViews once data is retrieved
     private Context context;
-    private AnimalAdapter adapter;
+    private ListViewFragment.AnimalAdapter adapter;
 
     /**
      * The private constructor for Ecosystem
@@ -102,7 +102,7 @@ public class Ecosystem {
      *
      * @param adapter   adapter for a ListView object
      */
-    public  void setAdapter(AnimalAdapter adapter){
+    public  void setAdapter(ListViewFragment.AnimalAdapter adapter){
         this.adapter = adapter;
     }
 
@@ -376,8 +376,8 @@ public class Ecosystem {
                 "historic_range/" + fileName + ".png";
 
         // call to get picture
-        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView, new com.squareup
-                .picasso.Callback(){
+        Picasso.with(context).load(url).error(R.mipmap.ic_launcher).fit().centerCrop()
+                .into(imageView, new com.squareup.picasso.Callback(){
 
             /*
              *  because the image doesn't load all at once you have to set the image for the animal
