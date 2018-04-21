@@ -41,15 +41,15 @@ dependencies {
     implementation 'com.google.android.gms:play-services-places:11.6.2'
     implementation 'com.google.android.gms:play-services:11.6.2'
     implementation 'com.squareup.okhttp3:okhttp:3.2.0'
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.0-beta1'
 
     // compile dependency for picasso library
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
 
     //used for tab layout
-    compile "com.android.support:appcompat-v7:${supportLibVersion}"
-    compile "com.android.support:design:${supportLibVersion}"
+    implementation "com.android.support:appcompat-v7:${supportLibVersion}"
+    implementation "com.android.support:design:${supportLibVersion}"
 
     //-------- Google Maps Utility Dependency
-    compile 'com.google.maps.android:android-maps-utils:0.5+'
+    implementation 'com.google.maps.android:android-maps-utils:0.5+'
 }
