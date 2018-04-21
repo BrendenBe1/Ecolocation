@@ -43,6 +43,14 @@ public class Ecosystem {
     private Context context;
     private ListViewFragment.AnimalAdapter adapter;
 
+    public void retrieveData(Context context){
+        this.context = context;
+        currentList = getAnimalData(AnimalType.CURRENT_MAMMAL);
+        historicList = getAnimalData(AnimalType.HISTORIC_MAMMAL);
+        adapter = null;
+
+    }
+
     /**
      * The private constructor for Ecosystem
      *
@@ -50,7 +58,6 @@ public class Ecosystem {
      */
     private Ecosystem(Context context){
         currentList = new ArrayList<Animal>();
-        this.context = context;
     }
 
     /**
@@ -331,8 +338,5 @@ public class Ecosystem {
 
     public void setChosenLocation(LatLng chosenLocation) {
         this.chosenLocation = chosenLocation;
-        currentList = getAnimalData(AnimalType.CURRENT_MAMMAL);
-        historicList = getAnimalData(AnimalType.HISTORIC_MAMMAL);
-        adapter = null;
     }
 }

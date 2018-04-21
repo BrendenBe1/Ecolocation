@@ -49,6 +49,7 @@ public class ListViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+
         pageType = getArguments().getInt(ARG_PAGE);
     }
 
