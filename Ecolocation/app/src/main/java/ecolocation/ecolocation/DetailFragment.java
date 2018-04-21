@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -15,13 +16,13 @@ public class DetailFragment extends android.support.v4.app.Fragment {
     //widgets
     private ImageView animalPic;
     private ImageView rangeMapPic;
-    private TextView rangeMapText;
     private TextView binomialText;
     private TextView nameText;
     private TextView descText;
     private TextView wikiLink;
     private TextView massText;
     private TextView endangeredLevel;
+    private LinearLayout rangeMapLayout;
 
     //variables
     private Animal animal;
@@ -73,18 +74,18 @@ public class DetailFragment extends android.support.v4.app.Fragment {
         massText = (TextView) view.findViewById(R.id.txt_mass);
         endangeredLevel = (TextView) view.findViewById(R.id.txt_endangered_level);
 
+
         //show range map if animal is Pleistocene animal (AKA: historic)
         if(animalType.equals(AnimalType.HISTORIC_MAMMAL)){
             //initialize the historic related widgets
+            rangeMapLayout = (LinearLayout) view.findViewById(R.id.range_map);
             rangeMapPic = (ImageView) view.findViewById(R.id.img_range_map);
-            rangeMapText = (TextView) view.findViewById(R.id.txt_range_map_title);
-
-            //make visible
-            rangeMapPic.setVisibility(View.VISIBLE);
-            rangeMapText.setVisibility(View.VISIBLE);
 
             //get picture for range map
             rangeMapPic.setImageDrawable(animal.getRangeMap());
+
+            //make visible
+            rangeMapLayout.setVisibility(View.VISIBLE);
         }
 
         //set contents of widgets

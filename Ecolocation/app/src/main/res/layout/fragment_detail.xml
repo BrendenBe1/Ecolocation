@@ -142,32 +142,38 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/range_map"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/txt_range_map_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
                     android:text="Range Map"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:visibility="invisible" />
+                    android:visibility="visible" />
 
-            </RelativeLayout>
+                <ImageView
+                    android:id="@+id/img_range_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:adjustViewBounds="true"
+                    android:paddingBottom="15dp"
+                    android:src="@drawable/ic_launcher_background"
+                    android:visibility="visible" />
 
-            <ImageView
-                android:id="@+id/img_range_map"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:adjustViewBounds="true"
-                android:src="@drawable/ic_launcher_background"
-                android:visibility="invisible" />
+            </LinearLayout>
 
         </LinearLayout>
 

@@ -1,6 +1,7 @@
 package ecolocation.ecolocation;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -139,6 +140,16 @@ public class Ecosystem {
         final ArrayList<Animal> list = new ArrayList<>();
 
         @SuppressLint("StaticFieldLeak") AsyncTask<Integer, Void, Void> asyncTask = new AsyncTask<Integer, Void, Void>() {
+            ProgressDialog dialog;
+
+            @Override
+            protected void onPreExecute() {
+                dialog = new ProgressDialog(context);
+                dialog.setMessage("Retrieving data...");
+                dialog.setCancelable(false);
+                dialog.show();
+            }
+
             @Override
             protected Void doInBackground(Integer... Void) {
 
@@ -208,6 +219,7 @@ public class Ecosystem {
 
             @Override
             protected void onPostExecute(Void aVoid) {
+                dialog.dismiss();
                 if(type == AnimalType.CURRENT_MAMMAL) {
                     for(int i = 0; i< currentList.size(); i++) {
                         Animal currAnimal = currentList.get(i);
