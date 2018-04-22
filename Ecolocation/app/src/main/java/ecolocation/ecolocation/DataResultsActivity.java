@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,17 +58,28 @@ public class DataResultsActivity extends AppCompatActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
     }
-
     // -------- Dialogs
     public void createHelpDialog() {
+        String message = "<b>" + "What Does This Represent?:" + "</b> <br/>" +
+                "Both the 'Bar Chart' and the 'Spatial Maps' tabs represent the ability to " +
+                "distribute " + "nutrients in an ecosystem both in the current era and in " +
+                "the Pleistocene Era (2,500,000 to 11,000 years ago). This is a service provided " +
+                "by the animals in an ecosystem that is vital for maintaining its health. Mammals" +
+                "during the Pleistocene Era are typically larger than currently existing mammals." +
+                " This means that Pleistocene Mammals can contribute more to their ecosystem " +
+                "because they can eat more, defecate more, and cover larger areas." + "<br/><br/>" +
+
+                "<b>" + "What If Scenarios:" + "</b> <br/>" +
+                "The blue slider represents the weight threshold for mammals in that ecosystem. " +
+                "By moving the nodes, you can see the effect of species of certain weights being " +
+                "removed from that ecosystem." + "<br/> <br/>" +
+
+                "<b>" + "Switching Eras:" + "</b> <br/>" +
+                "The drop down menu can be used to switch from the current spatial map to the " +
+                "Pleistocene Era spatial map";
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("What Does This Represent?:\n" +
-                "Both the 'Bar Chart' and the 'Spatial Maps' represent the ability to distribute nutrients in an ecosystem both in the current era and in the Pleistocene Era (2,500,000 to 11,000 years ago). " +
-                "This is a service provided by the animals in an ecosystem that is vital for maintaining its health.\n\n" +
-                "What If Scenarios:\n" +
-                "The blue slider represents the weight threshold for mammals in that ecosystem. By moving the nodes, you can see the effect of species of certain weights being removed from that ecosystem.\n\n" +
-                "Switching Eras:\n" +
-                "The drop down menu can be used to switch from the current spatial map to the Pleistocene Era spatial map").setTitle("Graph Help")
+        builder.setMessage(Html.fromHtml(message)).setTitle("Graph Help")
                 .setNegativeButton("close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog

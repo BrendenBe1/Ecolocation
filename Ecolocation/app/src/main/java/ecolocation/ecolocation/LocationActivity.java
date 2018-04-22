@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -155,7 +156,7 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
         mapFrag.getMapAsync(this);
     }
 
-    public void createDialog() {
+    public void createDialog2() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("There are two ways to choose a location:" +
                 "\n\n 1) Move the Marker:\n" +
@@ -163,6 +164,31 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
                 "2) Enter Coordinates:\n" +
                 "Enter the coordinates into the text boxes at the top of the screen. Enter the latitude (-90° to 90°) in the left textbox and the longitude (-180° to 180°) in the right textbox. Press the checkmark to confirm the coordinates.\n" +
                 "\n Once a location has been chosen press the 'next' button to view a list of the mammals in that ecosystem.").setTitle("Map Help")
+                .setNegativeButton("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                    }
+                });
+        // Create the AlertDialog object and return it
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    public void createDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        String message = "There are two ways to choose a location:" + "<br/><br/>"
+
+                + "<b>" + "1) Move the Marker:" + "</b> <br/>" +
+                "Hold your finger on the desired location and the marker will move to that location"
+
+                + "<br><br> <b>" + "2) Enter Coordinates:" + "</b> <br/>" +
+                "Enter the coordinates into the text boxes at the top of the screen. Enter the " +
+                "latitude (-90° to 90°) in the left textbox and the longitude (-180° to 180°) in " +
+                "the right textbox. Press the checkmark to confirm the coordinates." + "<br/>" +
+                "<br/>" + "Once a location has been chosen press the 'next' button to view a list " +
+                "of the mammals in that ecosystem.";
+
+        builder.setMessage(Html.fromHtml(message)).setTitle("Map Help")
                 .setNegativeButton("close", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog

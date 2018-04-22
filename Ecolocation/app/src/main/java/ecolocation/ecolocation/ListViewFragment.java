@@ -264,7 +264,7 @@ public class ListViewFragment extends Fragment {
         // create an imageView to hold the picture
         final ImageView imageView = new ImageView(getContext());
 
-        String fileName = animal.getBinomial();
+        String fileName = animal.getBinomial().toLowerCase().replace(" ", "-");
         String url = "https://www.cefns.nau.edu/capstone/projects/CS/2018/Ecolocation/images/" +
                 "historic_range/" + fileName + ".png";
 

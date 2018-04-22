@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -81,18 +82,26 @@ public class ListViewActivity extends AppCompatActivity {
     // ---------- Dialogs
     public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("‘Current’ Tab\n" +
-                "This tab has a list of mammals that currently live in the chosen ecosystem.\n\n" +
-                "‘Historic’ Tab\n" +
-                "This tab has a list of mammals that existed in the chosen ecosystem during the Pleistocene Era (2,500,000 to 11,000 years ago). Mammals during this era are typically larger than current mammals.\n\n" +
-                "Sorting\n" +
-                "The icon with three lines can be used to sort the list by common name, scientific name, mass, and threat level in ascending or descending order.\n\n" +
-                "Additional Information\n" +
-                "Click on an animal to view a page of information on that animal, as well as a link to its Wikipedia page").setTitle("List Help")
-                .setNegativeButton("close", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
+        String message = "<b>" + "‘Current’ Tab" + "</b> <br/>" +
+                "This tab has a list of mammals that currently live in the chosen ecosystem " +
+                "(The location you selected). Only mammals over 1kg are shown." + "<br/><br/>" +
+
+                "<b>" + "‘Historic’ Tab" + "</b> <br/>" +
+                "This tab has a list of mammals that existed in the chosen ecosystem (The " +
+                "location you selected) during the Pleistocene Era (2,500,000 to 11,000 years ago)"
+                + ". <br/><br/>" +
+
+                "<b>" + "Sorting" + "</b> <br/>" +
+                "The icon with three lines can be used to sort the list by common name, " +
+                "scientific name, mass, and threat level in ascending or descending order." +
+
+                "<br/><br/><b>" + "Additional Information" + "</b>" +
+                "Click on an animal to view a page of information on that animal, as well as a " +
+                "link to its Wikipedia page";
+
+        builder.setMessage(Html.fromHtml(message)).setTitle("List Help").setNegativeButton
+                ("close", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {}
                 });
         // Create the AlertDialog object and return it
         AlertDialog dialog = builder.create();

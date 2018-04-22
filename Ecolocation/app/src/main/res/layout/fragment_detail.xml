@@ -156,7 +156,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="range_map"
+                    android:text="@string/range_map"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:visibility="visible" />
