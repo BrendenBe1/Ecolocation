@@ -82,6 +82,7 @@ public class ListViewActivity extends AppCompatActivity {
     // ---------- Dialogs
     public void createDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
         String message = "<b>" + "‘Current’ Tab" + "</b> <br/>" +
                 "This tab has a list of mammals that currently live in the chosen ecosystem " +
                 "(The location you selected). Only mammals over 1kg are shown." + "<br/><br/>" +

@@ -16,16 +16,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.maps.model.LatLng;
-
 /**
  *  This activity displays the results of calculating the nutrient movement graphically. Displays
  *  the results through a bar chart and a spatial map.
  */
 public class DataResultsActivity extends AppCompatActivity {
-    // private variables
-//    Button listViewBttn;
-    LatLng chosenLocation;
+    private ViewPager viewPager;
+
 
     /**
      *  Sets up the view and tool bar of the activity
@@ -51,7 +48,7 @@ public class DataResultsActivity extends AppCompatActivity {
 
         //----------- Widgets
         // setting up the view pager widget
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         viewPager.setAdapter(new ResultsAdapter(getSupportFragmentManager(), this));
 
         // setting up the tab layout widget
@@ -60,23 +57,39 @@ public class DataResultsActivity extends AppCompatActivity {
     }
     // -------- Dialogs
     public void createHelpDialog() {
-        String message = "<b>" + "What Does This Represent?:" + "</b> <br/>" +
-                "Both the 'Bar Chart' and the 'Spatial Maps' tabs represent the ability to " +
-                "distribute " + "nutrients in an ecosystem both in the current era and in " +
-                "the Pleistocene Era (2,500,000 to 11,000 years ago). This is a service provided " +
-                "by the animals in an ecosystem that is vital for maintaining its health. Mammals" +
-                "during the Pleistocene Era are typically larger than currently existing mammals." +
-                " This means that Pleistocene Mammals can contribute more to their ecosystem " +
-                "because they can eat more, defecate more, and cover larger areas." + "<br/><br/>" +
+        String message;
+        if(viewPager.getCurrentItem() == 0){
+            message ="<b>" + "What Does This Represent?:" + "</b> <br/>" +
+                    "This spatial map represents the animals ability to distribute nutrients" +
+                    " in an ecosystem. There are two spatial maps to view. The first one " +
+                    "represents the current nutrient dispersal throughout the planet. The second" +
+                    " spatial map represents the nutrient dispersal during the Pleistocene Era" +
+                    " (2,500,000 to 11,000 years ago). <br> Nutrient dispersal is an ecosystem" +
+                    " service provided by an ecosystem's animals. It is vital for maintaining an" +
+                    " ecosystem's health. The higher the nutrient dispersal is the more healthy " +
+                    "and productive it is. <br> Animals during the Pleistocene Era are typically " +
+                    "larger than currently existing animals and contribute more to their " +
+                    "ecosystems because of this." +
+                    "<br/> <br/> <b>" + "Switching Eras" + "</b> <br/>" +
+                    "The drop down menu can be used to switch from the current spatial map to the "
+                    + "historic spatial map (during the Pleistocene Era).";
+        }
+        else{
+            message = "<b>" + "What Does This Represent?" + "</b> <br/>" +
+                    "The bar chart is displaying the nutrient movement within the selected " +
+                    "ecosystem. It is comparing the nutrient movement between the Pleistocene" +
+                    " Era (2,500,000 to 11,000 years ago) and the current nutrient movement." +
+                    "Nutrient movement is an ecosystem service provided by an ecosystem's " +
+                    "animals. The higher the nutrient dispersal is the more healthy and " +
+                    "productive it is. <br> Animals during the Pleistocene Era are typically " +
+                    "larger than currently existing animals and contribute more to their " +
+                    "ecosystems because of this." + "<br/><br/>" +
 
-                "<b>" + "What If Scenarios:" + "</b> <br/>" +
-                "The blue slider represents the weight threshold for mammals in that ecosystem. " +
-                "By moving the nodes, you can see the effect of species of certain weights being " +
-                "removed from that ecosystem." + "<br/> <br/>" +
-
-                "<b>" + "Switching Eras:" + "</b> <br/>" +
-                "The drop down menu can be used to switch from the current spatial map to the " +
-                "Pleistocene Era spatial map";
+                    "<b>" + "What If Scenarios" + "</b> <br/>" +
+                    "The blue slider represents the weight threshold for mammals in that " +
+                    "ecosystem. By moving the nodes, you can see the effect of species of certain" +
+                    " weights being removed from that ecosystem." + "<br/> <br/>";
+        }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(Html.fromHtml(message)).setTitle("Graph Help")
