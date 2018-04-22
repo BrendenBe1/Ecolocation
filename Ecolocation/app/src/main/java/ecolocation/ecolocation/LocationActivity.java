@@ -354,7 +354,6 @@ public class LocationActivity extends AppCompatActivity implements OnMapReadyCal
      * If the previous are correct, it puts the numbers in the following format: (##.##, ##.##)
      */
     private void updateTextViews(){
-//        String regex = "-?\\d+\\.?\\d+$";
         String regex = "-?\\d+(\\.\\d+$)?";
         String latStr = latTxt.getText().toString();
         String longStr = longTxt.getText().toString();
