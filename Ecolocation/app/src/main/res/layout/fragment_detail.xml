@@ -170,7 +170,7 @@
                     android:layout_marginRight="10dp"
                     android:adjustViewBounds="true"
                     android:paddingBottom="15dp"
-                    android:src="@drawable/ic_launcher_background"
+                    app:srcCompat="@drawable/ic_launcher_background"
                     android:visibility="visible" />
 
             </LinearLayout>

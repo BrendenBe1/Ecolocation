@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 /**
@@ -18,7 +18,7 @@ import android.widget.Spinner;
 public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     // widget
     private Spinner spinner;
-    private ImageView mapImg;
+    private TouchImageView mapImg;
 
     private boolean isCurrentMap = true;   //when true show current map, when false show historic
 
@@ -33,7 +33,7 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
         View view = inflater.inflate(R.layout.fragment_spatial_mapping, container,
                 false);
 
-        mapImg = (ImageView) view.findViewById(R.id.map_img);
+        mapImg = (TouchImageView) view.findViewById(R.id.map_img);
 
         // ------------ Set Up Spinner to set up which map to show
         spinner = (Spinner) view.findViewById(R.id.spinner);
@@ -70,7 +70,7 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
         }
     }
 
-    public void onNothingSelected(AdapterView<?> parent){
-        // do nothing
-    }
+    public void onNothingSelected(AdapterView<?> parent){    }
+
 }
+
