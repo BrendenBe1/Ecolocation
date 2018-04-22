@@ -110,6 +110,13 @@ public class ListViewFragment extends Fragment {
 
     public void updateListView(){
         if(adapter != null){
+            animalList.clear();
+            if(animalType == AnimalType.CURRENT_MAMMAL){
+                animalList.addAll(Ecosystem.get(getContext()).getCurrentList());
+            }
+            else{
+                animalList.addAll(Ecosystem.get(getContext()).getHistoricList());
+            }
             adapter.notifyDataSetChanged();
         }
     }
