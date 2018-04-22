@@ -36,9 +36,7 @@ import java.util.List;
 public class HomeActivity extends AppCompatActivity {
     //widgets
     Button runButton;
-    Button infoButton;
     Button aboutButton;
-    Button helpButton;
 
     // A default location (Flagstaff, Arizona) and default zoom to use when location permission is
     // not granted.
@@ -65,7 +63,6 @@ public class HomeActivity extends AppCompatActivity {
 
         //----------- Implementing Widgets -------------
         runButton = (Button) findViewById(R.id.bttn_run);
-        infoButton = (Button) findViewById(R.id.bttn_info);
         aboutButton = (Button) findViewById(R.id.bttn_about);
 
         getLocationPermission();

@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:gravity="center_horizontal"
-                android:text="Nutrient Movement of Ecosystem"
+                android:text="@string/barchart_title"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 

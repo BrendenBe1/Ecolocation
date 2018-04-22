@@ -29,7 +29,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="1dp"
             android:layout_weight="1"
-            android:hint="(Latitude,"
+            android:hint="@string/txt_lat"
             android:textStyle="bold" />
 
         <EditText
@@ -40,7 +40,7 @@
             android:layout_marginRight="16dp"
             android:layout_toRightOf="@id/txt_lat"
             android:layout_weight="1"
-            android:hint="Longitude)"
+            android:hint="@string/txt_long"
             android:textStyle="bold" />
 
         <ImageButton
@@ -73,6 +73,6 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="17dp"
         android:layout_marginRight="60dp"
-        android:text="Next" />
+        android:text="@string/loc_next_bttn" />
 
 </RelativeLayout>

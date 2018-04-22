@@ -5,35 +5,59 @@
     <!--Home Screen Strings-->
     <string name="home_title">Ecolocation</string>
     <string name="home_bttn_run">Run</string>
-    <string name="home_bttn_info">Info</string>
     <string name="home_bttn_about">About</string>
 
-    <!--Detail Animal Screen Strings-->
+    <!--About Activity Strings-->
+    <string name="about_title">About Ecolocation</string>
+    <string name="about_background">A plentiful supply of nutrients is vital for life to flourish on
+        land and in the ocean. It is now recognised that animals disperse many of these nutrients
+        across their landscapes, simply by eating and moving. Large animals in particular are
+        important to this process as they often travel great distances, bringing essential minerals
+        such as nitrogen and phosphorous to distant habitats as they pass through. \n
+
+        Until recently Earth was home to an abundance of large animals. In this app, you can
+        discover more about these fascinating creatures and learn about the vital role they played
+        in keeping their environments fertile and healthy. Choose any location across the world’s
+        continents to find a list of all living and extinct mammals and explore how their presence
+        or absence impacts total animal nutrient distribution using interactive graphs. You can also
+        create your own “what if” scenarios to forecast how nutrient distribution may change in the
+        future.
+    </string>
+    <string name="credit_title">Credits</string>
+    <string name="iucn_title">IUCN</string>
+    <string name="iucn_credit"></string>
+    <string name="arkive_title">ARKive</string>
+    <string name="arkive_credit"></string>
+    <string name="historic_title"></string>
+    <string name="historic_credit"></string>
+
+
+    <!--Detail Fragment Strings-->
+    <string name="animal_name">Species\' Name</string>
+    <string name="description">Description</string>
+    <string name="wikipedia_link">Wikipedia Link</string>
+    <string name="scientific_name">Scientific Name: </string>
     <string name="mass_title">Mass: </string>
     <string name="pop_title">Population: </string>
     <string name="end_lev_title">Endangered Level: </string>
     <string name="diet_title">Diet: </string>
-
-    <!--Location Screen Strings-->
-    <string name="select_location_prompt">Select a location you want to explore.</string>
-    <string name="bttn_curr_loc">Current Location</string>
-    <string name="bttn_custom_loc">Custom Location</string>
-
-    <!--Graph Results Strings-->
-    <string name="bttn_run">View Animals in the Selected Ecosystem</string>
-    <string name="local_spatial">Local Spatial Map of Nutrient Distribution</string>
-    <string name="bar_graph">Bar Chart Nutrient Distributions</string>
-
-    <!--About Screen Strings-->
-    <string name="about_str">This screen will describe stuff like where the data is from and the
-                             purpose of the app and stuff.</string>
-
-    <!--Info Screen Strings-->
-    <string name="info_str">This screen will describe stuff such as nutrient dispersal and such</string>
+    <string name="range_map">Range Map</string>
 
     <!--List View Screen Strings  -->
-    <string name="list_title_str">List of Animals in This Ecosystem</string>
-    <string name="bttn_reset">Reset</string>
-    <string name="bttn_re_run">Re-Run</string>
-    <string name="bttn_sort">Sort</string>
+    <string name="listview_bttn_next">View Data Results</string>
+
+    <!--Location Screen Strings-->
+    <string name="loc_next_bttn">Next</string>
+    <string name="txt_lat">(Latitude,</string>
+    <string name="txt_long">Longitude)</string>
+
+    <!--Graph Results Strings-->
+    <string name="barchart_title">Nutrient Movement of Ecosystem</string>
+    <string name="what_if">What-If Scenarios</string>
+
+    <!--Spatial Mapping Fragment-->
+    <string name="spatial_title">Nutrient Dispersal Potential Spatial Map</string>
+    <string name="spatial_low">Lower Values</string>
+    <string name="spatial_high">Higher Values</string>
+
 </resources>

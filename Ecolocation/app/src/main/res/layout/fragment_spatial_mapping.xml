@@ -18,7 +18,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="20dp"
             android:gravity="center_horizontal"
-            android:text="Nurtrient Dispersal Potential Spatial Map"
+            android:text="@string/spatial_title"
             android:textColor="@android:color/black"
             android:textSize="24sp" />
 
@@ -57,7 +57,7 @@
             android:layout_below="@+id/gradient"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Lower Values"
+            android:text="@string/spatial_low"
             android:textSize="14sp" />
 
         <TextView
@@ -68,7 +68,7 @@
             android:layout_below="@+id/gradient"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Higher Values"
+            android:text="@string/spatial_high"
             android:textSize="14sp" />
     </RelativeLayout>
 </ScrollView>

@@ -61,7 +61,8 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".ListView2"></activity>
+        <activity android:name=".ListView2" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>

@@ -26,38 +26,35 @@
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_title"
         android:layout_centerInParent="true"
-        android:layout_marginTop="15dp"
-        android:orientation="vertical">
+        app:srcCompat="@drawable/ocelot" />
 
-        <Button
-            android:id="@+id/bttn_run"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/home_bttn_run" />
+    <Button
+        android:id="@+id/bttn_run"
+        style="@style/CustomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="15dp"
+        android:text="@string/home_bttn_run" />
 
-        <Button
-            android:id="@+id/bttn_info"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="15dp"
-            android:text="@string/home_bttn_info" />
-
-        <Button
-            android:id="@+id/bttn_about"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/home_bttn_about" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/bttn_about"
+        style="@style/CustomButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/home_bttn_about" />
 
 </RelativeLayout>
