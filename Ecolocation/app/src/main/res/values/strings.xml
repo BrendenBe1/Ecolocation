@@ -60,4 +60,13 @@
     <string name="spatial_low">Lower Values</string>
     <string name="spatial_high">Higher Values</string>
 
+    <!--Spatial Mapping Fragment-->
+    <string-array name= "endangered_level_array">
+        <item>Least Concern</item>
+        <item>Near Threatened</item>
+        <item>Vulnerable</item>
+        <item>Endangered</item>
+        <item>Critically Endangered</item>
+    </string-array>
+
 </resources>

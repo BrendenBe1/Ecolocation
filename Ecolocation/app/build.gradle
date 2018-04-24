@@ -46,6 +46,9 @@ dependencies {
     // compile dependency for picasso library
     implementation 'com.squareup.picasso:picasso:2.5.2'
 
+    //compile dependency for multple select item
+    compile 'com.github.pratikbutani:MultiSelectSpinner:08d324c987'
+
     //used for tab layout
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:design:${supportLibVersion}"
