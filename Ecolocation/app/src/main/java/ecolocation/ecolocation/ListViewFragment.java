@@ -263,7 +263,14 @@ public class ListViewFragment extends Fragment {
                         }
                     }
                     @Override
-                    public void onError(){}
+                    public void onError()
+                    {
+                        Drawable d = getResources().getDrawable( R.drawable.missing );
+                        animal.setImage( d );
+                        if(adapter != null){
+                            adapter.notifyImageChange(animal.getType());
+                        }
+                    }
                 });
     }
 
