@@ -30,13 +30,15 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
                 <TextView
                     android:id="@+id/tital1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_horizontal"
-                    android:text="what if Scenarios"
+                    android:text="What-If Scenarios"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -45,10 +47,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="10dp"
                     android:gravity="center_horizontal"
                     android:text="@string/barchart_title"
                     android:textSize="20sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -122,14 +125,15 @@
 
             <io.apptik.widget.MultiSlider
                 android:id="@+id/range_slider"
-                android:layout_width="350dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 app:drawThumbsApart="true"
-                app:stepsThumbsApart="0"
-                app:thumbNumber="2"
 
-                />
+                app:stepsThumbsApart="0"
+                app:thumbNumber="2" />
 
             <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
                 android:id="@+id/spinner"

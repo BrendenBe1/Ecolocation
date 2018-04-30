@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 
 /**
@@ -19,8 +18,6 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
     // widget
     private Spinner spinner;
     private TouchImageView mapImg;
-
-    private boolean isCurrentMap = true;   //when true show current map, when false show historic
 
     public static SpatialMapFragment newInstance(){
         SpatialMapFragment fragment = new SpatialMapFragment();
@@ -40,7 +37,7 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
 
         //set up list of values to show in spinner
         String[] mapStrings = {"Current Nutrient Dispersal Potential", "Historic Nutrient Dispersal"
-        + " Potential"};
+        + " Potential", "Changes Nutrient Dispersal Potential"};
 
         // set up adapter & the layout type for its list of values
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout
@@ -60,13 +57,13 @@ public class SpatialMapFragment extends Fragment implements AdapterView.OnItemSe
         Resources res = getActivity().getResources();
         // position 0 = current map, position 1 = historic map
         if(pos == 0){
-            isCurrentMap = true;
-            mapImg.setImageDrawable(res.getDrawable(R.drawable.cropped_global_nutrient_current));
+            mapImg.setImageDrawable(res.getDrawable(R.drawable.current));
+        }
+        else if(pos == 1){
+            mapImg.setImageDrawable(res.getDrawable(R.drawable.past));
         }
         else{
-            isCurrentMap = false;
-            mapImg.setImageDrawable(res.getDrawable(R.drawable.cropped_global_nutrient_past));
-
+            mapImg.setImageDrawable(res.getDrawable(R.drawable.change));
         }
     }
 

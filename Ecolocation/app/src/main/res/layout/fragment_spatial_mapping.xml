@@ -1,75 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:map="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scroll_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/spinner_title_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="false"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/spatial_title"
+        android:textColor="@android:color/black"
+        android:textSize="24sp" />
+
+    <Spinner
+        android:id="@+id/spinner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner_title_txt"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp" />
 
-        <TextView
-            android:id="@+id/spinner_title_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="false"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:text="@string/spatial_title"
-            android:textColor="@android:color/black"
-            android:textSize="24sp" />
+    <ecolocation.ecolocation.TouchImageView
+        android:id="@+id/map_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spinner"
+        android:adjustViewBounds="true"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp"
+        map:srcCompat="@drawable/current" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinner_title_txt"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp" />
-
-        <ecolocation.ecolocation.TouchImageView
-            android:id="@+id/map_img"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/spinner"
-            android:adjustViewBounds="true"
-            android:paddingBottom="15dp"
-
-            android:paddingTop="15dp"
-            map:srcCompat="@drawable/cropped_global_nutrient_current" />
-
-        <ImageView
-            android:id="@+id/gradient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/map_img"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            map:srcCompat="@drawable/gradient" />
-
-        <TextView
-            android:id="@+id/low_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/gradient"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/spatial_low"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/high_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/gradient"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/spatial_high"
-            android:textSize="14sp" />
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

@@ -96,7 +96,7 @@ public class ListViewActivity extends AppCompatActivity {
                 "The icon with three lines can be used to sort the list by common name, " +
                 "scientific name, mass, and threat level in ascending or descending order." +
 
-                "<br/><br/><b>" + "Additional Information" + "</b>" +
+                "<br/><br/><b>" + "Additional Information" + "</b> <br/>" +
                 "Click on an animal to view a page of information on that animal, as well as a " +
                 "link to its Wikipedia page";
 

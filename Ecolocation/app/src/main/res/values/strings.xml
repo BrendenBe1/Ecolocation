@@ -23,13 +23,25 @@
         create your own “what if” scenarios to forecast how nutrient distribution may change in the
         future.
     </string>
+
     <string name="credit_title">Credits</string>
-    <string name="iucn_title">IUCN</string>
-    <string name="iucn_credit"></string>
+
+    <string name="doughty_title">Dr. Chris Doughty</string>
+    <string name="doughty_credit">Doughty CE, Wolf A, Malhi Y (2013) The legacy of the pleistocene
+        megafauna extinctions on nutrient availability in Amazonia. Nat Geosci 6(9):761–764.
+    </string>
+    <string name="doughty_credit2">Wolf A, Doughty CE, Malhi Y (2013) Lateral diffusion of
+        nutrients by mammalian herbivores in terrestrial ecosystems. PLoS One 8(8):e71352.</string>
+
+    <string name="historic_title">Pleistocene Era Data</string>
+    <string name="historic_credit">Faurby S, Svenning JC (August 20, 2015) Historic and prehistoric
+        human-driven extinctions have reshaped global mammal diversity patterns. Diversity and
+        Distributions, 10.1111/ddi.12369</string>
+
+    <string name="iucn_title">IUCN (International Union for Conservation of Nature)</string>
+
     <string name="arkive_title">ARKive</string>
     <string name="arkive_credit"></string>
-    <string name="historic_title"></string>
-    <string name="historic_credit"></string>
 
 
     <!--Detail Fragment Strings-->
@@ -44,7 +56,9 @@
     <string name="range_map">Range Map</string>
 
     <!--List View Screen Strings  -->
-    <string name="listview_bttn_next">View Data Results</string>
+    <string name="listview_bttn_next">View Ecosystem Services</string>
+    <string name="website1">http://www.pnas.org/content/113/4/868.full</string>
+    <string name="website2">https://www.cdoughty.org/</string>
 
     <!--Location Screen Strings-->
     <string name="loc_next_bttn">Next</string>

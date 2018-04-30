@@ -59,20 +59,17 @@ public class DataResultsActivity extends AppCompatActivity {
     public void createHelpDialog() {
         String message;
         if(viewPager.getCurrentItem() == 0){
-            message ="<b>" + "What Does This Represent?:" + "</b> <br/>" +
-                    "This spatial map represents the animals ability to distribute nutrients" +
-                    " in an ecosystem. There are two spatial maps to view. The first one " +
-                    "represents the current nutrient dispersal throughout the planet. The second" +
-                    " spatial map represents the nutrient dispersal during the Pleistocene Era" +
-                    " (2,500,000 to 11,000 years ago). <br> Nutrient dispersal is an ecosystem" +
-                    " service provided by an ecosystem's animals. It is vital for maintaining an" +
-                    " ecosystem's health. The higher the nutrient dispersal is the more healthy " +
-                    "and productive it is. <br> Animals during the Pleistocene Era are typically " +
-                    "larger than currently existing animals and contribute more to their " +
-                    "ecosystems because of this." +
-                    "<br/> <br/> <b>" + "Switching Eras" + "</b> <br/>" +
-                    "The drop down menu can be used to switch from the current spatial map to the "
-                    + "historic spatial map (during the Pleistocene Era).";
+            message = "<b>" + "What Does this Represent?" + "</b> <br/>"+
+                        "Animals play an important role in the transport of nutrients, but this " +
+                        "role has diminished because many of the largest animals have gone extinct."
+                        + " Here, we quantify the movement of nutrients by animals on land both " +
+                        "now and prior to their widespread reductions. We show lateral nutrient " +
+                        "distribution capacity (km2·y−1) by all mammals as it would have been " +
+                        "without the end-Pleistocene and Holocene megafauna extinctions, as it is" +
+                        " currently, and as the percentage of the original value." +
+                        "<br/> <br/> <b>" + "Switching Eras" + "</b> <br/>" +
+                        "The drop down menu can be used to switch from the current spatial map to" +
+                        " the historic spatial map (during the Pleistocene Era).";
         }
         else{
             message = "<b>" + "What Does This Represent?" + "</b> <br/>" +
@@ -89,6 +86,18 @@ public class DataResultsActivity extends AppCompatActivity {
                     "The blue slider represents the weight threshold for mammals in that " +
                     "ecosystem. By moving the nodes, you can see the effect of species of certain" +
                     " weights being removed from that ecosystem." + "<br/> <br/>";
+
+//            "<b>" + "What Does This Represent?:" + "</b> <br/>" +
+//                    "This spatial map represents the animals ability to distribute nutrients" +
+//                    " in an ecosystem. There are two spatial maps to view. The first one " +
+//                    "represents the current nutrient dispersal throughout the planet. The second" +
+//                    " spatial map represents the nutrient dispersal during the Pleistocene Era" +
+//                    " (2,500,000 to 11,000 years ago). <br> Nutrient dispersal is an ecosystem" +
+//                    " service provided by an ecosystem's animals. It is vital for maintaining an" +
+//                    " ecosystem's health. The higher the nutrient dispersal is the more healthy " +
+//                    "and productive it is. <br> Animals during the Pleistocene Era are typically " +
+//                    "larger than currently existing animals and contribute more to their " +
+//                    "ecosystems because of this."
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -105,7 +114,10 @@ public class DataResultsActivity extends AppCompatActivity {
 
     private void createInfoDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Insert links to Chris's Website here")
+        String message = "<b>" + "For more information" + "</b> <br/>" +
+                this.getResources().getString(R.string.website1) + "<br/> <br/>" +
+                this.getResources().getString(R.string.website2);
+        builder.setMessage(Html.fromHtml(message))
                 .setNeutralButton("Close", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -149,7 +161,7 @@ public class DataResultsActivity extends AppCompatActivity {
  */
 class ResultsAdapter extends FragmentPagerAdapter{
     final int PAGE_COUNT = 2;
-    private String[] tabTitles = new String[]{"Spatial Mapping", "Bar Chart"};
+    private String[] tabTitles = new String[]{"Bar Chart", "Spatial Mapping"};
 
     // constructor
     public ResultsAdapter(FragmentManager fm, Context context){
@@ -177,11 +189,11 @@ class ResultsAdapter extends FragmentPagerAdapter{
     public Fragment getItem(int position) {
         // position 0 == bar chart, position 1 == spatial mapping
         if(position == 0){
-            return SpatialMapFragment.newInstance();
+            return BarChartFragment.newInstance();
         }
         else{
             //position 1
-            return BarChartFragment.newInstance();
+            return SpatialMapFragment.newInstance();
         }
     }
 
