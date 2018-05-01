@@ -1,5 +1,6 @@
 import csv
 import wikipedia
+import sys
 
 def getInfo(name):
     """
@@ -39,7 +40,7 @@ def getInfo(name):
     return {'binomial': name, 'common_name': page.title, 'wiki_link': page.url, 'desc': description}
 
 
-def getAllInfo(file, newFile):
+def getAllInfo():
     """
     This is the script for obtain the information for all the animals. It reads from a csv file (iucn.csv) and writes combines the
     current information with the new information into a new csv file (iucn_complete.csv).
@@ -53,8 +54,8 @@ def getAllInfo(file, newFile):
     @:except UnicodeError:
     """
     #open file iucn.csv file and create a new file that will contain the appended info & the corresponding readers & writers
-    fileIn = open(file+'.csv', 'r')
-    fileOut = open(newFile+'.csv', 'a', newline='')
+    fileIn = open(sys.argv[1], 'r')
+    fileOut = open(sys.argv[2], 'a', newline='')
     reader = csv.reader(fileIn)
     writer = csv.writer(fileOut)
 
@@ -95,4 +96,4 @@ def getAllInfo(file, newFile):
     fileIn.close
     fileOut.close()
 
-getAllInfo('extinct', 'exctinct_complete.csv')
+getAllInfo()
