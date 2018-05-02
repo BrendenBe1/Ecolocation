@@ -64,8 +64,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         return fragment;
     }
 
-
-
     private static double sum(double...values){
         double result = 0;
         for (double value: values){

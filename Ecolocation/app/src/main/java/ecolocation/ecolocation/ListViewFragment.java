@@ -398,6 +398,7 @@ public class ListViewFragment extends Fragment {
             progressBar.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
 
+
             if(type == AnimalType.CURRENT_MAMMAL) {
                 ArrayList<Animal> currentList = ecosystem.getCurrentList();
 
@@ -407,9 +408,32 @@ public class ListViewFragment extends Fragment {
 
                     Log.d("currAnimal", currAnimal.getBinomial());
                 }
+
+                if(currentList.size() > 0){
+                    Drawable pic = getContext().getResources().getDrawable(R.drawable.homo_sapien);
+                    Animal homoSapien = new Animal("Homo Sapiens", "Homo Sapiens", pic,
+                            "Homo sapies is the systematic name used in taxonomy " +
+                                    "(also known as a "
+                                    + "binomial nomenclature) for anatomically modern humans, " +
+                                    "i.e. the only extant human species. The name is Latin for" +
+                                    "\"wise man\" and was introduced in 1758 by Carl Linnaeus" +
+                                    " (who is himself also the type specimen).",
+                            "https://en.wikipedia.org/wiki/Homo_sapiens","LC",
+                            53, AnimalType.CURRENT_MAMMAL);
+                    currentList.add(homoSapien);
+                }
+
+                //sort list by mass, so that the animals with the bigger mass are shown first
+                AnimalSort sorter = new AnimalSort();
+                sorter.sort(currentList, SORT_TYPE.MASS, 1);
+
             }
             else{
                 ArrayList<Animal> historicList = ecosystem.getHistoricList();
+
+                //sort list by mass, so that the animals with the bigger mass are shown first
+                AnimalSort sorter = new AnimalSort();
+                sorter.sort(historicList, SORT_TYPE.MASS, 1);
 
                 for(int i = 0; i< historicList.size(); i++) {
                     Animal currAnimal = historicList.get(i);
