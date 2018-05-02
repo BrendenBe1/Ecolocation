@@ -2,151 +2,137 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
     android:scrollbars="vertical">
 
-    <ScrollView
-        android:id="@+id/scroll_view"
+    <Spinner
+        android:id="@+id/spinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+        android:layout_margin="10dp" />
+
+
+    <TextView
+        android:id="@+id/tital1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/barChart2"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="-79dp"
+        android:gravity="center_horizontal"
+        android:text="What if Scenarios"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tital2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/tital1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:text="@string/barchart_title"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="70dp"
+        android:layout_height="438dp"
         android:layout_alignParentTop="true"
-        android:isScrollContainer="true"
-        android:scrollbarStyle="insideOverlay">
+        android:gravity="center"
+        android:rotation="-90"
+        android:text="Nutrient Movement"
+        android:visibility="visible" />
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart2"
+        android:layout_width="314dp"
+        android:layout_height="291dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="79dp"
+        android:foregroundGravity="left|center" />
 
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp" />
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tital1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="What-If Scenarios"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+    <TextView
+        android:id="@+id/first"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/range_slider"
+        android:layout_alignParentStart="true"
+        android:paddingLeft="10dp"
+        android:text="Showing all mammals between " />
 
-                <TextView
-                    android:id="@+id/tital2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_horizontal"
-                    android:text="@string/barchart_title"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+    <TextView
+        android:id="@+id/minValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/first"
+        android:layout_toEndOf="@+id/first"
+        android:text="min" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="413dp"
-                android:gravity="center">
+    <TextView
+        android:id="@+id/midle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/first"
+        android:layout_toEndOf="@+id/minValue"
+        android:text=" and " />
 
-                <TextView
-                    android:layout_width="70dp"
-                    android:layout_height="438dp"
-                    android:layout_alignParentTop="true"
-                    android:gravity="center"
-                    android:rotation="-90"
-                    android:text="Nutrient Movement"
-                    android:visibility="visible" />
+    <TextView
+        android:id="@+id/maxValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/first"
+        android:layout_toEndOf="@+id/midle"
+        android:text=" max" />
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChart2"
-                    android:layout_width="328dp"
-                    android:layout_height="415dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="54dp"
-                    android:layout_marginStart="54dp"
-                    android:foregroundGravity="left|center" />
+    <TextView
+        android:id="@+id/last"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/first"
+        android:layout_toEndOf="@+id/maxValue"
+        android:text=" kilograms" />
 
-                <com.github.mikephil.charting.charts.BarChart
-                    android:id="@+id/barChart"
-                    android:layout_width="333dp"
-                    android:layout_height="412dp"
-                    android:layout_alignParentTop="true"
-                    android:foregroundGravity="left|center" />
-            </RelativeLayout>
+    <io.apptik.widget.MultiSlider
+        android:id="@+id/range_slider"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        android:layout_above="@+id/spinner"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        app:drawThumbsApart="true"
+        app:stepsThumbsApart="0"
+        app:thumbNumber="2" />
 
-                <TextView
-                    android:id="@+id/first"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="Showing all mammals between "/>
+    <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
+        android:id="@+id/spinner"
+        style="@style/AppTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="58dp"
+        android:background="@color/colorPrimary"
+        android:prompt="@color/colorPrimary"
+        android:theme="@style/AppTheme"
+        app:hintText="Multi Selection" />
 
-                <TextView
-                    android:id="@+id/minValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="min" />
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="315dp"
+        android:layout_height="290dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/barChart2"
+        android:foregroundGravity="left|center" />
 
-                <TextView
-                    android:id="@+id/midle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" and " />
 
-                <TextView
-                    android:id="@+id/maxValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" max" />
 
-                <TextView
-                    android:id="@+id/last"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=" kilograms"/>
-            </LinearLayout>
-
-            <io.apptik.widget.MultiSlider
-                android:id="@+id/range_slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                app:drawThumbsApart="true"
-
-                app:stepsThumbsApart="0"
-                app:thumbNumber="2" />
-
-            <com.androidbuts.multispinnerfilter.MultiSpinnerSearch
-                android:id="@+id/spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:hintText="Multi Selection" />
-
-            <Space
-                android:id="@+id/space"
-                android:layout_width="match_parent"
-                android:layout_height="40dp" />
-
-        </LinearLayout>
-    </ScrollView>
 </RelativeLayout>

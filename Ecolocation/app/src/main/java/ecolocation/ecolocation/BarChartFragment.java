@@ -1,6 +1,19 @@
 package ecolocation.ecolocation;
+import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatSpinner;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.*;
 import android.widget.*;
@@ -30,6 +43,8 @@ import java.lang.Comparable;
 
 import io.apptik.widget.MultiSlider;
 
+import static com.google.android.gms.plus.PlusOneDummyView.TAG;
+
 /**
  *  Created by Chandler on 3/19/2018.
  *
@@ -44,7 +59,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
     private ArrayList<BarEntry> barEntries , barEntries2;
     private MultiSlider multiSlider1;
     private TextView min, max, first, midle, last, tital1, tital2;
-    private Space space;
     private Integer threatLevelValueS[], threatLevelValueR[];
     private double whatIf[], animalMassC[];
     private ThreatLevel threatLevel[];
@@ -63,6 +77,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         BarChartFragment fragment = new BarChartFragment();
         return fragment;
     }
+
 
     private static double sum(double...values){
         double result = 0;
@@ -97,14 +112,10 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         barChart2 = view.findViewById(R.id.barChart2);
         barChart2.setVisibility(View.INVISIBLE);
 
-        //setUpBarChart();
-
         // Customize slider
         tital1 = view.findViewById(R.id.tital1);
         tital2 = view.findViewById(R.id.tital2);
         tital1.setVisibility(View.INVISIBLE);
-        space = view.findViewById(R.id.space);
-        space.setVisibility(View.INVISIBLE);
         min = view.findViewById(R.id.minValue);
         min.setVisibility(View.INVISIBLE);
         max = view.findViewById(R.id.maxValue);
@@ -121,6 +132,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
 
         //setup spinner
         spinner = view.findViewById(R.id.spinner);
+        spinner.setBackgroundColor(4);
         spinner.setVisibility(View.INVISIBLE);
         spinner1 = view.findViewById(R.id.spinner1);
 
@@ -134,6 +146,8 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         spinner1.setOnItemSelectedListener(this);
         dropDownList();
         setUpBarChart();
+
+
 
         return view;
     }
@@ -208,7 +222,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         // ---------- Set Up Bars2
         barEntries2 = new ArrayList<>();
         barEntries2.add(new BarEntry(1f, (float) nutrDisC));
-        barEntries2.add(new BarEntry(2f, (float) changes));
+        barEntries2.add(new BarEntry(2f, (float) sum(whatIf)));
         String[] labels2 = new String[] {"" ,"Current", "What If"};
         barChart2.getXAxis().setValueFormatter(new MyXAxisValueFormatter(labels2));
 
@@ -218,7 +232,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
         BarData current_nutrient = new BarData(dataSet);
 
-        current_nutrient.setBarWidth(.8f);
+        current_nutrient.setBarWidth(.5f);
 
         barChart1.setData(current_nutrient);
 
@@ -231,7 +245,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
         dataSet2.setColors(ColorTemplate.MATERIAL_COLORS);
         BarData whatIf_Nutrient = new BarData(dataSet2);
 
-        whatIf_Nutrient.setBarWidth(.8f);
+        whatIf_Nutrient.setBarWidth(.5f);
 
         barChart2.setData(whatIf_Nutrient);
 
@@ -299,12 +313,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 threatLevelValueR[j] = 111;
                             }
                         }
-
-                        changes = (int) sum(whatIf);
-                        barEntries2.remove(1);
-                        barEntries2.add(new BarEntry(2f, (float) changes));
-                        barChart2.notifyDataSetChanged();
-                        barChart2.invalidate();
                     }
                     else if(value < preValueI)
                     {
@@ -317,12 +325,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                             }
 
                         }
-
-                        changes = (int) sum(whatIf);
-                        barEntries2.remove(1);
-                        barEntries2.add(new BarEntry(2f, (float) changes));
-                        barChart2.notifyDataSetChanged();
-                        barChart2.invalidate();
                     }
                 }
                 else
@@ -338,12 +340,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 threatLevelValueR[j] = 111;
                             }
                         }
-
-                        changes = (int) sum(whatIf);
-                        barEntries2.remove(1);
-                        barEntries2.add(new BarEntry(2f, (float) changes));
-                        barChart2.notifyDataSetChanged();
-                        barChart2.invalidate();
                     }
                     else if(value > preValueD)
                     {
@@ -355,14 +351,13 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 threatLevelValueR[j] = threatLevel[j].getValue() + 1;
                             }
                         }
-
-                        changes = (int) sum(whatIf);
-                        barEntries2.remove(1);
-                        barEntries2.add(new BarEntry(2f, (float) changes));
-                        barChart2.notifyDataSetChanged();
-                        barChart2.invalidate();
                     }
                 }
+                changes = (int) sum(whatIf);
+                barEntries2.remove(1);
+                barEntries2.add(new BarEntry(2f, (float) changes));
+                barChart2.notifyDataSetChanged();
+                barChart2.invalidate();
                 preValueI = multiSlider.getThumb(0).getValue();
                 preValueD = multiSlider.getThumb(1).getValue();
             }
@@ -394,7 +389,9 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                     if (list.get(i).isSelected()) {
 
                         switch (list.get(i).getName()) {
+
                             case "Least Concern":
+
                                 threatLevelValueS[0] = 1;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 0) {
@@ -404,6 +401,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Near Threatened":
+
                                 threatLevelValueS[1] = 2;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 1) {
@@ -413,6 +411,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Vulnerable":
+
                                 threatLevelValueS[2] = 3;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 2) {
@@ -422,6 +421,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Endangered":
+
                                 threatLevelValueS[3] = 4;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 3) {
@@ -433,7 +433,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                             case "Critically Endangered":
                                 threatLevelValueS[4] = 5;
                                 for (int j = 0; j < animaListC.size(); j++) {
-                                    if (threatLevel[j].getValue() == 4) {
+                                    if (threatLevel[j].getValue() >= 4) {
                                         whatIf[j] = 0;
                                     }
                                 }
@@ -445,7 +445,9 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                     } else {
 
                         switch (list.get(i).getName()) {
+
                             case "Least Concern":
+
                                 threatLevelValueS[0] = 0;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 0) {
@@ -455,6 +457,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Near Threatened":
+
                                 threatLevelValueS[1] = 0;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 1) {
@@ -464,6 +467,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Vulnerable":
+
                                 threatLevelValueS[2] = 0;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 2) {
@@ -473,6 +477,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Endangered":
+
                                 threatLevelValueS[3] = 0;
                                 for (int j = 0; j < animaListC.size(); j++) {
                                     if (threatLevel[j].getValue() == 3) {
@@ -482,9 +487,10 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
                                 break;
 
                             case "Critically Endangered":
+
                                 threatLevelValueS[4] = 0;
                                 for (int j = 0; j < animaListC.size(); j++) {
-                                    if (threatLevel[j].getValue() == 4) {
+                                    if (threatLevel[j].getValue() >= 4) {
                                         whatIf[j] = animalMassC[j];
                                     }
                                 }
@@ -495,6 +501,7 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
 
                         }
                     }
+
                     changes = (int) sum(whatIf);
                     barEntries2.remove(1);
                     barEntries2.add(new BarEntry(2f, (float) changes));
@@ -522,7 +529,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
             first.setVisibility(View.INVISIBLE);
             midle.setVisibility(View.INVISIBLE);
             last.setVisibility(View.INVISIBLE);
-            space.setVisibility(View.INVISIBLE);
 
         }
         else{
@@ -537,7 +543,6 @@ public class BarChartFragment extends Fragment implements AdapterView.OnItemSele
             first.setVisibility(View.VISIBLE);
             midle.setVisibility(View.VISIBLE);
             last.setVisibility(View.VISIBLE);
-            space.setVisibility(View.VISIBLE);
         }
     }
 
@@ -564,4 +569,309 @@ class MyXAxisValueFormatter implements AxisValueFormatter {
     }
 
     public int getDecimalDigits() { return 0; }
+}
+
+class MultiSpinner extends AppCompatSpinner implements DialogInterface.OnCancelListener {
+    private static final String TAG = MultiSpinnerSearch.class.getSimpleName();
+    private List<KeyPairBoolData> items;
+    private String defaultText = "";
+    private String spinnerTitle = "";
+    private SpinnerListener listener;
+    private int limit = -1;
+    private int selected = 0;
+    private LimitExceedListener limitListener;
+    MyAdapter adapter;
+    public static AlertDialog.Builder builder;
+    public static AlertDialog ad;
+
+    public MultiSpinner(Context context) {
+        super(context);
+    }
+
+    public MultiSpinner(Context arg0, AttributeSet arg1) {
+        super(arg0, arg1);
+        TypedArray a = arg0.obtainStyledAttributes(arg1, R.styleable.MultiSpinnerSearch);
+        for (int i = 0; i < a.getIndexCount(); ++i) {
+            int attr = a.getIndex(i);
+            if (attr == com.androidbuts.multispinnerfilter.R.styleable.MultiSpinnerSearch_hintText) {
+                spinnerTitle = a.getString(attr);
+                defaultText = spinnerTitle;
+                break;
+            }
+        }
+        Log.i(TAG, "spinnerTitle: "+spinnerTitle);
+        a.recycle();
+    }
+
+    public MultiSpinner(Context arg0, AttributeSet arg1, int arg2) {
+        super(arg0, arg1, arg2);
+    }
+
+    public void setLimit(int limit, LimitExceedListener listener) {
+        this.limit = limit;
+        this.limitListener = listener;
+    }
+
+    public List<KeyPairBoolData> getSelectedItems() {
+        List<KeyPairBoolData> selectedItems = new ArrayList<>();
+        for(KeyPairBoolData item : items){
+            if(item.isSelected()){
+                selectedItems.add(item);
+            }
+        }
+        return selectedItems;
+    }
+
+    public List<Long> getSelectedIds() {
+        List<Long> selectedItemsIds = new ArrayList<>();
+        for(KeyPairBoolData item : items){
+            if(item.isSelected()){
+                selectedItemsIds.add(item.getId());
+            }
+        }
+        return selectedItemsIds;
+    }
+
+    @Override
+    public void onCancel(DialogInterface dialog) {
+        // refresh text on spinner
+
+        StringBuilder spinnerBuffer = new StringBuilder();
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).isSelected()) {
+                spinnerBuffer.append(items.get(i).getName());
+                spinnerBuffer.append(", ");
+            }
+        }
+
+        String spinnerText = spinnerBuffer.toString();
+        if (spinnerText.length() > 2)
+            spinnerText = spinnerText.substring(0, spinnerText.length() - 2);
+        else
+            spinnerText = defaultText;
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getContext(), R.layout.textview_for_spinner, new String[]{spinnerText});
+        setAdapter(adapterSpinner);
+
+        if (adapter != null)
+            adapter.notifyDataSetChanged();
+
+        listener.onItemsSelected(items);
+    }
+
+    @Override
+    public boolean performClick() {
+
+        builder = new AlertDialog.Builder(getContext(), com.androidbuts.multispinnerfilter.R.style.myDialog);
+        builder.setTitle(spinnerTitle);
+
+        final LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        final View view = inflater.inflate(com.androidbuts.multispinnerfilter.R.layout.alert_dialog_listview_search, null);
+        builder.setView(view);
+
+        final ListView listView = (ListView) view.findViewById(R.id.tital2);
+        listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        listView.setFastScrollEnabled(false);
+        adapter = new MyAdapter(getContext(), items);
+        listView.setAdapter(adapter);
+
+        final TextView emptyText = (TextView) view.findViewById(com.androidbuts.multispinnerfilter.R.id.empty);
+        listView.setEmptyView(emptyText);
+
+        final EditText editText = (EditText) view.findViewById(com.androidbuts.multispinnerfilter.R.id.alertSearchEditText);
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                adapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                Log.i(TAG, " ITEMS : " + items.size());
+                dialog.cancel();
+            }
+        });
+
+        builder.setOnCancelListener(this);
+        ad = builder.show();
+        return true;
+    }
+
+    public void setItems(List<KeyPairBoolData> items, int position, SpinnerListener listener) {
+
+        this.items = items;
+        this.listener = listener;
+
+        StringBuilder spinnerBuffer = new StringBuilder();
+
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).isSelected()) {
+                spinnerBuffer.append(items.get(i).getName());
+                spinnerBuffer.append(", ");
+            }
+        }
+        if (spinnerBuffer.length() > 2)
+            defaultText = spinnerBuffer.toString().substring(0, spinnerBuffer.toString().length() - 2);
+
+        ArrayAdapter<String> adapterSpinner = new ArrayAdapter<>(getContext(), com.androidbuts.multispinnerfilter.R.layout.textview_for_spinner, new String[]{defaultText});
+        setAdapter(adapterSpinner);
+
+        if (position != -1) {
+            items.get(position).setSelected(true);
+            //listener.onItemsSelected(items);
+            onCancel(null);
+        }
+    }
+
+    public interface LimitExceedListener {
+        void onLimitListener(KeyPairBoolData data);
+    }
+
+    //Adapter Class
+    public class MyAdapter extends BaseAdapter implements Filterable {
+
+        List<KeyPairBoolData> arrayList;
+        List<KeyPairBoolData> mOriginalValues; // Original Values
+        LayoutInflater inflater;
+
+        public MyAdapter(Context context, List<KeyPairBoolData> arrayList) {
+            this.arrayList = arrayList;
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public int getCount() {
+            return arrayList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        private class ViewHolder {
+            TextView textView;
+            CheckBox checkBox;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            Log.i(TAG, "getView() enter");
+            ViewHolder holder;
+
+            if (convertView == null) {
+                holder = new ViewHolder();
+                convertView = inflater.inflate(com.androidbuts.multispinnerfilter.R.layout.item_listview_multiple,  parent, false);
+                holder.textView = (TextView) convertView.findViewById(com.androidbuts.multispinnerfilter.R.id.alertTextView);
+                holder.checkBox = (CheckBox) convertView.findViewById(com.androidbuts.multispinnerfilter.R.id.alertCheckbox);
+
+                convertView.setTag(holder);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            final int backgroundColor = (position%2 == 0) ? com.androidbuts.multispinnerfilter.R.color.list_even : com.androidbuts.multispinnerfilter.R.color.list_odd;
+            convertView.setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
+
+            final KeyPairBoolData data = arrayList.get(position);
+
+            holder.textView.setText(data.getName());
+            holder.textView.setTypeface(null, Typeface.NORMAL);
+            holder.checkBox.setChecked(data.isSelected());
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if(data.isSelected()) { // deselect
+                        selected--;
+                    } else if(selected == limit) { // select with limit
+                        if(limitListener != null)
+                            limitListener.onLimitListener(data);
+                        return;
+                    } else { // selected
+                        selected++;
+                    }
+
+                    final ViewHolder temp = (ViewHolder) v.getTag();
+                    temp.checkBox.setChecked(!temp.checkBox.isChecked());
+
+                    data.setSelected(!data.isSelected());
+                    Log.i(TAG, "On Click Selected Item : " + data.getName() + " : " + data.isSelected());
+                    notifyDataSetChanged();
+                }
+            });
+            if (data.isSelected()) {
+                holder.textView.setTypeface(null, Typeface.BOLD);
+                holder.textView.setTextColor(Color.WHITE);
+                convertView.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+            }
+            holder.checkBox.setTag(holder);
+
+            return convertView;
+        }
+
+        @SuppressLint("DefaultLocale")
+        @Override
+        public Filter getFilter() {
+            return new Filter() {
+
+                @SuppressWarnings("unchecked")
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+
+                    arrayList = (List<KeyPairBoolData>) results.values; // has the filtered values
+                    notifyDataSetChanged();  // notifies the data with new filtered values
+                }
+
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults results = new FilterResults();        // Holds the results of a filtering operation in values
+                    List<KeyPairBoolData> FilteredArrList = new ArrayList<>();
+
+                    if (mOriginalValues == null) {
+                        mOriginalValues = new ArrayList<>(arrayList); // saves the original data in mOriginalValues
+                    }
+
+                    if (constraint == null || constraint.length() == 0) {
+
+                        // set the Original result to return
+                        results.count = mOriginalValues.size();
+                        results.values = mOriginalValues;
+                    } else {
+                        constraint = constraint.toString().toLowerCase();
+                        for (int i = 0; i < mOriginalValues.size(); i++) {
+                            Log.i(TAG, "Filter : " + mOriginalValues.get(i).getName() + " -> " + mOriginalValues.get(i).isSelected());
+                            String data = mOriginalValues.get(i).getName();
+                            if (data.toLowerCase().contains(constraint.toString())) {
+                                FilteredArrList.add(mOriginalValues.get(i));
+                            }
+                        }
+                        // set the Filtered result to return
+                        results.count = FilteredArrList.size();
+                        results.values = FilteredArrList;
+                    }
+                    return results;
+                }
+            };
+        }
+    }
 }
