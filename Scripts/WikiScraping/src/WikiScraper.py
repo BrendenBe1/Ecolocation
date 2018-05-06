@@ -63,10 +63,11 @@ def getAllInfo():
 
     #this keeps track of which row the reader is located at in the iucn.csv file.
     index = 0
+    firstRowAreHeaders = sys.argv[3]
 
     for row in reader:
         #The first row (row 0) contains the header
-        if index == 0:
+        if index == 0 and firstRowAreHeaders == 'true':
             row.append('common_name')
             row.append('wiki_link')
             row.append('description')

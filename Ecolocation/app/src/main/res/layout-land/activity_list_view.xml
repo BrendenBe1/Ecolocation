@@ -50,7 +50,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorAccent"
         android:text="@string/listview_bttn_next"
         android:textColor="@color/white"
         android:textSize="14sp" />

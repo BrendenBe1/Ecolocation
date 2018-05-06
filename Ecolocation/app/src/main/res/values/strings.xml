@@ -7,6 +7,44 @@
     <string name="home_bttn_run">Run</string>
     <string name="home_bttn_about">About</string>
 
+    <!--Detail Fragment Strings-->
+    <string name="animal_name">Species\' Name</string>
+    <string name="description">Description</string>
+    <string name="wikipedia_link">Wikipedia Link</string>
+    <string name="scientific_name">Scientific Name: </string>
+    <string name="mass_title">Mass: </string>
+    <string name="pop_title">Population: </string>
+    <string name="end_lev_title">Endangered Level: </string>
+    <string name="diet_title">Diet: </string>
+    <string name="range_map">Range Map</string>
+
+    <!--List View Screen Strings  -->
+    <string name="listview_bttn_next">View Ecosystem Services</string>
+
+    <!--Location Screen Strings-->
+    <string name="loc_next_bttn">Next</string>
+    <string name="txt_lat">(Latitude,</string>
+    <string name="txt_long">Longitude)</string>
+
+    <!--Graph Results Strings-->
+    <string name="barchart_title">Nutrient Movement of Ecosystem</string>
+    <string name="what_if">What-If Scenarios</string>
+
+    <!--Spatial Mapping Fragment-->
+    <string name="spatial_title">Nutrient Dispersal Potential Spatial Map</string>
+    <string name="spatial_low">Lower Values</string>
+    <string name="spatial_high">Higher Values</string>
+
+    <!--Spatial Mapping Fragment-->
+    <string-array name= "endangered_level_array">
+        <item>Least Concern</item>
+        <item>Near Threatened</item>
+        <item>Vulnerable</item>
+        <item>Endangered</item>
+        <item>Critically Endangered</item>
+    </string-array>
+
+
     <!--About Activity Strings-->
     <string name="about_title">About Ecolocation</string>
     <string name="about_background">A plentiful supply of nutrients is vital for life to flourish on
@@ -43,44 +81,14 @@
     <string name="arkive_title">ARKive</string>
     <string name="arkive_credit"></string>
 
+    <string name="developer_title">Developers</string>
+    <string name="developer_credit">Brenden Bernal, Michael Hartzell, Chandler Hayes, and Anthony
+        De La Torre</string>
 
-    <!--Detail Fragment Strings-->
-    <string name="animal_name">Species\' Name</string>
-    <string name="description">Description</string>
-    <string name="wikipedia_link">Wikipedia Link</string>
-    <string name="scientific_name">Scientific Name: </string>
-    <string name="mass_title">Mass: </string>
-    <string name="pop_title">Population: </string>
-    <string name="end_lev_title">Endangered Level: </string>
-    <string name="diet_title">Diet: </string>
-    <string name="range_map">Range Map</string>
-
-    <!--List View Screen Strings  -->
-    <string name="listview_bttn_next">View Ecosystem Services</string>
-    <string name="website1">http://www.pnas.org/content/113/4/868.full</string>
-    <string name="website2">https://www.cdoughty.org/</string>
-
-    <!--Location Screen Strings-->
-    <string name="loc_next_bttn">Next</string>
-    <string name="txt_lat">(Latitude,</string>
-    <string name="txt_long">Longitude)</string>
-
-    <!--Graph Results Strings-->
-    <string name="barchart_title">Nutrient Movement of Ecosystem</string>
-    <string name="what_if">What-If Scenarios</string>
-
-    <!--Spatial Mapping Fragment-->
-    <string name="spatial_title">Nutrient Dispersal Potential Spatial Map</string>
-    <string name="spatial_low">Lower Values</string>
-    <string name="spatial_high">Higher Values</string>
-
-    <!--Spatial Mapping Fragment-->
-    <string-array name= "endangered_level_array">
-        <item>Least Concern</item>
-        <item>Near Threatened</item>
-        <item>Vulnerable</item>
-        <item>Endangered</item>
-        <item>Critically Endangered</item>
-    </string-array>
-
+    <!-- Info Dialog-->
+    <string name="info_dialog_title">For More Information</string>
+    <string name="about_link1">Learn more about animals transporting nutrients</string>
+    <string name="about_link2">Find more articles</string>
+    <string name="info_link1"></string>
+    <string name="info_link2">https://www.cdoughty.org/</string>
 </resources>

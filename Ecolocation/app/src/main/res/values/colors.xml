@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#4caf50</color>
     <color name="colorPrimaryDark">#2e7d32</color>
-    <color name="colorAccent">#0195d7</color>
+    <color name="colorAccent">#0075a9</color>
 
     <color name="white">#ffffff</color>
     <color name="googleMap">#dddddd</color>

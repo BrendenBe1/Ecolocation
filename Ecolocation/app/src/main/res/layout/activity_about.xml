@@ -12,7 +12,7 @@
         tools:context=".AboutActivity">
 
         <TextView
-            android:id="@+id/about_title"
+            android:id="@+id/txt_about_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -24,7 +24,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/background_title"
+            android:id="@+id/txt_background_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,7 +33,7 @@
             android:text="@string/about_background" />
 
         <TextView
-            android:id="@+id/credits_title"
+            android:id="@+id/txt_credits_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -45,7 +45,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/doughty_title"
+            android:id="@+id/txt_doughty_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -56,7 +56,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/doughty_credit"
+            android:id="@+id/txt_doughty_credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -66,7 +66,7 @@
             android:text="@string/doughty_credit" />
 
         <TextView
-            android:id="@+id/doughty_credit2"
+            android:id="@+id/txt_doughty_credit2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -76,7 +76,7 @@
             android:text="@string/doughty_credit2" />
 
         <TextView
-            android:id="@+id/historic_title"
+            android:id="@+id/txt_historic_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -88,7 +88,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/historic_credit"
+            android:id="@+id/txt_historic_credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -98,7 +98,7 @@
             android:text="@string/historic_credit" />
 
         <TextView
-            android:id="@+id/iucn_title"
+            android:id="@+id/txt_iucn_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
@@ -108,15 +108,37 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <!-- The text for this is assigned in the Activity's code-->
         <TextView
-            android:id="@+id/iucn_credit"
+            android:id="@+id/txt_iucn_credit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/txt_developer_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:text="@string/developer_title"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_developer_credit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:text="" />
+            android:text="@string/developer_credit" />
 
     </LinearLayout>
 </ScrollView>

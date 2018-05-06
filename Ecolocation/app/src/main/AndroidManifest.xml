@@ -2,13 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ecolocation.ecolocation">
 
-    <!-- Permission for Location Services -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.INTERNET" />
-
-    <!-- Permission for Location Services -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/ecolocation_logo"
@@ -53,6 +46,9 @@
         <!-- Web Activity -->
         <activity android:name=".WebActivity" />
 
+        <!-- About Activity-->
+        <activity android:name=".AboutActivity"></activity>
+
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data
             android:name="com.google.android.gms.version"
@@ -61,8 +57,13 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_api_key" />
 
-        <activity android:name=".ListView2" />
-        <activity android:name=".AboutActivity"></activity>
     </application>
+
+    <!-- Permission for Location Services -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Permission for Location Services -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
 </manifest>

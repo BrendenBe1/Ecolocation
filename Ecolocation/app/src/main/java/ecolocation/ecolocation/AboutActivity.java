@@ -13,7 +13,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        iucnCredit = (TextView) findViewById(R.id.iucn_credit);
+        iucnCredit = (TextView) findViewById(R.id.txt_iucn_credit);
         iucnCredit.setText("IUCN 2017. The IUCN Red List of Threatened " +
                 "Species. Version 2017-3. \\<http://www.iucnredlist.org>. " +
                 "Downloaded on 05 December 2017.");

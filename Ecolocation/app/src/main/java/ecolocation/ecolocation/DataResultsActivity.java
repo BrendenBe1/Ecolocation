@@ -2,6 +2,7 @@ package ecolocation.ecolocation;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,9 +13,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  *  This activity displays the results of calculating the nutrient movement graphically. Displays
@@ -86,18 +89,6 @@ public class DataResultsActivity extends AppCompatActivity {
                     "The blue slider represents the weight threshold for mammals in that " +
                     "ecosystem. By moving the nodes, you can see the effect of species of certain" +
                     " weights being removed from that ecosystem." + "<br/> <br/>";
-
-//            "<b>" + "What Does This Represent?:" + "</b> <br/>" +
-//                    "This spatial map represents the animals ability to distribute nutrients" +
-//                    " in an ecosystem. There are two spatial maps to view. The first one " +
-//                    "represents the current nutrient dispersal throughout the planet. The second" +
-//                    " spatial map represents the nutrient dispersal during the Pleistocene Era" +
-//                    " (2,500,000 to 11,000 years ago). <br> Nutrient dispersal is an ecosystem" +
-//                    " service provided by an ecosystem's animals. It is vital for maintaining an" +
-//                    " ecosystem's health. The higher the nutrient dispersal is the more healthy " +
-//                    "and productive it is. <br> Animals during the Pleistocene Era are typically " +
-//                    "larger than currently existing animals and contribute more to their " +
-//                    "ecosystems because of this."
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -114,16 +105,49 @@ public class DataResultsActivity extends AppCompatActivity {
 
     private void createInfoDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        String message = "<b>" + "For more information" + "</b> <br/>" +
-                this.getResources().getString(R.string.website1) + "<br/> <br/>" +
-                this.getResources().getString(R.string.website2);
-        builder.setMessage(Html.fromHtml(message))
-                .setNeutralButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // user closes dialog
-                    }
-                });
+        builder.setNeutralButton("CLOSE", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // user cancelled dialog
+            }
+        });
+
+        // create custom layout
+        LayoutInflater inflater = getLayoutInflater();
+        View customView = inflater.inflate(R.layout.dialog_info, null);
+
+        // wiring widgets
+        TextView txtLink1 = (TextView) customView.findViewById(R.id.txt_link1);
+        String link = txtLink1.getText().toString();
+        link += " <u> here</u>";
+        txtLink1.setText(Html.fromHtml(link));
+        // enable visiting the link
+        txtLink1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DataResultsActivity.this, WebActivity.class);
+                intent.putExtra("url", "http://www.pnas.org/content/113/4/868.full");
+                startActivity(intent);
+            }
+        });
+
+        TextView txtLink2 = (TextView) customView.findViewById(R.id.txt_link2);
+        String link2 = txtLink2.getText().toString();
+        link2 += " <u> here</u>";
+        txtLink2.setText(Html.fromHtml(link2));
+
+        // enable visiting the link
+        txtLink2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(DataResultsActivity.this, WebActivity.class);
+                intent.putExtra("url", "https://www.cdoughty.org/");
+                startActivity(intent);
+            }
+        });
+
+        // assign view to dialog
+        builder.setView(customView);
         AlertDialog dialog = builder.create();
         dialog.show();
     }
