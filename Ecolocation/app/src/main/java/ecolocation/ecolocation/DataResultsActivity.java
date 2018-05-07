@@ -59,7 +59,7 @@ public class DataResultsActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
     }
     // -------- Dialogs
-    public void createHelpDialog() {
+    private void createHelpDialog() {
         String message;
         if(viewPager.getCurrentItem() == 0){
             message = "<b>" + "What Does this Represent?" + "</b> <br/>"+

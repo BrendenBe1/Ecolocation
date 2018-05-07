@@ -21,18 +21,6 @@ public class Ecosystem {
     private ArrayList<Animal> currentList;   //current mammals
     private ArrayList<Animal> historicList; //historic (Pleistocene Era) Animals
 
-    //needed for updating ListViews once data is retrieved
-    private Context context;
-    private ListViewFragment.AnimalAdapter adapter;
-
-//    public void retrieveData(Context context){
-//        this.context = context;
-//        currentList = getAnimalData(AnimalType.CURRENT_MAMMAL);
-//        historicList = getAnimalData(AnimalType.HISTORIC_MAMMAL);
-//        adapter = null;
-//
-//    }
-
     /**
      * The private constructor for Ecosystem
      *
@@ -41,7 +29,6 @@ public class Ecosystem {
     private Ecosystem(Context context){
         currentList = new ArrayList<Animal>();
         historicList = new ArrayList<Animal>();
-        this.context = context;
     }
 
     /**
@@ -82,17 +69,6 @@ public class Ecosystem {
             }
         }
         return null;
-    }
-
-    /**
-     * By binding an adapter (one used for a ListView) to this class, we can notify the adapter when
-     * changes occurs to the data set. If the list of animals is empty when the ListView page is
-     * created, the list can be updated when the data comes in
-     *
-     * @param adapter   adapter for a ListView object
-     */
-    public  void setAdapter(ListViewFragment.AnimalAdapter adapter){
-        this.adapter = adapter;
     }
 
     //---------- Initializing & Returning ArrayList<Animal>
