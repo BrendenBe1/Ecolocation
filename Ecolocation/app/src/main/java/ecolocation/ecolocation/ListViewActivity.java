@@ -39,15 +39,17 @@ public class ListViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
 
-        // --------- Get Data From Database
-        //need to get coordinates and initialize Ecosystem
-        Ecosystem ecosystem = Ecosystem.get(this);
-        // if the intent has coordinates then we need to get them
-        if(getIntent().hasExtra(EXTRA_COORDINATES)){
-            //get the chosen location's coordinates & send it to Ecosystem instance
-            LatLng coordinates = getIntent().getExtras().getParcelable(EXTRA_COORDINATES);
-            Log.d("LATITUDE graph: ", String.valueOf(coordinates.latitude));
-            ecosystem.setChosenLocation(coordinates);
+        if(savedInstanceState == null){
+            // --------- Get Data From Database
+            //need to get coordinates and initialize Ecosystem
+            Ecosystem ecosystem = Ecosystem.get(this);
+            // if the intent has coordinates then we need to get them
+            if(getIntent().hasExtra(EXTRA_COORDINATES)){
+                //get the chosen location's coordinates & send it to Ecosystem instance
+                LatLng coordinates = getIntent().getExtras().getParcelable(EXTRA_COORDINATES);
+                Log.d("LATITUDE graph: ", String.valueOf(coordinates.latitude));
+                ecosystem.setChosenLocation(coordinates);
+            }
         }
 
         //----------- toolbar setup
@@ -201,6 +203,11 @@ public class ListViewActivity extends AppCompatActivity {
         return intent;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putBoolean("rotate", true);
+    }
 
 }
 

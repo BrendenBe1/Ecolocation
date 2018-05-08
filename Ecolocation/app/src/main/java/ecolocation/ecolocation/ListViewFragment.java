@@ -1,6 +1,7 @@
 package ecolocation.ecolocation;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
@@ -71,7 +72,7 @@ public class ListViewFragment extends Fragment {
 
         pageType = getArguments().getInt(ARG_PAGE);
 
-        // -------- Retrieving correct list
+       // -------- Retrieving correct list
         if(pageType == 0){
             //use current mammals list
             animalList = Ecosystem.get(getContext()).getCurrentList();
@@ -81,8 +82,6 @@ public class ListViewFragment extends Fragment {
             animalList = Ecosystem.get(getContext()).getHistoricList();
             animalType = AnimalType.HISTORIC_MAMMAL;
         }
-
-
     }
 
     @Override
@@ -90,8 +89,15 @@ public class ListViewFragment extends Fragment {
                              Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_list_view, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        AnimalType[] type = {animalType};
-        new Task ().execute(type);
+
+        if(savedInstanceState == null){
+            // make sure activity won't restart in the middle of this due to rotation
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+
+            //get data from database
+            AnimalType[] type = {animalType};
+            new Task ().execute(type);
+        }
 
         // Setting Up RecyclerView
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
@@ -103,8 +109,6 @@ public class ListViewFragment extends Fragment {
         adapter = new AnimalAdapter(animalList);
         recyclerView.setAdapter(adapter);
         Ecosystem ecosystem = Ecosystem.get(getContext());
-        ecosystem.setAdapter(adapter);
-
         return view;
     }
 
@@ -234,7 +238,8 @@ public class ListViewFragment extends Fragment {
         final ImageView imageView = new ImageView(getContext());
 
         String fileName = "";
-        if(animal.getType().equals(AnimalType.CURRENT_MAMMAL)){
+        if(animal.getType().equals(AnimalType.CURRENT_MAMMAL) && !animal.getBinomial().toLowerCase()
+                .equals("homo sapiens")){
             fileName = animal.getBinomial().replace(" ", "-").toLowerCase();
         }
         else{
@@ -302,6 +307,13 @@ public class ListViewFragment extends Fragment {
                     @Override
                     public void onError(){}
                 });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState){
+        super.onSaveInstanceState(savedInstanceState);
+        //lets the fragment know that the data is already retrieved from the database
+        savedInstanceState.putBoolean("state", true);
     }
 
     // ------- loading database
@@ -402,16 +414,10 @@ public class ListViewFragment extends Fragment {
             if(type == AnimalType.CURRENT_MAMMAL) {
                 ArrayList<Animal> currentList = ecosystem.getCurrentList();
 
-                for(int i = 0; i< currentList.size(); i++) {
-                    Animal currAnimal = currentList.get(i);
-                    loadImageFromURL(currAnimal);
-
-                    Log.d("currAnimal", currAnimal.getBinomial());
-                }
-
                 if(currentList.size() > 0){
-                    Drawable pic = getContext().getResources().getDrawable(R.drawable.homo_sapien);
-                    Animal homoSapien = new Animal("Homo Sapiens", "Homo Sapiens", pic,
+                    final Drawable pic = getContext().getResources().getDrawable(R.drawable
+                            .ic_launcher_background);
+                    Animal homoSapien = new Animal("Homo sapiens", "Homo Sapiens", pic,
                             "Homo sapies is the systematic name used in taxonomy " +
                                     "(also known as a "
                                     + "binomial nomenclature) for anatomically modern humans, " +
@@ -421,6 +427,14 @@ public class ListViewFragment extends Fragment {
                             "https://en.wikipedia.org/wiki/Homo_sapiens","LC",
                             53, AnimalType.CURRENT_MAMMAL);
                     currentList.add(homoSapien);
+                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                }
+
+                for(int i = 0; i< currentList.size(); i++) {
+                    Animal currAnimal = currentList.get(i);
+                    loadImageFromURL(currAnimal);
+
+                    Log.d("currAnimal", currAnimal.getBinomial());
                 }
 
                 //sort list by mass, so that the animals with the bigger mass are shown first
