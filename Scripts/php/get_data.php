@@ -9,7 +9,7 @@
 
 	mysqli_set_charset($con, 'utf8');
 	
-	$sql = "Select binomial, common_name, mass, code, wiki_link, description FROM iucn WHERE st_contains(boundaries, GeomFromText('Point($lon $lat)'))";
+	$sql = "Select binomial, common_name, mass, code, wiki_link, description FROM iucn WHERE mass >= 1000 AND st_contains(boundaries, GeomFromText('Point($lon $lat)'))";
 
 	$result = mysqli_query($con, $sql);
 	while($row = mysqli_fetch_assoc($result)){
