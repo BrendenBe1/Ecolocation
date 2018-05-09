@@ -1,9 +1,8 @@
 <resources>
-    <string name="app_name">Ecolocation</string>
+    <string name="app_name">AniMap</string>
     <string name="google_maps_api_key">AIzaSyCXjh2-6Fuamh7jnjKLbn-Y_shjpqHzX7w</string>
 
     <!--Home Screen Strings-->
-    <string name="home_title">Ecolocation</string>
     <string name="home_bttn_run">Run</string>
     <string name="home_bttn_about">About</string>
 

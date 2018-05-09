@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ecolocation.ecolocation">
+    package="animap.animap">
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ecolocation_logo"
+        android:icon="@drawable/animap_logo"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme">
 
         <!-- Home Activity -->
-        <activity android:name=".HomeActivity">
+        <activity android:name="animap.animap.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,33 +21,33 @@
         </activity>
 
         <!-- Animal Detail Activity -->
-        <activity android:name=".DetailActivity" />
+        <activity android:name="animap.animap.DetailActivity" />
 
         <!-- Location Activity -->
         <activity
-            android:name=".LocationActivity"
+            android:name="animap.animap.LocationActivity"
             android:launchMode="singleTop" />
 
         <!-- List View Activity -->
         <activity
-            android:name=".ListViewActivity"
+            android:name="animap.animap.ListViewActivity"
             android:launchMode="singleTop"
-            android:parentActivityName=".LocationActivity">
+            android:parentActivityName="animap.animap.LocationActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".LocationActivity" />
+                android:value="animap.animap.LocationActivity" />
         </activity>
 
         <!-- Data Results Activity -->
         <activity
-            android:name=".DataResultsActivity"
+            android:name="animap.animap.DataResultsActivity"
             android:screenOrientation="portrait" />
 
         <!-- Web Activity -->
-        <activity android:name=".WebActivity" />
+        <activity android:name="animap.animap.WebActivity" />
 
         <!-- About Activity-->
-        <activity android:name=".AboutActivity"></activity>
+        <activity android:name="animap.animap.AboutActivity"></activity>
 
         <!-- The API key for Google Maps-based APIs. -->
         <meta-data

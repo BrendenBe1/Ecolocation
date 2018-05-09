@@ -30,7 +30,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp" />
 
-    <ecolocation.ecolocation.TouchImageView
+    <animap.animap.TouchImageView
         android:id="@+id/map_img"
         android:layout_width="wrap_content"
         android:layout_height="295dp"
