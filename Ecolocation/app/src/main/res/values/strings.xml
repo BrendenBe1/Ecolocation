@@ -26,7 +26,7 @@
     <string name="txt_long">Longitude)</string>
 
     <!--Graph Results Strings-->
-    <string name="barchart_title">Nutrient Movement of Ecosystem</string>
+    <string name="barchart_title">Potential Nutrient Movement</string>
     <string name="what_if">What-If Scenarios</string>
 
     <!--Spatial Mapping Fragment-->

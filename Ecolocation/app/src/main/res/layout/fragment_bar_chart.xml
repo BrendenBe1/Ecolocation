@@ -40,22 +40,33 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="70dp"
-        android:layout_height="438dp"
+    <ImageView
+        android:layout_width="278dp"
+        android:layout_height="236dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:gravity="center"
+        android:layout_marginTop="141dp"
+        android:adjustViewBounds="false"
+        android:foregroundGravity="clip_vertical|clip_horizontal"
         android:rotation="-90"
-        android:text="Nutrient Movement"
-        android:visibility="visible" />
+        android:scaleType="fitStart"
+        android:src="@drawable/barchart_label" />
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart2"
         android:layout_width="314dp"
-        android:layout_height="291dp"
-        android:layout_alignParentEnd="true"
+        android:layout_height="323dp"
         android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="79dp"
+        android:foregroundGravity="left|center" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:id="@+id/barChart"
+        android:layout_width="315dp"
+        android:layout_height="325dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@+id/barChart2"
         android:foregroundGravity="left|center" />
 
 
@@ -64,7 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/range_slider"
-        android:layout_alignParentStart="true"
         android:paddingLeft="10dp"
         android:text="Showing all mammals between " />
 
@@ -119,19 +129,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="42dp"
         android:background="@color/colorPrimary"
         android:prompt="@color/colorPrimary"
         android:theme="@style/AppTheme"
         app:hintText="Multi Selection" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="315dp"
-        android:layout_height="290dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignTop="@+id/barChart2"
-        android:foregroundGravity="left|center" />
+
 
 
 
